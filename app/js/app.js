@@ -14,6 +14,9 @@ class HtetLingoApp {
     this.quizIndex = 0;
     this.quizScore = 0;
 
+    this.engMyanCache = null;
+    this.femaleNamesCache = null;
+    this.loadExternalDatasets();
     this.userStats = {
       xp: parseInt(localStorage.getItem('htetlingo_xp') || '150', 10),
       streak: parseInt(localStorage.getItem('htetlingo_streak') || '5', 10),
@@ -626,7 +629,17 @@ class HtetLingoApp {
     `;
   }
 
-  searchDict(query) {
+  async loadExternalDatasets() {
+    try {
+      const res = await fetch('./data/eng_myan_quick.json');
+      if (res.ok) {
+        this.engMyanCache = await res.json();
+        console.log('[HtetLingo] EMDictionary database loaded:', this.engMyanCache.length, 'words');
+      }
+    } catch(e) {}
+  }
+
+  async searchDict(query) {
     const list = document.getElementById('dictResultsList');
     if (!list) return;
     const q = query.toLowerCase().trim();
@@ -635,22 +648,56 @@ class HtetLingoApp {
       return;
     }
 
-    const filtered = window.HTET_DATA.dictionary.filter(item => {
+    // 1. In-memory curated matches
+    let resultsHtml = '';
+    const curatedMatches = window.HTET_DATA.dictionary.filter(item => {
       if (item.term.toLowerCase().includes(q)) return true;
       if (item.translations.my.includes(q)) return true;
-      if (item.translations.ja.toLowerCase().includes(q)) return true;
-      if (item.translations.zh.toLowerCase().includes(q)) return true;
-      if (item.translations.th.toLowerCase().includes(q)) return true;
+      if (item.translations.ja && item.translations.ja.toLowerCase().includes(q)) return true;
+      if (item.translations.zh && item.translations.zh.toLowerCase().includes(q)) return true;
       return false;
     });
 
-    if (filtered.length) {
-      list.innerHTML = filtered.map(item => this.formatDictEntry(item)).join('');
+    if (curatedMatches.length) {
+      resultsHtml += curatedMatches.map(item => this.formatDictEntry(item)).join('');
+    }
+
+    // 2. Query EMDictionary database (from soeminnminn/EngMyanDictionary-MAC)
+    if (!this.engMyanCache) {
+      await this.loadExternalDatasets();
+    }
+
+    if (this.engMyanCache && this.engMyanCache.length) {
+      const emMatches = this.engMyanCache.filter(item => {
+        return item.w.toLowerCase().startsWith(q) || item.w.toLowerCase().includes(q) || item.d.includes(q);
+      }).slice(0, 10);
+
+      if (emMatches.length) {
+        resultsHtml += '<div style="margin: 1.25rem 0 0.6rem; font-weight: 800; color: var(--rose-primary); font-size: 0.95rem;">📚 EMDictionary (Open Source Myanmar-English Database Matches)</div>';
+        resultsHtml += emMatches.map(item => `
+          <div class="card" style="padding: 1.15rem; margin-bottom: 0.75rem;">
+            <div class="card-header" style="margin-bottom: 0.4rem;">
+              <div>
+                <span style="font-size: 0.72rem; background: var(--rose-light); color: var(--rose-primary); padding: 0.15rem 0.55rem; border-radius: var(--radius-full); font-weight: 800;">EMDictionary</span>
+                <h3 style="font-size: 1.25rem; font-weight: 900; margin-top: 0.2rem;">${item.w}</h3>
+              </div>
+              <button class="icon-btn" onclick="app.speakCurrent('${item.w.replace(/'/g, "\\'")}', 'en')">🔊 Speak</button>
+            </div>
+            <div style="font-size: 0.92rem; color: var(--text-main); line-height: 1.6;">
+              ${item.d}
+            </div>
+          </div>
+        `).join('');
+      }
+    }
+
+    if (resultsHtml) {
+      list.innerHTML = resultsHtml;
     } else {
       list.innerHTML = `
-        <div style="text-align: center; padding: 2.5rem 1rem; color: var(--text-muted); background: var(--bg-card); border-radius: var(--radius-md); border: 1px dashed var(--border-color);">
+        <div style="text-align: center; padding: 2.5rem 1rem; color: var(--text-muted); background: var(--bg-card); border-radius: var(--radius-md); border: 1.5px dashed var(--border-color);">
           <div style="font-size: 2rem; margin-bottom: 0.5rem;">🌸</div>
-          No exact match found for "<strong>${query}</strong>" in the primary list.<br/>
+          No exact match found for "<strong>${query}</strong>".<br/>
           Try searching in our Myanmar Female Names dictionary or use the Phrasebook below!<br/>
           <button class="pill-btn" style="margin-top: 1rem; background: var(--rose-primary); color: white; border: none;" onclick="app.switchTab('translate')">Open Live Phrasebook →</button>
         </div>

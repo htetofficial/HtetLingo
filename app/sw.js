@@ -1,5 +1,5 @@
-// HtetLingo Service Worker - Offline-First Learning
-const CACHE_NAME = 'htetlingo-v1.0.0';
+// HtetLingo Service Worker - Cute & Feminist Offline-First Learning
+const CACHE_NAME = 'htetlingo-v1.1.0';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -12,13 +12,17 @@ const ASSETS_TO_CACHE = [
   './js/supabaseClient.js',
   './js/revenueCat.js',
   './js/aiTutor.js',
+  './data/eng_myan_quick.json',
+  './data/female_names.json',
+  './data/karen_words.json',
+  './data/myanmar_common_words.json',
   './icons/icon.svg'
 ];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      console.log('[HtetLingo SW] Pre-caching offline assets');
+      console.log('[HtetLingo SW] Pre-caching offline datasets & assets');
       return cache.addAll(ASSETS_TO_CACHE);
     }).then(() => self.skipWaiting())
   );
@@ -40,21 +44,18 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-  // Ignore non-GET requests or external API calls to Supabase/RevenueCat
   if (event.request.method !== 'GET') return;
   const url = new URL(event.request.url);
 
-  // If request is within our app scope, use cache-first with network fallback
   if (url.origin === location.origin) {
     event.respondWith(
       caches.match(event.request).then((cachedResponse) => {
         if (cachedResponse) {
-          // Fetch updated version in background to refresh cache
           fetch(event.request).then((networkResponse) => {
             if (networkResponse && networkResponse.status === 200) {
               caches.open(CACHE_NAME).then((cache) => cache.put(event.request, networkResponse));
             }
-          }).catch(() => {/* ignore background fetch failure */});
+          }).catch(() => {});
           return cachedResponse;
         }
         return fetch(event.request).then((networkResponse) => {
@@ -66,8 +67,7 @@ self.addEventListener('fetch', (event) => {
           return networkResponse;
         });
       }).catch(() => {
-        // Fallback for HTML documents
-        if (event.request.headers.get('accept').includes('text/html')) {
+        if (event.request.headers.get('accept')?.includes('text/html')) {
           return caches.match('./index.html');
         }
       })
