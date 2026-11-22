@@ -1,0 +1,25 @@
+{
+  "name": "htetlingo",
+  "version": "1.0.0",
+  "description": "Learn Languages. Understand Words. Connect Cultures. Multilingual Learning, Dictionary, Translation and AI Tutoring Platform by Htet.",
+  "scripts": {
+    "dev": "npx serve app",
+    "docs": "npx serve docs",
+    "deploy:cf": "npx wrangler pages deploy app --project-name htetlingo --branch main"
+  },
+  "keywords": [
+    "language-learning",
+    "burmese",
+    "japanese",
+    "chinese",
+    "thai",
+    "english",
+    "ai-tutor",
+    "dictionary",
+    "translation",
+    "offline-first",
+    "pwa"
+  ],
+  "author": "Htet (htetofficial)",
+  "license": "MIT"
+}

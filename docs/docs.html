@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Documentation — HtetLingo Platform & Architecture</title>
+  <meta name="description" content="Technical documentation, database schema, cross-platform architecture, and open-source dataset roadmap for HtetLingo.">
+  
+  <meta name="color-scheme" content="light dark">
+  <script>
+    try {
+      const stored = localStorage.getItem("color-scheme");
+      if (stored) document.querySelector('meta[name="color-scheme"]').content = stored;
+    } catch (e) {}
+  </script>
+
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+  <link rel="stylesheet" href="css/docs.css">
+</head>
+<body>
+
+  <!-- Navigation Header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="logo-brand">
+        <img src="assets/logo.svg" alt="HtetLingo" class="logo-img">
+        <span class="logo-text">HtetLingo Docs</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="demo.html" class="nav-link">Interactive Demo</a></li>
+        <li><a href="https://github.com/htetofficial/HtetLingo" target="_blank" class="nav-link">GitHub</a></li>
+        <li><a href="https://htetlingo.pages.dev" target="_blank" class="btn-launch">Launch App ↗</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Docs Layout -->
+  <div class="docs-layout">
+    
+    <!-- Sidebar Menu -->
+    <aside class="docs-sidebar">
+      <ul class="docs-menu">
+        <li><a href="#overview" class="docs-menu-link active">1. Platform Overview</a></li>
+        <li><a href="#architecture" class="docs-menu-link">2. Cross-Platform Architecture</a></li>
+        <li><a href="#offline" class="docs-menu-link">3. Offline-First Storage Engine</a></li>
+        <li><a href="#supabase" class="docs-menu-link">4. Supabase Backend & RLS</a></li>
+        <li><a href="#revenuecat" class="docs-menu-link">5. RevenueCat Monetization</a></li>
+        <li><a href="#datasets" class="docs-menu-link">6. Open-Source Datasets Roadmap</a></li>
+        <li><a href="#getting-started" class="docs-menu-link">7. Developer Quickstart</a></li>
+      </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="docs-content">
+      
+      <!-- Section 1 -->
+      <section id="overview">
+        <h1>Platform Documentation</h1>
+        <p>
+          <strong>HtetLingo</strong> is an ambitious, community-rooted multilingual learning, dictionary, translation, and AI tutoring platform founded by Htet. It bridges global communication across English, Burmese (မြန်မာ), Japanese (日本語), Chinese (中文), Thai (ภาษาไทย), French, German, and Korean.
+        </p>
+        <p>
+          Unlike legacy dictionary apps that merely display static word translations, HtetLingo is built around <strong>cognitive acquisition</strong>: Spaced Repetition (SRS), structured cross-cultural grammar guides, speech pronunciation feedback, and conversational AI tutoring.
+        </p>
+      </section>
+
+      <!-- Section 2 -->
+      <section id="architecture">
+        <h2>2. Cross-Platform Architecture</h2>
+        <p>
+          HtetLingo uses a <strong>Web-first, Offline-first, Cross-platform</strong> architecture. The core application is engineered with modern web standards (Progressive Web App), designed to compile into native platforms without rewriting business logic:
+        </p>
+        <ul>
+          <li><strong>Cloudflare Pages (Web):</strong> Global edge distribution with zero cold starts and fast load times.</li>
+          <li><strong>Android Native (Capacitor):</strong> Wraps web components into an Android Studio Gradle project with native speech and offline storage access.</li>
+          <li><strong>iPadOS & macOS Native (Capacitor / Mac Catalyst):</strong> Adapts layout dynamically to iPad multi-column split view and native desktop window controls.</li>
+        </ul>
+
+        <div class="code-block">
+# Capacitor Build Configuration for Android and iOS/macOS
+npx @capacitor/cli create
+npx cap add android
+npx cap add ios
+npx cap sync
+        </div>
+      </section>
+
+      <!-- Section 3 -->
+      <section id="offline">
+        <h2>3. Offline-First Storage Engine</h2>
+        <p>
+          Learners in regions with intermittent connectivity (such as Myanmar) can use HtetLingo with complete reliability.
+        </p>
+        <p>
+          The offline engine combines <strong>IndexedDB</strong> for user learning data (SRS intervals, mastery scores, bookmarked terms, quiz history) with a <strong>Service Worker</strong> for asset caching. Even when completely disconnected, all flashcard sessions, grammar lessons, and dictionaries function without degradation.
+        </p>
+      </section>
+
+      <!-- Section 4 -->
+      <section id="supabase">
+        <h2>4. Supabase Backend & RLS</h2>
+        <p>
+          Cloud synchronization and authentication are powered by <strong>Supabase</strong>. Every database table enforces Row Level Security (RLS) so users can only access their own learning progress.
+        </p>
+
+        <div class="code-block">
+-- Schema excerpt: Row Level Security for Profiles & Progress
+ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.user_progress ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Users access own profile" 
+  ON public.profiles FOR ALL 
+  USING (auth.uid() = id);
+
+CREATE POLICY "Users access own learning progress" 
+  ON public.user_progress FOR ALL 
+  USING (auth.uid() = user_id);
+        </div>
+      </section>
+
+      <!-- Section 5 -->
+      <section id="revenuecat">
+        <h2>5. RevenueCat Monetization & Subscriptions</h2>
+        <p>
+          HtetLingo provides a sustainable business model powered by <strong>RevenueCat</strong> (API Key: <code>test_MlxZnHIsSDemVwtetEoTrDHUrrB</code>):
+        </p>
+        <ul>
+          <li><strong>Free Starter:</strong> Unlimited core vocabulary, basic dictionary search, and daily practice quizzes.</li>
+          <li><strong>Premium Subscription ($7.99/mo):</strong> Unlimited AI Tutor roleplay, advanced grammar courses, speech pronunciation scoring, and cloud sync.</li>
+          <li><strong>Lifetime VIP ($79.99 one-time):</strong> Permanent VIP access to all present and future languages and packs.</li>
+          <li><strong>Specialty Packs:</strong> Standalone language packages (e.g. JLPT N5–N1, HSK 1–6, Business English).</li>
+        </ul>
+      </section>
+
+      <!-- Section 6 -->
+      <section id="datasets">
+        <h2>6. Open-Source Datasets Roadmap</h2>
+        <p>
+          To expand the vocabulary database to hundreds of thousands of words, HtetLingo is designed to seamlessly integrate with prominent open-source lexical projects:
+        </p>
+        <ul>
+          <li><strong>Tatoeba Project:</strong> Large-scale open collaborative database of contextual sentence pairs with translations in Burmese, English, Japanese, Chinese, and Thai.</li>
+          <li><strong>JMdict & Kanjidic (EDRDG):</strong> The gold standard open-source Japanese-English electronic dictionary files.</li>
+          <li><strong>CC-CEDICT:</strong> Comprehensive open Chinese-to-English dictionary database with Pinyin and character variants.</li>
+          <li><strong>SEAlang Library & OpenBurmese:</strong> Authentic Southeast Asian linguistic resources for Burmese and Thai phonetic mappings.</li>
+          <li><strong>Wiktionary Dumps:</strong> Open multilingual lexical database with pronunciations and etymology.</li>
+        </ul>
+      </section>
+
+      <!-- Section 7 -->
+      <section id="getting-started">
+        <h2>7. Developer Quickstart</h2>
+        <p>To run or test HtetLingo locally:</p>
+        <div class="code-block">
+# 1. Clone repository
+git clone https://github.com/htetofficial/HtetLingo.git
+cd HtetLingo
+
+# 2. Run local web server
+npx serve app
+
+# 3. Deploy directly to Cloudflare Pages
+CLOUDFLARE_API_TOKEN="&lt;token&gt;" npx wrangler pages deploy app --project-name htetlingo
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-text">
+        © 2026 <strong>HtetLingo</strong> by Htet.
+      </div>
+      <div>
+        <a href="index.html" style="color: var(--text-muted); text-decoration: none;">Home</a> • 
+        <a href="demo.html" style="color: var(--text-muted); text-decoration: none;">Demo</a> • 
+        <a href="https://htetlingo.pages.dev" target="_blank" style="color: var(--primary); text-decoration: none; font-weight: 700;">Launch App ↗</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

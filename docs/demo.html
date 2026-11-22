@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Static Demo — HtetLingo</title>
+  <meta name="description" content="Try HtetLingo flashcards, dictionary search, and native pronunciation in an interactive browser demo.">
+  
+  <meta name="color-scheme" content="light dark">
+  <script>
+    try {
+      const stored = localStorage.getItem("color-scheme");
+      if (stored) document.querySelector('meta[name="color-scheme"]').content = stored;
+    } catch (e) {}
+  </script>
+
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+  <link rel="stylesheet" href="css/docs.css">
+  <style>
+    .demo-card-box {
+      max-width: 600px;
+      margin: 2rem auto;
+      background: var(--bg-card);
+      border: 2px solid var(--border-color);
+      border-radius: 20px;
+      padding: 2.5rem 2rem;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      cursor: pointer;
+      position: relative;
+    }
+    .demo-word {
+      font-size: 2.5rem;
+      font-weight: 900;
+      margin-bottom: 0.5rem;
+    }
+    .demo-phonetic {
+      font-size: 1.15rem;
+      color: var(--primary);
+      font-family: monospace;
+      margin-bottom: 1.25rem;
+    }
+    .demo-trans {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="logo-brand">
+        <img src="assets/logo.svg" alt="HtetLingo" class="logo-img">
+        <span class="logo-text">HtetLingo Demo</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="docs.html" class="nav-link">Docs</a></li>
+        <li>
+          <a href="https://htetlingo.pages.dev" target="_blank" class="btn-launch">Launch Full App ↗</a>
+        </li>
+      </ul>
+    </div>
+  </header>
+
+  <main style="max-width: 900px; margin: 3rem auto; padding: 0 1.5rem;">
+    <div style="text-align: center;">
+      <span style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--primary); background: var(--primary-light); padding: 0.3rem 0.8rem; border-radius: 9999px;">
+        Interactive Static Demo
+      </span>
+      <h1 style="font-size: 2.2rem; font-weight: 900; margin-top: 0.5rem;">Try HtetLingo in Action</h1>
+      <p style="color: var(--text-muted); font-size: 1rem;">
+        Click the audio button to hear native speech, flip the flashcard, or search words below.
+      </p>
+    </div>
+
+    <!-- Interactive Flashcard Demo -->
+    <div class="demo-card-box" id="demoCard" onclick="toggleCard()">
+      <div style="position: absolute; top: 1rem; left: 1.5rem; font-size: 0.8rem; font-weight: 700; color: var(--primary);">
+        JAPANESE • JLPT N5
+      </div>
+      <div class="demo-word" id="cardWord">ありがとうございます</div>
+      <div class="demo-phonetic" id="cardPhonetic">Arigatō gozaimasu</div>
+      <div class="demo-trans" id="cardTrans">ကျေးဇူးတင်ပါတယ် • Thank you very much</div>
+      
+      <div style="display: flex; gap: 0.75rem; justify-content: center; margin-top: 1.5rem;">
+        <button class="btn-hero-primary" style="padding: 0.5rem 1.25rem; font-size: 0.9rem;" onclick="event.stopPropagation(); playAudio();">
+          🔊 Speak Pronunciation
+        </button>
+        <button class="btn-hero-secondary" style="padding: 0.5rem 1.25rem; font-size: 0.9rem;" onclick="event.stopPropagation(); nextCard();">
+          Next Card →
+        </button>
+      </div>
+    </div>
+
+    <!-- Mini Dictionary Lookup Demo -->
+    <div style="margin-top: 4rem;">
+      <h2 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 0.75rem;">Instant Multilingual Search</h2>
+      <input type="text" id="demoSearch" placeholder="Type a word (e.g. language, friend, culture)..." 
+             style="width: 100%; padding: 0.85rem 1rem; border-radius: 12px; border: 1px solid var(--border-color); background: var(--bg-card); color: var(--text-main); font-size: 1rem; outline: none; margin-bottom: 1rem;" 
+             oninput="filterSearch(this.value)">
+
+      <div id="searchResults" style="display: flex; flex-direction: column; gap: 0.75rem;">
+        <!-- Injected by script -->
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const sampleCards = [
+      { word: 'ありがとうございます', phonetic: 'Arigatō gozaimasu', trans: 'ကျေးဇူးတင်ပါတယ် • Thank you very much', lang: 'ja' },
+      { word: 'မင်္ဂလာပါ', phonetic: 'Mingalaba', trans: 'Hello / Good day (Burmese greeting)', lang: 'my' },
+      { word: '你好', phonetic: 'Nǐ hǎo', trans: 'မင်္ဂလာပါ • Hello (Mandarin Chinese)', lang: 'zh' },
+      { word: 'ขอบคุณครับ', phonetic: 'Khop khun khrap', trans: 'ကျေးဇူးတင်ပါတယ် • Thank you (Thai male)', lang: 'th' }
+    ];
+    let cardIdx = 0;
+
+    function nextCard() {
+      cardIdx = (cardIdx + 1) % sampleCards.length;
+      const c = sampleCards[cardIdx];
+      document.getElementById('cardWord').textContent = c.word;
+      document.getElementById('cardPhonetic').textContent = c.phonetic;
+      document.getElementById('cardTrans').textContent = c.trans;
+    }
+
+    function playAudio() {
+      const c = sampleCards[cardIdx];
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(c.word);
+        u.lang = c.lang === 'ja' ? 'ja-JP' : (c.lang === 'zh' ? 'zh-CN' : (c.lang === 'th' ? 'th-TH' : 'en-US'));
+        window.speechSynthesis.speak(u);
+      }
+    }
+
+    const dictItems = [
+      { en: 'Language', my: 'ဘာသာစကား', ja: '言語 (Gengo)', zh: '语言 (Yǔyán)', th: 'ภาษา (Pha-sa)' },
+      { en: 'Culture', my: 'ယဉ်ကျေးမှု', ja: '文化 (Bunka)', zh: '文化 (Wénhuà)', th: 'วัฒนธรรม' },
+      { en: 'Friend', my: 'သူငယ်ချင်း / မိတ်ဆွေ', ja: '友達 (Tomodachi)', zh: '朋友 (Péngyou)', th: 'เพื่อน' },
+      { en: 'Learn', my: 'လေ့လာသင်ယူသည်', ja: '学ぶ (Manabu)', zh: '学习 (Xuéxí)', th: 'เรียนรู้' }
+    ];
+
+    function renderDict(items) {
+      const container = document.getElementById('searchResults');
+      container.innerHTML = items.map(d => `
+        <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 1rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+          <div>
+            <strong>${d.en}</strong> • <span style="color: var(--primary);">${d.my}</span>
+          </div>
+          <div style="font-size: 0.85rem; color: var(--text-muted);">
+            🇯🇵 ${d.ja} | 🇨🇳 ${d.zh} | 🇹🇭 ${d.th}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function filterSearch(val) {
+      const q = val.toLowerCase().trim();
+      if (!q) return renderDict(dictItems);
+      const filtered = dictItems.filter(d => 
+        d.en.toLowerCase().includes(q) || d.my.includes(q) || d.ja.toLowerCase().includes(q)
+      );
+      renderDict(filtered);
+    }
+
+    renderDict(dictItems);
+  </script>
+</body>
+</html>

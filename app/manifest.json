@@ -1,0 +1,37 @@
+{
+  "name": "HtetLingo - Multilingual Learning & AI Tutoring",
+  "short_name": "HtetLingo",
+  "description": "Learn English, Japanese, Chinese, Burmese, Thai, French, German, Korean with AI tutoring, dictionary, and offline practice.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0F172A",
+  "theme_color": "#6366F1",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "icons/icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "language", "productivity"],
+  "shortcuts": [
+    {
+      "name": "Daily Vocabulary",
+      "url": "./index.html#vocab",
+      "description": "Practice your flashcards and new words"
+    },
+    {
+      "name": "Dictionary",
+      "url": "./index.html#dict",
+      "description": "Quick multilingual dictionary search"
+    },
+    {
+      "name": "AI Tutor",
+      "url": "./index.html#aitutor",
+      "description": "Chat and practice with HtetAI"
+    }
+  ]
+}
