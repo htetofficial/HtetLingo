@@ -2,7 +2,7 @@
 // Structured Duolingo-style Units, Levels & Interactive Exercises
 // English, Japanese, Chinese, Thai, and Burmese
 // Features: Multi-tiered Interactive Questions, Cultural Etiquette,
-// Max Mapper Common English Errors Integration, and Feminine Empowerment.
+// Max Mapper Common English Errors, and LexiForge Sentence Smithing.
 
 const HTET_CURRICULUM = {
   "ja": {
@@ -1611,6 +1611,235 @@ const HTET_CURRICULUM = {
                     "b": "ပြီးမြောက်ရမည့် ရလဒ်များ",
                     "target": "deliverables",
                     "my": "ပြီးမြောက်ရမည့် ရလဒ်များ"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "en_u5",
+        "title": "Unit 5: LexiForge Sentence Smithing & Clause Matrix",
+        "subtitle": "ဝါကျခွဲများ ပေါင်းစပ်ဖန်တီးခြင်းနှင့် အဆင့်မြင့် အင်္ဂလိပ်ဝါကျဖွဲ့စည်းပုံ",
+        "color": "#8b5cf6",
+        "icon": "🧱",
+        "levels": [
+          {
+            "id": "en_u5_l1",
+            "title": "Lesson 1: Matrix Clause Assembly & Relative Pronouns",
+            "desc": "Independent & Dependent clauses, who, which, that",
+            "icon": "🧩",
+            "xp": 35,
+            "questions": [
+              {
+                "type": "choice",
+                "prompt": "Choose the correct relative pronoun for a person: \"The leader ______ inspired the community received the peace award.\"",
+                "audioText": "The leader who inspired the community received the peace award",
+                "audioLang": "en",
+                "options": [
+                  "who (referring to people)",
+                  "which (referring to objects)",
+                  "where (referring to place)",
+                  "when (referring to time)"
+                ],
+                "correct": 0,
+                "correctIndex": 0,
+                "tip": "လူပုဂ္ဂိုလ် (people) ကို ပြန်လည်ညွှန်းဆိုသော Relative Pronoun အဖြစ် \"who\" ကို အသုံးပြုရပါမည်။"
+              },
+              {
+                "type": "word_bank",
+                "prompt": "Assemble: \"Although she faced obstacles, she never surrendered\"",
+                "audioText": "Although she faced obstacles, she never surrendered",
+                "audioLang": "en",
+                "targetSentence": [
+                  "Although",
+                  "she",
+                  "faced",
+                  "obstacles",
+                  "she",
+                  "never",
+                  "surrendered"
+                ],
+                "words": [
+                  "Although",
+                  "she",
+                  "faced",
+                  "obstacles",
+                  "she",
+                  "never",
+                  "surrendered",
+                  "because",
+                  "but"
+                ],
+                "correct": "Although she faced obstacles she never surrendered",
+                "tip": "\"Although\" (သော်လည်း) သည် ဆန့်ကျင်ဘက် အလျော့ပေးပြ ဝါကျခွဲ (Adverbial Clause of Concession) ကို စတင်ရာတွင် သုံးသည်။"
+              },
+              {
+                "type": "match",
+                "prompt": "Match clause connectors with their grammatical functions",
+                "pairs": [
+                  {
+                    "a": "who",
+                    "b": "Relative Pronoun for People (လူပုဂ္ဂိုလ်ညွှန်း)",
+                    "target": "who",
+                    "my": "Relative Pronoun for People (လူပုဂ္ဂိုလ်ညွှန်း)"
+                  },
+                  {
+                    "a": "which",
+                    "b": "Relative Pronoun for Things (သက်မဲ့အရာဝတ္ထုညွှန်း)",
+                    "target": "which",
+                    "my": "Relative Pronoun for Things (သက်မဲ့အရာဝတ္ထုညွှန်း)"
+                  },
+                  {
+                    "a": "although",
+                    "b": "Subordinating Conjunction of Concession (အလျော့ပေးပြ)",
+                    "target": "although",
+                    "my": "Subordinating Conjunction of Concession (အလျော့ပေးပြ)"
+                  },
+                  {
+                    "a": "because",
+                    "b": "Subordinating Conjunction of Reason (အကြောင်းပြ)",
+                    "target": "because",
+                    "my": "Subordinating Conjunction of Reason (အကြောင်းပြ)"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "en_u5_l2",
+            "title": "Lesson 2: Syntactic Ambiguity & Modifier Placement",
+            "desc": "Clear modifier positioning without confusion",
+            "icon": "🎯",
+            "xp": 35,
+            "questions": [
+              {
+                "type": "choice",
+                "prompt": "Which sentence avoids a dangling modifier and states meaning clearly?",
+                "audioText": "Walking into the room, she saw the beautiful flowers",
+                "audioLang": "en",
+                "options": [
+                  "Walking into the room, she saw the beautiful flowers. (Clear)",
+                  "Walking into the room, the flowers were seen. (Dangling)",
+                  "The flowers walked into the room. (Nonsense)",
+                  "Walking the room saw her."
+                ],
+                "correct": 0,
+                "correctIndex": 0,
+                "tip": "Participle (Walking into the room) ၏ အပြုလုပ်သူ (she) သည် ၎င်း၏ ကပ်လျက်တွင် ကတ္တားအဖြစ် ရှိနေရပါမည်။"
+              },
+              {
+                "type": "match",
+                "prompt": "Match ambiguous modifiers with their clear rewrites",
+                "pairs": [
+                  {
+                    "a": "Driving fast, a dog was hit ❌",
+                    "b": "Driving fast, she hit a dog ✔️",
+                    "target": "Driving fast, a dog was hit ❌",
+                    "my": "Driving fast, she hit a dog ✔️"
+                  },
+                  {
+                    "a": "I saw the man with a telescope ❓",
+                    "b": "Using a telescope, I saw the man ✔️",
+                    "target": "I saw the man with a telescope ❓",
+                    "my": "Using a telescope, I saw the man ✔️"
+                  },
+                  {
+                    "a": "She almost drove for six hours",
+                    "b": "She drove for almost six hours ✔️",
+                    "target": "She almost drove for six hours",
+                    "my": "She drove for almost six hours ✔️"
+                  },
+                  {
+                    "a": "Covered in cream, she ate the cake",
+                    "b": "She ate the cake covered in cream ✔️",
+                    "target": "Covered in cream, she ate the cake",
+                    "my": "She ate the cake covered in cream ✔️"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "en_u5_l3",
+            "title": "Lesson 3: Logical Discourse Connectors (Mahavivo Taxonomy)",
+            "desc": "Mastering moreover, nevertheless, consequently, meanwhile",
+            "icon": "🔗",
+            "xp": 35,
+            "questions": [
+              {
+                "type": "choice",
+                "prompt": "Complete the sentence with an addition connector: \"The proposal is financially viable; ______, it aligns with our ethical vision.\"",
+                "audioText": "The proposal is financially viable; moreover, it aligns with our vision",
+                "audioLang": "en",
+                "options": [
+                  "moreover (ဒါ့အပြင် / ဖြည့်စွက်၍)",
+                  "however (ဆန့်ကျင်ဘက်)",
+                  "otherwise (မဟုတ်လျှင်)",
+                  "instead (အစား)"
+                ],
+                "correct": 0,
+                "correctIndex": 0,
+                "tip": "\"moreover\" သို့မဟုတ် \"furthermore\" သည် ယခင်အချက်ကို ပိုမိုအားကောင်းစေရန် အချက်သစ် ဖြည့်စွက်ရာတွင် သုံးသည်။"
+              },
+              {
+                "type": "word_bank",
+                "prompt": "Assemble: \"The team persevered; consequently, they achieved great triumph\"",
+                "audioText": "The team persevered; consequently, they achieved great triumph",
+                "audioLang": "en",
+                "targetSentence": [
+                  "The",
+                  "team",
+                  "persevered",
+                  "consequently",
+                  "they",
+                  "achieved",
+                  "great",
+                  "triumph"
+                ],
+                "words": [
+                  "The",
+                  "team",
+                  "persevered",
+                  "consequently",
+                  "they",
+                  "achieved",
+                  "great",
+                  "triumph",
+                  "however",
+                  "though"
+                ],
+                "correct": "The team persevered consequently they achieved great triumph",
+                "tip": "\"consequently\" (ရလဒ်အနေဖြင့်) သည် အကြောင်းရင်းကြောင့် ဖြစ်ပေါ်လာသော အောင်မြင်မှုရလဒ်ကို ဖော်ပြသည်။"
+              },
+              {
+                "type": "match",
+                "prompt": "Match logical connectors with their Burmese meanings",
+                "pairs": [
+                  {
+                    "a": "furthermore",
+                    "b": "ဒါ့အပြင် / ထို့ပြင် (Addition)",
+                    "target": "furthermore",
+                    "my": "ဒါ့အပြင် / ထို့ပြင် (Addition)"
+                  },
+                  {
+                    "a": "nevertheless",
+                    "b": "သို့သော်ငြားလည်း (Contrast)",
+                    "target": "nevertheless",
+                    "my": "သို့သော်ငြားလည်း (Contrast)"
+                  },
+                  {
+                    "a": "consequently",
+                    "b": "အကျိုးဆက်အားဖြင့် (Causality)",
+                    "target": "consequently",
+                    "my": "အကျိုးဆက်အားဖြင့် (Causality)"
+                  },
+                  {
+                    "a": "meanwhile",
+                    "b": "ထိုအချိန်အတောအတွင်း (Temporal)",
+                    "target": "meanwhile",
+                    "my": "ထိုအချိန်အတောအတွင်း (Temporal)"
                   }
                 ]
               }

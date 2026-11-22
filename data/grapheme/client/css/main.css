@@ -1,0 +1,39 @@
+/* CSS declarations go here */
+
+.hide {
+  display: none;
+}
+
+#userstring {
+  margin-bottom: 15px;
+}
+
+#usersubmit {
+  margin-bottom: 15px;
+}
+
+.content {
+  margin-top: 100px;
+}
+
+.highlight {
+  background-color: #777777;
+}
+
+.unstyledlist {
+  list-style: none;
+  margin-left: 0;
+}
+
+.legendToggle {
+  margin-bottom: 10px;
+  margin-top: -10px;
+}
+
+.results {
+  margin-top: 5px; 
+}
+
+.searchInverse {
+  background-color: #49515a;
+}

@@ -1,0 +1,1268 @@
+{
+  "source": "typedgrammar/typed-english",
+  "totalChapters": 31,
+  "chapters": [
+    {
+      "id": "a01",
+      "level": "advanced",
+      "order": 1,
+      "titleEn": "Chapter A01: နာမဝိသေသန ဝါကျခွဲများ: who / which / that (Relative Clauses)",
+      "titleZh": "定语从句：who / which / that",
+      "titleJa": "関係詞節：who / which / that",
+      "titleMy": "နာမဝိသေသန ဝါကျခွဲများ: who / which / that (Relative Clauses)",
+      "summaryZh": "定语从句紧跟在它所修饰的名词（先行词）之后，用 who / which / that 这样的关系词引导，把一整个小句压缩成对名词的修饰。指人用 who，指物用 which，that 两者通用。这是英语区别于中文“……的”前置修饰、也不同于日语连体修饰的核心句式。",
+      "summaryJa": "関係詞節は修飾する名詞（先行詞）の直後に置かれ、who / which / that などの関係詞で導かれて、一つの節をまるごと名詞の修飾語に変える。人には who、物には which、that は両方に使える。英語が中国語の「〜的」や日本語の連体修飾と決定的に異なる構文である。",
+      "summaryMy": "လူနှင့် အရာဝတ္ထုများကို အသေးစိတ် ရှင်းလင်းဖော်ပြသော ဆက်စပ်နာမ်စားများ။",
+      "examples": [
+        {
+          "en": "The girl who reads is a student.",
+          "zh": "那个在读书的女孩是学生。",
+          "ja": "本を読んでいるその女の子は学生だ。"
+        },
+        {
+          "en": "The dog which runs is happy.",
+          "zh": "那只在跑的狗很开心。",
+          "ja": "走っているその犬は幸せだ。"
+        },
+        {
+          "en": "The book that the boy reads is new.",
+          "zh": "那个男孩在读的书是新的。",
+          "ja": "その少年が読んでいる本は新しい。"
+        },
+        {
+          "en": "The student that studies is happy.",
+          "zh": "那个学习的学生很开心。",
+          "ja": "勉強しているその学生は幸せだ。"
+        }
+      ]
+    },
+    {
+      "id": "a02",
+      "level": "advanced",
+      "order": 2,
+      "titleEn": "Chapter A02: ကံပုဒ် ဝါကျခွဲများ (Noun Clause: that-clauses)",
+      "titleZh": "宾语从句（that 从句）",
+      "titleJa": "名詞節（that 節）",
+      "titleMy": "ကံပုဒ် ဝါကျခွဲများ (Noun Clause: that-clauses)",
+      "summaryZh": "“我认为……”这类句子，宾语不是一个名词，而是一整个句子。引导它的是连词 that：`I think` + `that` + `[一个完整的句子]`。在 Typed English 中用 `ConjunctionPart<\\",
+      "summaryJa": "「私は～と思う」のような文では、目的語が名詞ではなく一つの文まるごとになる。それを導くのが接続詞 that：`I think` + `that` + `[完全な文]`。Typed English では `ConjunctionPart<\\",
+      "summaryMy": "ထင်မြင်ချက်၊ ယုံကြည်ချက်နှင့် အသိပညာများကို ဖော်ပြသော that-ဝါကျခွဲများ။",
+      "examples": [
+        {
+          "en": "I think that the dog runs.",
+          "zh": "我认为那只狗在跑。",
+          "ja": "私はその犬が走ると思う。"
+        },
+        {
+          "en": "She knows that the boy reads a book.",
+          "zh": "她知道那个男孩在读书。",
+          "ja": "彼女はその少年が本を読むと知っている。"
+        },
+        {
+          "en": "I knew that the bird sang.",
+          "zh": "我知道那只鸟（当时）唱了歌。",
+          "ja": "私はその鳥が歌ったと知っていた。"
+        },
+        {
+          "en": "We hope that the teacher comes.",
+          "zh": "我们希望老师会来。",
+          "ja": "私たちは先生が来ることを願っている。"
+        }
+      ]
+    },
+    {
+      "id": "a03",
+      "level": "advanced",
+      "order": 3,
+      "titleEn": "Chapter A03: ခံရကံပြ ဝါကျများ (Passive Voice: be + Past Participle)",
+      "titleZh": "被动语态：be + 过去分词",
+      "titleJa": "受動態：be + 過去分詞",
+      "titleMy": "ခံရကံပြ ဝါကျများ (Passive Voice: be + Past Participle)",
+      "summaryZh": "被动语态把动作的承受者放到主语位置，结构是 **be 动词 + 过去分词**（be + past participle）。be 随时态和主语变化（is/was/were），过去分词形式固定；动作的执行者若要点明，用 **by** 引出。",
+      "summaryJa": "受動態は動作の受け手を主語に置く構文で、形は **be 動詞 + 過去分詞**（be + past participle）。be は時制と主語に応じて is/was/were と変化し、過去分詞は固定。動作主を示すときは **by** で導く。",
+      "summaryMy": "ပြုလုပ်သူထက် ခံရသူ သို့မဟုတ် လုပ်ဆောင်ချက်ကို ပိုမိုအလေးပေးဖော်ပြခြင်း။",
+      "examples": [
+        {
+          "en": "The book is written.",
+          "zh": "这本书被写出来。",
+          "ja": "その本は書かれる。"
+        },
+        {
+          "en": "The song is sung.",
+          "zh": "这首歌被唱起来。",
+          "ja": "その歌は歌われる。"
+        },
+        {
+          "en": "The book was written by Mary.",
+          "zh": "这本书是玛丽写的。",
+          "ja": "その本はメアリーによって書かれた。"
+        },
+        {
+          "en": "The bird was seen by the child.",
+          "zh": "那只鸟被这孩子看见了。",
+          "ja": "その鳥はその子に見られた。"
+        }
+      ]
+    },
+    {
+      "id": "a04",
+      "level": "advanced",
+      "order": 4,
+      "titleEn": "Chapter A04: အခြေအနေပြ ဝါကျများ (Conditionals: Type 0, 1, 2, 3)",
+      "titleZh": "条件句（if 从句）",
+      "titleJa": "条件文（if 節）",
+      "titleMy": "အခြေအနေပြ ဝါကျများ (Conditionals: Type 0, 1, 2, 3)",
+      "summaryZh": "条件句由 `if` 把两个分句连起来：一个表示**条件**，一个表示**结果**。条件分句和结果分句各自用什么时态，决定了这是哪一类条件句——本章讲零类（普遍真理）、第一类（真实的将来）和第二类（与现在事实相反的假设）。",
+      "summaryJa": "条件文は `if` で二つの節をつなぐ：一方が**条件**、もう一方が**帰結**を表す。条件節と帰結節がそれぞれどの時制を取るかで、どの種類の条件文かが決まる——本章では零類（普遍的真理）・第一類（現実的な未来）・第二類（現在の事実に反する仮定）を扱う。",
+      "summaryMy": "အကယ်၍ ... ဖြစ်ခဲ့လျှင် ဟူသော ဖြစ်နိုင်ခြေအလိုက် အဆင့်ဆင့်ပြ ဝါကျများ။",
+      "examples": [
+        {
+          "en": "If the sun shines, the bird sings.",
+          "zh": "如果太阳照耀，鸟儿就歌唱。",
+          "ja": "太陽が照ると、鳥はさえずる。"
+        },
+        {
+          "en": "If the cat sleeps, the dog runs.",
+          "zh": "如果猫睡觉，狗就跑。",
+          "ja": "猫が眠ると、犬は走る。"
+        },
+        {
+          "en": "If the girl studies, she will play.",
+          "zh": "如果这女孩学习，她就会去玩。",
+          "ja": "その女の子が勉強すれば、彼女は遊ぶだろう。"
+        },
+        {
+          "en": "If the teacher asks, the students will read.",
+          "zh": "如果老师提问，学生们就会朗读。",
+          "ja": "先生が尋ねれば、生徒たちは読むだろう。"
+        }
+      ]
+    },
+    {
+      "id": "a05",
+      "level": "advanced",
+      "order": 5,
+      "titleEn": "Chapter A05: သွယ်ဝိုက်ပြောဆိုချက်များ (Reported Speech)",
+      "titleZh": "间接引语（转述）",
+      "titleJa": "間接話法",
+      "titleMy": "သွယ်ဝိုက်ပြောဆိုချက်များ (Reported Speech)",
+      "summaryZh": "间接引语（转述）不照搬别人的原话，而是把它嵌入主句，用连词 that 引导一个从句：She said that she was tired.（她说她累了。）转述时通常要做两件事——动词时态后移一格（现在→过去、will→would），以及人称随说话视角改变。这与中文“她说她累了”几乎不变形、日语用「と」加引用形的方式都很不同。",
+      "summaryJa": "間接話法（伝達）は人の言葉をそのまま引き写すのではなく、主節に埋め込み、接続詞 that で従属節を導く：She said that she was tired.（彼女は疲れていると言った）。伝達の際は通常二つの操作が起こる——動詞の時制を一段後ろへずらす（現在→過去、will→would）こと、そして話し手の視点に合わせて人称を変えること。中国語の「她说她累了」がほぼ無変化であること、日本語が「と」＋引用形を使うことと大きく異なる。",
+      "summaryMy": "တစ်ပါးသူ၏ စကားများကို တဆင့်ပြန်လည်ပြောဆိုရာတွင် ကာလနှင့် နာမ်စားများ ပြောင်းလဲပုံ။",
+      "examples": [
+        {
+          "en": "Mary knows that the teacher is tired.",
+          "zh": "玛丽知道老师累了。",
+          "ja": "メアリーは先生が疲れていることを知っている。"
+        },
+        {
+          "en": "The boy thinks that the girl reads a book.",
+          "zh": "这男孩以为那女孩在读一本书。",
+          "ja": "その少年はその少女が本を読んでいると思っている。"
+        },
+        {
+          "en": "She said that she was tired.",
+          "zh": "她说她（当时）累了。",
+          "ja": "彼女は疲れていると言った。"
+        },
+        {
+          "en": "The teacher said that the student read a book.",
+          "zh": "老师说那学生读了一本书。",
+          "ja": "先生はその生徒が本を読んだと言った。"
+        }
+      ]
+    },
+    {
+      "id": "a06",
+      "level": "advanced",
+      "order": 6,
+      "titleEn": "Chapter A06: ပစ္စုပ္ပန်ပြီးပြည့်စုံဆဲကာလ (Present Perfect Continuous: have/has been + -ing)",
+      "titleZh": "现在完成进行时：have/has been + -ing",
+      "titleJa": "現在完了進行形：have/has been + -ing",
+      "titleMy": "ပစ္စုပ္ပန်ပြီးပြည့်စုံဆဲကာလ (Present Perfect Continuous: have/has been + -ing)",
+      "summaryZh": "现在完成进行时把**完成体**（have/has + been）和**进行体**（-ing）叠在一起，表示一个动作从过去某点开始、**一直持续到现在**（或刚刚停止），强调动作的**持续时间**。结构固定为 **have/has + been + 动词-ing**：主语是第三人称单数用 `has`，其他用 `have`，`been` 永远不变。",
+      "summaryJa": "現在完了進行形は**完了相**（have/has + been）と**進行相**（-ing）を重ねた形で、ある動作が過去のある時点から始まって**今まで続いている**（または今しがた終わった）ことを表し、その**継続時間**を強調する。形は **have/has + been + 動詞-ing** で固定：三人称単数の主語なら `has`、それ以外は `have`、`been` は決して変化しない。",
+      "summaryMy": "အတိတ်က စတင်ခဲ့ပြီး ယခုတိုင် ဆက်လက်ဖြစ်ပွားနေဆဲ လုပ်ဆောင်ချက်ကို အလေးပေးဖော်ပြခြင်း။",
+      "examples": [
+        {
+          "en": "The dog has been running.",
+          "zh": "这只狗一直在跑。",
+          "ja": "その犬はずっと走り続けている。"
+        },
+        {
+          "en": "The student has been reading.",
+          "zh": "这个学生一直在读书。",
+          "ja": "その学生はずっと読書を続けている。"
+        },
+        {
+          "en": "The children have been playing.",
+          "zh": "孩子们一直在玩。",
+          "ja": "子どもたちはずっと遊び続けている。"
+        },
+        {
+          "en": "The students have been studying.",
+          "zh": "学生们一直在学习。",
+          "ja": "学生たちはずっと勉強し続けている。"
+        }
+      ]
+    },
+    {
+      "id": "a07",
+      "level": "advanced",
+      "order": 7,
+      "titleEn": "Chapter A07: Participle များဖြင့် အထူးပြုခြင်း (Participle Clauses)",
+      "titleZh": "分词作定语与状语",
+      "titleJa": "分詞の限定・付帯用法",
+      "titleMy": "Participle များဖြင့် အထူးပြုခြင်း (Participle Clauses)",
+      "summaryZh": "现在分词（-ing）和过去分词（-ed/-en）都能像形容词一样**修饰名词**：现在分词表“正在……的、主动的”（the running dog 奔跑的狗），过去分词表“被……的、已完成的”（a broken window 破了的窗）。分词短语还能放在句首作**状语**，描述伴随情况（Walking home, she sang 一边走回家一边唱）。",
+      "summaryJa": "現在分詞（-ing）と過去分詞（-ed/-en）はどちらも形容詞のように**名詞を修飾**できる。現在分詞は「〜している・能動」（the running dog 走っている犬）、過去分詞は「〜された・完了」（a broken window 壊れた窓）を表す。分詞句を文頭に置けば**付帯状況**を表す副詞句（Walking home, she sang 家に歩きながら彼女は歌った）にもなる。",
+      "summaryMy": "ဝါကျများကို ကျစ်လျစ်သိပ်သည်းစေရန် V-ing နှင့် V-ed အထူးပြု ဝါကျခွဲများ ဖွဲ့စည်းပုံ။",
+      "examples": [
+        {
+          "en": "The running dog barked.",
+          "zh": "那只奔跑的狗叫了。",
+          "ja": "走っている犬が吠えた。"
+        },
+        {
+          "en": "A singing bird woke the child.",
+          "zh": "一只歌唱的鸟把孩子吵醒了。",
+          "ja": "歌っている鳥が子どもを起こした。"
+        },
+        {
+          "en": "The broken window stayed open.",
+          "zh": "那扇破了的窗一直开着。",
+          "ja": "割れた窓は開いたままだった。"
+        },
+        {
+          "en": "A written letter lay on the table.",
+          "zh": "一封写好的信放在桌上。",
+          "ja": "書かれた手紙がテーブルの上に置かれていた。"
+        }
+      ]
+    },
+    {
+      "id": "a08",
+      "level": "advanced",
+      "order": 8,
+      "titleEn": "Chapter A08: အလေးပေးခြင်းနှင့် နေရာပြောင်းပြန်ဝါကျများ (Emphasis & Inversion)",
+      "titleZh": "强调与倒装",
+      "titleJa": "強調と倒置",
+      "titleMy": "အလေးပေးခြင်းနှင့် နေရာပြောင်းပြန်ဝါကျများ (Emphasis & Inversion)",
+      "summaryZh": "为了强调，英语会把一个被标记的成分（否定副词、only 短语、程度词）**提到句首**，然后把**助动词移到主语前面**，形成“**主谓倒装**”——“I have never seen it” 变成 “**Never have I** seen it”。这种倒装是书面语和正式语体的重要修辞手段。",
+      "summaryJa": "強調のために、英語は標識のある要素（否定副詞・only 句・程度語）を**文頭に前置**し、続いて**助動詞を主語の前に移す**——「主語・助動詞の倒置」。“I have never seen it” は “**Never have I** seen it” となる。書き言葉や改まった文体で重要な修辞手段である。",
+      "summaryMy": "အဓိပ္ပာယ်ကို ပိုမိုလေးနက်ထင်ရှားစေရန် နေရာပြောင်းပြန်လှန်ဖွဲ့စည်းသော ဝါကျများ။",
+      "examples": [
+        {
+          "en": "Never have I seen the bird.",
+          "zh": "我从没见过那只鸟。",
+          "ja": "その鳥を一度も見たことがない。"
+        },
+        {
+          "en": "Rarely does the cat sleep.",
+          "zh": "这只猫很少睡觉。",
+          "ja": "その猫はめったに眠らない。"
+        },
+        {
+          "en": "Only then did the boy read the book.",
+          "zh": "直到那时，那个男孩才读这本书。",
+          "ja": "その時になって初めて、その少年はその本を読んだ。"
+        },
+        {
+          "en": "Only here can the child sleep.",
+          "zh": "只有在这里，这孩子才能睡着。",
+          "ja": "ここでだけ、その子は眠ることができる。"
+        }
+      ]
+    },
+    {
+      "id": "a09",
+      "level": "advanced",
+      "order": 9,
+      "titleEn": "Chapter A09: နာမ်ဝါကျခွဲများ ခြုံငုံသုံးသပ်ချက် (Comprehensive Noun Clauses)",
+      "titleZh": "名词性从句综合",
+      "titleJa": "名詞節の総合",
+      "titleMy": "နာမ်ဝါကျခွဲများ ခြုံငုံသုံးသပ်ချက် (Comprehensive Noun Clauses)",
+      "summaryZh": "名词性从句是一整个小句充当名词的角色——它可以做**主语**、**宾语**或**表语（补语）**。引导词有 that（不表意，只起连接作用）、what / who（兼作从句内成分的疑问词）、以及 whether / if（表示“是否”）。和中文“……的事”、日语「〜こと／〜かどうか」对应，但英语把从句直接放进名词的位置，语序不变。",
+      "summaryJa": "名詞節は一つの節がまるごと名詞の働きをするもので、**主語**・**目的語**・**補語（叙述語）**になれる。導く語は that（意味を持たず接続だけ）、what / who（節内の成分を兼ねる疑問詞）、whether / if（「〜かどうか」）。中国語の「〜のこと」、日本語の「〜こと／〜かどうか」に対応するが、英語は節をそのまま名詞の位置に置き、語順は変えない。",
+      "summaryMy": "what, whether, how, why စသည်တို့ဖြင့် ဖွဲ့စည်းထားသော နာမ်ဝါကျခွဲများ။",
+      "examples": [
+        {
+          "en": "I know that he runs.",
+          "zh": "我知道他在跑。",
+          "ja": "彼が走ると私は知っている。"
+        },
+        {
+          "en": "Mary thinks that the book is good.",
+          "zh": "玛丽认为这本书很好。",
+          "ja": "メアリーはその本が良いと思っている。"
+        },
+        {
+          "en": "I know what she reads.",
+          "zh": "我知道她读什么。",
+          "ja": "彼女が何を読むか私は知っている。"
+        },
+        {
+          "en": "I know whether he sings.",
+          "zh": "我知道他是否唱歌。",
+          "ja": "彼が歌うかどうか私は知っている。"
+        }
+      ]
+    },
+    {
+      "id": "e01",
+      "level": "elementary",
+      "order": 1,
+      "titleEn": "Chapter E01: အခြေခံ ဝါကျတည်ဆောက်ပုံ: ကတ္တား-ကြိယာ-ကံ (SVO)",
+      "titleZh": "基本语序：主-谓-宾",
+      "titleJa": "基本語順：主語・動詞・目的語",
+      "titleMy": "အခြေခံ ဝါကျတည်ဆောက်ပုံ: ကတ္တား-ကြိယာ-ကံ (SVO)",
+      "summaryZh": "英语靠词的“位置”而不是助词来表达谁对谁做了什么。先掌握最核心的主语+谓语+宾语顺序。",
+      "summaryJa": "英語は助詞ではなく語の「位置」で誰が誰に何をするかを表す。まずは中核となる主語＋動詞＋目的語の順序を押さえる。",
+      "summaryMy": "အင်္ဂလိပ်ဘာသာတွင် စကားလုံးများ၏ နေရာအထားအသိုဖြင့် အဓိပ္ပာယ်ကို သတ်မှတ်သည်။ ကတ္တား၊ ကြိယာ၊ ကံပုဒ် အစီအစဉ်ကို ကျွမ်းကျင်စွာ လေ့လာပါ။",
+      "examples": [
+        {
+          "en": "The dog runs.",
+          "zh": "那只狗在跑。",
+          "ja": "その犬は走る。"
+        },
+        {
+          "en": "Birds sing.",
+          "zh": "鸟儿歌唱。",
+          "ja": "鳥が歌う。"
+        },
+        {
+          "en": "The cat chases the dog.",
+          "zh": "猫追狗。",
+          "ja": "猫が犬を追いかける。"
+        },
+        {
+          "en": "I like cats.",
+          "zh": "我喜欢猫。",
+          "ja": "私は猫が好きだ。"
+        }
+      ]
+    },
+    {
+      "id": "e02",
+      "level": "elementary",
+      "order": 2,
+      "titleEn": "Chapter E02: Be ကြိယာအသုံးများ: am / is / are",
+      "titleZh": "be 动词：am / is / are",
+      "titleJa": "be 動詞：am / is / are",
+      "titleMy": "Be ကြိယာအသုံးများ: am / is / are",
+      "summaryZh": "英语用 be 动词把主语和它的“身份”或“状态”连接起来：主语 + be + 名词/形容词。be 在现在时有三种形态——am / is / are，要随主语变化。",
+      "summaryJa": "英語は be 動詞で主語とその「身分」や「状態」をつなぐ：主語 + be + 名詞／形容詞。be は現在時制で am / is / are の三つに変化し、主語に合わせて使い分ける。",
+      "summaryMy": "ပစ္စုပ္ပန်ကာလတွင် ကတ္တားအလိုက် be verb များ ပြောင်းလဲပုံနှင့် မိတ်ဆက်ခြင်း။",
+      "examples": [
+        {
+          "en": "I am a teacher.",
+          "zh": "我是一名老师。",
+          "ja": "私は先生です。"
+        },
+        {
+          "en": "Tom is a student.",
+          "zh": "汤姆是一名学生。",
+          "ja": "トムは学生です。"
+        },
+        {
+          "en": "The cat is small.",
+          "zh": "那只猫很小。",
+          "ja": "その猫は小さい。"
+        },
+        {
+          "en": "The books are new.",
+          "zh": "这些书是新的。",
+          "ja": "これらの本は新しい。"
+        }
+      ]
+    },
+    {
+      "id": "e03",
+      "level": "elementary",
+      "order": 3,
+      "titleEn": "Chapter E03: ရိုးရိုးပစ္စုပ္ပန်ကာလနှင့် တတိယပုဂ္ဂိုလ်တစ်ဦးဆိုင်ရာ -s အသံထွက်",
+      "titleZh": "一般现在时与第三人称单数 -s",
+      "titleJa": "現在形と三人称単数の -s",
+      "titleMy": "ရိုးရိုးပစ္စုပ္ပန်ကာလနှင့် တတိယပုဂ္ဂိုလ်တစ်ဦးဆိုင်ရာ -s အသံထွက်",
+      "summaryZh": "一般现在时描述习惯、事实和反复发生的动作。除了第三人称单数主语要给动词加 `-s`/`-es`/`-ies` 以外，动词都用原形。",
+      "summaryJa": "現在形は習慣・事実・繰り返される動作を表す。三人称単数の主語のときだけ動詞に `-s`/`-es`/`-ies` を付け、それ以外は原形を使う。",
+      "summaryMy": "He, She, It သို့မဟုတ် နာမ်တစ်ဦးဆိုင်ရာများနောက်တွင် ကြိယာ၌ -s / -es ထည့်သွင်းပုံ။",
+      "examples": [
+        {
+          "en": "I read books.",
+          "zh": "我读书。",
+          "ja": "私は本を読む。"
+        },
+        {
+          "en": "Students study every day.",
+          "zh": "学生们每天学习。",
+          "ja": "学生は毎日勉強する。"
+        },
+        {
+          "en": "The girl likes apples.",
+          "zh": "那个女孩喜欢苹果。",
+          "ja": "その女の子はりんごが好きだ。"
+        },
+        {
+          "en": "She writes a book.",
+          "zh": "她写一本书。",
+          "ja": "彼女は本を書く。"
+        }
+      ]
+    },
+    {
+      "id": "e04",
+      "level": "elementary",
+      "order": 4,
+      "titleEn": "Chapter E04: နာမ်များ၏ အနည်းနှင့် အများကိန်း (Singular & Plural)",
+      "titleZh": "名词的单复数",
+      "titleJa": "名詞の単数・複数",
+      "titleMy": "နာမ်များ၏ အနည်းနှင့် အများကိန်း (Singular & Plural)",
+      "summaryZh": "英语的可数名词分单数和复数两种形态：复数通常在词尾加 `-s`，但拼写会因结尾字母变成 `-es` 或 `-ies`；少数名词是不规则的，如 child→children。",
+      "summaryJa": "英語の可算名詞は単数形と複数形を持つ。複数形は語尾に `-s` を付けるのが基本だが、つづりにより `-es` や `-ies` になる。child→children のように不規則なものも少数ある。",
+      "summaryMy": "နာမ်များကို အများကိန်းပြောင်းလဲပုံ (-s, -es, -ies) နှင့် ပုံမှန်မဟုတ်သော အများကိန်းများ။",
+      "examples": [
+        {
+          "en": "The dogs run.",
+          "zh": "那些狗在跑。",
+          "ja": "その犬たちは走る。"
+        },
+        {
+          "en": "Students read books.",
+          "zh": "学生们读书。",
+          "ja": "学生たちは本を読む。"
+        },
+        {
+          "en": "The boxes are big.",
+          "zh": "那些箱子很大。",
+          "ja": "その箱は大きい。"
+        },
+        {
+          "en": "Cities have libraries.",
+          "zh": "城市里有图书馆。",
+          "ja": "都市には図書館がある。"
+        }
+      ]
+    },
+    {
+      "id": "e05",
+      "level": "elementary",
+      "order": 5,
+      "titleEn": "Chapter E05: ညွှန်းပုဒ်များနှင့် ညွှန်းဆိုပြ စကားလုံးများ: a / an / the / this / that",
+      "titleZh": "冠词与指示词：a / an / the / this / that",
+      "titleJa": "冠詞と指示詞：a / an / the / this / that",
+      "titleMy": "ညွှန်းပုဒ်များနှင့် ညွှန်းဆိုပြ စကားလုံးများ: a / an / the / this / that",
+      "summaryZh": "中文和日语都没有冠词，但英语的可数单数名词前几乎总要带一个限定词。本章区分 a/an（泛指、初次提到）与 the（特指、双方已知），并学习指示词 this/that/these/those 如何按“远近”和“单复数”变化。",
+      "summaryJa": "中国語にも日本語にも冠詞は無いが、英語では可算の単数名詞の前にほぼ必ず限定詞が要る。本章では a/an（不特定・初出）と the（特定・既知）を区別し、指示詞 this/that/these/those が「近称・遠称」と「単数・複数」でどう変わるかを学ぶ。",
+      "summaryMy": "သတ်မှတ်ညွှန်းပုဒ်နှင့် အထွေထွေညွှန်းပုဒ်များကို မှန်ကန်စွာ အသုံးပြုနည်း။",
+      "examples": [
+        {
+          "en": "Mary eats an apple.",
+          "zh": "玛丽吃一个苹果。",
+          "ja": "メアリーはりんごを一つ食べる。"
+        },
+        {
+          "en": "Tom reads a book.",
+          "zh": "汤姆读一本书。",
+          "ja": "トムは本を一冊読む。"
+        },
+        {
+          "en": "The student reads the book.",
+          "zh": "那个学生读那本书。",
+          "ja": "その学生はその本を読む。"
+        },
+        {
+          "en": "The sun shines.",
+          "zh": "太阳照耀。",
+          "ja": "太陽が輝く。"
+        }
+      ]
+    },
+    {
+      "id": "e06",
+      "level": "elementary",
+      "order": 6,
+      "titleEn": "Chapter E06: လူပုဂ္ဂိုလ်နာမ်စားများနှင့် ပိုင်ဆိုင်မှုပြ နာမ်စားများ",
+      "titleZh": "人称代词与物主代词",
+      "titleJa": "人称代名詞と所有格",
+      "titleMy": "လူပုဂ္ဂိုလ်နာမ်စားများနှင့် ပိုင်ဆိုင်မှုပြ နာမ်စားများ",
+      "summaryZh": "英语的人称代词会按“格”变形：做主语时用 I / he / she，做宾语时用 me / him / her。表示“谁的”有两套办法——物主词 my / mine 和名词所有格 `",
+      "summaryJa": "英語の人称代名詞は「格」によって形が変わる。主語なら I / he / she、目的語なら me / him / her。「誰の」を表すには所有格の語 my / mine と、名詞に付く `",
+      "summaryMy": "I/me/my/mine, we/us/our, they/them/their နာမ်စားများ စနစ်တကျ သုံးစွဲပုံ။",
+      "examples": [
+        {
+          "en": "She sees him.",
+          "zh": "她看见他。",
+          "ja": "彼女は彼を見る。"
+        },
+        {
+          "en": "We like them.",
+          "zh": "我们喜欢他们。",
+          "ja": "私たちは彼らが好きだ。"
+        },
+        {
+          "en": "My dog likes your cat.",
+          "zh": "我的狗喜欢你的猫。",
+          "ja": "私の犬はあなたの猫が好きだ。"
+        },
+        {
+          "en": "This book is mine.",
+          "zh": "这本书是我的。",
+          "ja": "この本は私のだ。"
+        }
+      ]
+    },
+    {
+      "id": "e07",
+      "level": "elementary",
+      "order": 7,
+      "titleEn": "Chapter E07: နာမဝိသေသနများ: အထူးပြုခြင်းနှင့် အခြေအနေဖော်ပြခြင်း",
+      "titleZh": "形容词：定语与表语",
+      "titleJa": "形容詞：限定用法と叙述用法",
+      "titleMy": "နာမဝိသေသနများ: အထူးပြုခြင်းနှင့် အခြေအနေဖော်ပြခြင်း",
+      "summaryZh": "形容词有两种用法：放在名词前作**定语**（the big dog），或放在系动词 be 后作**表语**（the dog is big）。英语形容词本身不变形，靠位置区分这两种用法。",
+      "summaryJa": "形容詞には二つの使い方がある：名詞の前に置く**限定用法**（the big dog）と、be 動詞の後に置く**叙述用法**（the dog is big）。英語の形容詞は形を変えず、位置で区別する。",
+      "summaryMy": "နာမ်၏ ရှေ့တွင် ကပ်လျက် အထူးပြုခြင်းနှင့် Linking verb နောက်တွင် အခြေအနေပြခြင်း။",
+      "examples": [
+        {
+          "en": "The big dog runs.",
+          "zh": "那只大狗在跑。",
+          "ja": "その大きい犬が走る。"
+        },
+        {
+          "en": "Mary reads an old book.",
+          "zh": "玛丽读一本旧书。",
+          "ja": "メアリーは古い本を読む。"
+        },
+        {
+          "en": "The dog is big.",
+          "zh": "那只狗很大。",
+          "ja": "その犬は大きい。"
+        },
+        {
+          "en": "The children are happy.",
+          "zh": "孩子们很快乐。",
+          "ja": "子供たちは幸せだ。"
+        }
+      ]
+    },
+    {
+      "id": "e08",
+      "level": "elementary",
+      "order": 8,
+      "titleEn": "Chapter E08: နေရာပြ ဝိဘတ်များ: in / on / at",
+      "titleZh": "介词与地点：in / on / at",
+      "titleJa": "前置詞と場所：in / on / at",
+      "titleMy": "နေရာပြ ဝိဘတ်များ: in / on / at",
+      "summaryZh": "英语用介词短语表示地点：`in`（在……里面/范围内）、`on`（在……表面上）、`at`（在某一点）。结构是 介词 + (限定词) + 名词，整体放在句子后面。",
+      "summaryJa": "英語は前置詞句で場所を表す：`in`（〜の中・範囲内）、`on`（〜の表面の上）、`at`（ある一点で）。構造は 前置詞 + (限定詞) + 名詞 で、文末に置く。",
+      "summaryMy": "အကျယ်အဝန်း၊ မျက်နှာပြင်နှင့် တိကျသောနေရာများကို ခွဲခြားပြသသော ဝိဘတ်များ။",
+      "examples": [
+        {
+          "en": "The cat sleeps in the box.",
+          "zh": "猫睡在盒子里。",
+          "ja": "猫は箱の中で眠る。"
+        },
+        {
+          "en": "Tom studies in the library.",
+          "zh": "汤姆在图书馆里学习。",
+          "ja": "トムは図書館で勉強する。"
+        },
+        {
+          "en": "The book is on the table.",
+          "zh": "书在桌子上。",
+          "ja": "本はテーブルの上にある。"
+        },
+        {
+          "en": "A bird sits on the wall.",
+          "zh": "一只鸟停在墙上。",
+          "ja": "鳥が壁にとまる。"
+        }
+      ]
+    },
+    {
+      "id": "e09",
+      "level": "elementary",
+      "order": 9,
+      "titleEn": "Chapter E09: ရိုးရိုးအတိတ်ကာလ (Past Simple: ပုံမှန်နှင့် ပုံမှန်မဟုတ်သော ကြိယာများ)",
+      "titleZh": "一般过去时（规则与不规则）",
+      "titleJa": "過去形（規則・不規則）",
+      "titleMy": "ရိုးရိုးအတိတ်ကာလ (Past Simple: ပုံမှန်နှင့် ပုံမှန်မဟုတ်သော ကြိယာများ)",
+      "summaryZh": "英语用动词本身的变化表示“过去”：规则动词加 -ed，不规则动词换词形。和中文“了/过”、日语「〜た」不同，过去的标记直接长在动词上。",
+      "summaryJa": "英語は「過去」を動詞そのものの変化で表す。規則動詞は -ed を付け、不規則動詞は語形を変える。中国語の「了/过」や日本語の「〜た」と違い、過去のしるしは動詞に直接付く。",
+      "summaryMy": "အတိတ်တွင် ပြီးဆုံးခဲ့သော လုပ်ဆောင်ချက်များကို -ed နှင့် irregular verbs များဖြင့် ဖော်ပြခြင်း။",
+      "examples": [
+        {
+          "en": "The boy played.",
+          "zh": "那个男孩玩了。",
+          "ja": "その少年は遊んだ。"
+        },
+        {
+          "en": "Mary studied English.",
+          "zh": "玛丽学习了英语。",
+          "ja": "メアリーは英語を勉強した。"
+        },
+        {
+          "en": "Tom went to the park.",
+          "zh": "汤姆去了公园。",
+          "ja": "トムは公園へ行った。"
+        },
+        {
+          "en": "The girl saw a bird.",
+          "zh": "那个女孩看见了一只鸟。",
+          "ja": "その少女は鳥を見た。"
+        }
+      ]
+    },
+    {
+      "id": "e10",
+      "level": "elementary",
+      "order": 10,
+      "titleEn": "Chapter E10: မျက်မှောက်ဆဲ ပစ္စုပ္ပန်ကာလ (Present Continuous: be + -ing)",
+      "titleZh": "现在进行时：be + -ing",
+      "titleJa": "現在進行形：be + -ing",
+      "titleMy": "မျက်မှောက်ဆဲ ပစ္စုပ္ပန်ကာလ (Present Continuous: be + -ing)",
+      "summaryZh": "现在进行时表示“此刻正在发生”的动作，结构是 be 动词（am / is / are）＋动词的 -ing 形式。重点是让 be 与主语一致，并写对 -ing（注意 run→running 这类双写）。",
+      "summaryJa": "現在進行形は「今まさに起きている」動作を表し、be 動詞（am / is / are）＋動詞の -ing 形で作る。be を主語に一致させ、-ing を正しく綴ること（run→running のような子音重ねに注意）がポイント。",
+      "summaryMy": "ယခုလက်ရှိ အချိန်တွင် ဖြစ်ပျက်လှုပ်ရှားနေဆဲ လုပ်ဆောင်ချက်များကို ဖော်ပြခြင်း။",
+      "examples": [
+        {
+          "en": "The girl is reading a book.",
+          "zh": "那个女孩正在读一本书。",
+          "ja": "その女の子は本を読んでいる。"
+        },
+        {
+          "en": "The children are eating apples.",
+          "zh": "孩子们正在吃苹果。",
+          "ja": "子供たちはりんごを食べている。"
+        },
+        {
+          "en": "I am writing a book.",
+          "zh": "我正在写一本书。",
+          "ja": "私は本を書いている。"
+        },
+        {
+          "en": "She is singing.",
+          "zh": "她正在唱歌。",
+          "ja": "彼女は歌っている。"
+        }
+      ]
+    },
+    {
+      "id": "e11",
+      "level": "elementary",
+      "order": 11,
+      "titleEn": "Chapter E11: အနာဂတ်ကာလ: will / be going to",
+      "titleZh": "一般将来时：will / be going to",
+      "titleJa": "未来表現：will / be going to",
+      "titleMy": "အနာဂတ်ကာလ: will / be going to",
+      "summaryZh": "英语没有专门的将来时词尾，而是用助动词搭建将来：`will` + 动词原形，或 `be going to` + 动词原形。本章讲清两者的构造与区别。",
+      "summaryJa": "英語には専用の未来時制の語尾がなく、助動詞で未来を組み立てる：`will` + 動詞の原形、または `be going to` + 動詞の原形。本章ではこの二つの作り方と使い分けを学ぶ。",
+      "summaryMy": "အနာဂတ်တွင် ပြုလုပ်မည့် အစီအစဉ်များ၊ ဆုံးဖြတ်ချက်များနှင့် ခန့်မှန်းချက်များ။",
+      "examples": [
+        {
+          "en": "I will go.",
+          "zh": "我会去。",
+          "ja": "私は行く。"
+        },
+        {
+          "en": "Mary will read the book.",
+          "zh": "玛丽会读这本书。",
+          "ja": "メアリーはその本を読むだろう。"
+        },
+        {
+          "en": "I am going to study.",
+          "zh": "我打算学习。",
+          "ja": "私は勉強するつもりだ。"
+        },
+        {
+          "en": "It is going to rain.",
+          "zh": "要下雨了。",
+          "ja": "雨が降りそうだ。"
+        }
+      ]
+    },
+    {
+      "id": "e12",
+      "level": "elementary",
+      "order": 12,
+      "titleEn": "Chapter E12: အငြင်းဝါကျနှင့် မေးခွန်းဝါကျ တည်ဆောက်ပုံများ",
+      "titleZh": "否定句与一般疑问句",
+      "titleJa": "否定文と疑問文",
+      "titleMy": "အငြင်းဝါကျနှင့် မေးခွန်းဝါကျ တည်ဆောက်ပုံများ",
+      "summaryZh": "英语用助动词 do / does / did 来构成实义动词的否定句和一般疑问句：助动词承担时态和第三人称的 -s，主动词回到原形。否定是“助动词 + not + 原形”，疑问是把助动词提到主语前面。",
+      "summaryJa": "英語は一般動詞の否定文・疑問文を助動詞 do / does / did で作る。助動詞が時制と三人称の -s を担い、本動詞は原形に戻る。否定は「助動詞 + not + 原形」、疑問は助動詞を主語の前に出す。",
+      "summaryMy": "do/does/did/be verbs များကို အသုံးပြု၍ အငြင်းဝါကျနှင့် Yes/No မေးခွန်းများ ပြုလုပ်ခြင်း။",
+      "examples": [
+        {
+          "en": "Tom does not go.",
+          "zh": "汤姆不去。",
+          "ja": "トムは行かない。"
+        },
+        {
+          "en": "The students do not read.",
+          "zh": "学生们不读书。",
+          "ja": "学生たちは読まない。"
+        },
+        {
+          "en": "Mary did not eat the apple.",
+          "zh": "玛丽没有吃那个苹果。",
+          "ja": "メアリーはそのりんごを食べなかった。"
+        },
+        {
+          "en": "The boy did not see the bird.",
+          "zh": "男孩没有看见那只鸟。",
+          "ja": "その少年はその鳥を見なかった。"
+        }
+      ]
+    },
+    {
+      "id": "i01",
+      "level": "intermediate",
+      "order": 1,
+      "titleEn": "Chapter I01: ပြီးပြည့်စုံပစ္စုပ္ပန်ကာလ (Present Perfect: have/has + V3)",
+      "titleZh": "现在完成时：have / has + 过去分词",
+      "titleJa": "現在完了：have / has + 過去分詞",
+      "titleMy": "ပြီးပြည့်စုံပစ္စုပ္ပန်ကာလ (Present Perfect: have/has + V3)",
+      "summaryZh": "现在完成时用 `have / has` 加动词的**过去分词**，把过去发生的动作和现在联系起来：强调结果、经历或“到现在为止”的状态，而不只是过去某个时间点。",
+      "summaryJa": "現在完了は `have / has` に動詞の**過去分詞**を足し、過去の動作と現在を結びつける。単なる過去の一点ではなく、結果・経験・「今までに」という状態を表す。",
+      "summaryMy": "အတိတ်က လုပ်ဆောင်ချက်သည် ပစ္စုပ္ပန်အပေါ် အကျိုးသက်ရောက်မှု သို့မဟုတ် အတွေ့အကြုံရှိနေခြင်း။",
+      "examples": [
+        {
+          "en": "Tom has eaten the apple.",
+          "zh": "汤姆已经把苹果吃了。",
+          "ja": "トムはりんごを食べてしまった。"
+        },
+        {
+          "en": "The students have read the book.",
+          "zh": "学生们读过这本书了。",
+          "ja": "学生たちはその本を読み終えた。"
+        },
+        {
+          "en": "Mary has finished the book.",
+          "zh": "玛丽已经读完了这本书。",
+          "ja": "メアリーはその本を読み終えた。"
+        },
+        {
+          "en": "I have lost the key.",
+          "zh": "我把那把钥匙弄丢了。",
+          "ja": "私はその鍵をなくしてしまった。"
+        }
+      ]
+    },
+    {
+      "id": "i02",
+      "level": "intermediate",
+      "order": 2,
+      "titleEn": "Chapter I02: အတိတ်ဆဲကာလနှင့် အတိတ်ပြီးကာလ (Past Continuous & Past Perfect)",
+      "titleZh": "过去进行时与过去完成时",
+      "titleJa": "過去進行形・過去完了",
+      "titleMy": "အတိတ်ဆဲကာလနှင့် အတိတ်ပြီးကာလ (Past Continuous & Past Perfect)",
+      "summaryZh": "过去进行时 `was/were + -ing` 描写过去某一刻“正在进行”的动作；过去完成时 `had + 过去分词` 表示“在过去某时之前就已经完成”的动作。两者都让我们把镜头对准过去的不同层次。",
+      "summaryJa": "過去進行形 `was/were + -ing` は過去のある瞬間に「進行中」だった動作を描く。過去完了 `had + 過去分詞` は「過去のある時点よりさらに前に完了していた」動作を表す。どちらも過去の異なる層へカメラを向ける道具だ。",
+      "summaryMy": "အတိတ်တွင် ဆက်လက်ဖြစ်ပွားနေခဲ့သော လုပ်ဆောင်ချက်နှင့် အတိတ်ကာလမတိုင်မီက ပြီးနှင့်ခဲ့သော လုပ်ဆောင်ချက်များ။",
+      "examples": [
+        {
+          "en": "The boy was reading a book.",
+          "zh": "那个男孩正在读一本书。",
+          "ja": "その少年は本を読んでいた。"
+        },
+        {
+          "en": "The boys were running in the park.",
+          "zh": "男孩们正在公园里跑。",
+          "ja": "少年たちは公園で走っていた。"
+        },
+        {
+          "en": "The girl was writing when the teacher came.",
+          "zh": "老师进来时，女孩正在写字。",
+          "ja": "先生が来たとき、少女は書いていた。"
+        },
+        {
+          "en": "Tom was sleeping when the bird sang.",
+          "zh": "鸟儿歌唱时，汤姆正在睡觉。",
+          "ja": "鳥が歌ったとき、トムは眠っていた。"
+        }
+      ]
+    },
+    {
+      "id": "i03",
+      "level": "intermediate",
+      "order": 3,
+      "titleEn": "Chapter I03: အကူကြိယာများ (Modal Verbs: can/could/may/must/should)",
+      "titleZh": "情态动词：can/could/may/must/should",
+      "titleJa": "助動詞：can/could/may/must/should",
+      "titleMy": "အကူကြိယာများ (Modal Verbs: can/could/may/must/should)",
+      "summaryZh": "情态动词（can/could/may/must/should）放在主动词前，表达能力、许可、可能、义务或建议。它本身永不变形，后面的动词一律用原形（不加 -s、不加 to）。",
+      "summaryJa": "法助動詞（can/could/may/must/should）は主動詞の前に置かれ、能力・許可・可能性・義務・助言を表す。助動詞自身は決して活用せず、後ろの動詞は必ず原形（-s も to も付かない）。",
+      "summaryMy": "စွမ်းရည်၊ ခွင့်ပြုချက်၊ တာဝန်နှင့် အကြံပြုချက်များကို ဖော်ပြသော အထူးကြိယာများ။",
+      "examples": [
+        {
+          "en": "The bird can sing.",
+          "zh": "这只鸟会唱歌。",
+          "ja": "その鳥は歌うことができる。"
+        },
+        {
+          "en": "The child could read a book.",
+          "zh": "这孩子（当时）会读书。",
+          "ja": "その子は本を読むことができた。"
+        },
+        {
+          "en": "You may go.",
+          "zh": "你可以走了。",
+          "ja": "行ってよろしい。"
+        },
+        {
+          "en": "Mary may not come.",
+          "zh": "玛丽也许不来。",
+          "ja": "メアリーは来ないかもしれない。"
+        }
+      ]
+    },
+    {
+      "id": "i04",
+      "level": "intermediate",
+      "order": 4,
+      "titleEn": "Chapter I04: နှိုင်းယှဉ်ပြ အဆင့်များ (Comparatives & Superlatives)",
+      "titleZh": "比较级与最高级",
+      "titleJa": "比較級と最上級",
+      "titleMy": "နှိုင်းယှဉ်ပြ အဆင့်များ (Comparatives & Superlatives)",
+      "summaryZh": "英语形容词有三个等级：原级、比较级、最高级。短词加 -er/-est（如 tall→taller→tallest），长词用 more/most。比较级常配 than，最高级常配 the。汉语用“更／最”、日语用「より／いちばん」表达同样的对比，但英语是直接改变形容词本身的形态。",
+      "summaryJa": "英語の形容詞には三つの等級がある：原級・比較級・最上級。短い語は -er/-est を付け（tall→taller→tallest）、長い語は more/most を使う。比較級はよく than を、最上級はよく the を伴う。中国語の「更／最」、日本語の「より／いちばん」と同じ対比を、英語は形容詞そのものの形を変えて表す。",
+      "summaryMy": "ပိုမိုသာလွန်ခြင်း (-er / more) နှင့် အသာလွန်ဆုံးဖြစ်ခြင်း (-est / most)။",
+      "examples": [
+        {
+          "en": "Tom is taller than Mary.",
+          "zh": "汤姆比玛丽高。",
+          "ja": "トムはメアリーより背が高い。"
+        },
+        {
+          "en": "The dog is bigger than the cat.",
+          "zh": "这只狗比这只猫大。",
+          "ja": "その犬はその猫より大きい。"
+        },
+        {
+          "en": "Mary is the tallest student.",
+          "zh": "玛丽是最高的学生。",
+          "ja": "メアリーはいちばん背の高い学生だ。"
+        },
+        {
+          "en": "The library is the biggest house.",
+          "zh": "图书馆是最大的房子。",
+          "ja": "図書館はいちばん大きい建物だ。"
+        }
+      ]
+    },
+    {
+      "id": "i05",
+      "level": "intermediate",
+      "order": 5,
+      "titleEn": "Chapter I05: ကြိယာဝိသေသနများ: ပုံစံ၊ အကြိမ်အရေအတွက်နှင့် အတိုင်းအတာ",
+      "titleZh": "副词：方式、频率、程度",
+      "titleJa": "副詞：様態・頻度・程度",
+      "titleMy": "ကြိယာဝိသေသနများ: ပုံစံ၊ အကြိမ်အရေအတွက်နှင့် အတိုင်းအတာ",
+      "summaryZh": "副词用来修饰动词、形容词或其它副词。本章区分三类常见副词：表“怎样”的方式副词（quickly），表“多久一次”的频率副词（always/often/never），以及表“到什么程度”的程度副词（very/too/quite）。三类副词在句中的**位置规则不同**，这是英语和中文、日语差异最大的地方。",
+      "summaryJa": "副詞は動詞・形容詞・他の副詞を修飾する。本章では三種を区別する：「どのように」を表す様態の副詞（quickly）、「どのくらいの頻度で」を表す頻度の副詞（always/often/never）、「どの程度」を表す程度の副詞（very/too/quite）。三者は文中の**位置のルールが異なり**、ここが中国語・日本語との最大の違いとなる。",
+      "summaryMy": "ကြိယာနှင့် နာမဝိသေသနများကို ပိုမိုတိကျစေရန် ထပ်မံအထူးပြုခြင်း။",
+      "examples": [
+        {
+          "en": "The bird sings happily.",
+          "zh": "这只鸟快乐地歌唱。",
+          "ja": "その鳥は楽しそうに歌う。"
+        },
+        {
+          "en": "The girl reads the book quietly.",
+          "zh": "这女孩安静地读那本书。",
+          "ja": "その少女は静かにその本を読む。"
+        },
+        {
+          "en": "Tom always reads in the library.",
+          "zh": "汤姆总是在图书馆里读书。",
+          "ja": "トムはいつも図書館で読書する。"
+        },
+        {
+          "en": "The cat never sleeps.",
+          "zh": "这只猫从不睡觉。",
+          "ja": "その猫は決して眠らない。"
+        }
+      ]
+    },
+    {
+      "id": "i06",
+      "level": "intermediate",
+      "order": 6,
+      "titleEn": "Chapter I06: Infinitive အသုံး: to + မူရင်းကြိယာ",
+      "titleZh": "不定式：to + 动词",
+      "titleJa": "不定詞：to + 動詞",
+      "titleMy": "Infinitive အသုံး: to + မူရင်းကြိယာ",
+      "summaryZh": "不定式是“to + 动词原形”（to go、to read），是动词的一种非时态形式。它最常见的两种用法：作另一个动词的宾语（want to go“想去”），以及表示目的（… to study“为了学习”）。注意 to 后面永远是原形，不加 -s、-ed。",
+      "summaryJa": "不定詞は「to + 動詞の原形」（to go、to read）で、時制を持たない動詞の形。代表的な用法は二つ：別の動詞の目的語になる（want to go「行きたい」）と、目的を表す（… to study「勉強するために」）。to の後ろは常に原形で、-s や -ed は付かない。",
+      "summaryMy": "ရည်ရွယ်ချက်၊ ဆန္ဒနှင့် အကြောင်းပြချက်များအတွက် to-infinitive အသုံးပြုပုံ။",
+      "examples": [
+        {
+          "en": "I want to go.",
+          "zh": "我想去。",
+          "ja": "私は行きたい。"
+        },
+        {
+          "en": "Mary likes to read a book.",
+          "zh": "玛丽喜欢读书。",
+          "ja": "メアリーは本を読むのが好きだ。"
+        },
+        {
+          "en": "The boy runs to play.",
+          "zh": "男孩跑去玩。",
+          "ja": "その少年は遊びに走る。"
+        },
+        {
+          "en": "Mary came to see the teacher.",
+          "zh": "玛丽来见老师。",
+          "ja": "メアリーは先生に会いに来た。"
+        }
+      ]
+    },
+    {
+      "id": "i07",
+      "level": "intermediate",
+      "order": 7,
+      "titleEn": "Chapter I07: Gerund (ကြိယာနာမ်: V-ing အသုံး)",
+      "titleZh": "动名词",
+      "titleJa": "動名詞",
+      "titleMy": "Gerund (ကြိယာနာမ်: V-ing အသုံး)",
+      "summaryZh": "动名词是动词加 -ing 后**当名词用**的形式（reading、swimming）。它可以做主语，也可以做宾语，本身仍保留动词的意义。在 Typed English 里就是把 `VerbPart<V, \\",
+      "summaryJa": "動名詞は動詞に -ing を付けて**名詞として使う**形（reading、swimming）。主語にも目的語にもなり、動詞の意味は残ったまま。Typed English では名詞が入る位置に `VerbPart<V, \\",
+      "summaryMy": "ကြိယာကို -ing ပေါင်းထည့်ပြီး နာမ်အဖြစ် အသုံးပြုခြင်း။",
+      "examples": [
+        {
+          "en": "Reading is fun.",
+          "zh": "阅读很有趣。",
+          "ja": "読書は楽しい。"
+        },
+        {
+          "en": "Swimming is good.",
+          "zh": "游泳很好。",
+          "ja": "泳ぐことは良い。"
+        },
+        {
+          "en": "I like swimming.",
+          "zh": "我喜欢游泳。",
+          "ja": "私は泳ぐのが好きだ。"
+        },
+        {
+          "en": "Mary enjoys reading.",
+          "zh": "玛丽喜欢阅读。",
+          "ja": "メアリーは読書を楽しむ。"
+        }
+      ]
+    },
+    {
+      "id": "i08",
+      "level": "intermediate",
+      "order": 8,
+      "titleEn": "Chapter I08: စကားစပ်များ: and / but / or / so",
+      "titleZh": "并列连词：and / or / but / so",
+      "titleJa": "等位接続詞：and / or / but / so",
+      "titleMy": "စကားစပ်များ: and / but / or / so",
+      "summaryZh": "并列连词 and（和）、or（或）、but（但）、so（所以）连接两个**地位平等**的成分——可以是两个词、两个短语，也可以是两个完整的句子。它们和从属连词不同，不会让任何一边变成“附属”的从句。",
+      "summaryJa": "等位接続詞 and（〜と）、or（または）、but（しかし）、so（だから）は、**対等な立場**の要素どうしを結ぶ——単語と単語、句と句、あるいは完全な文と文。従属接続詞と違い、どちらか一方を「従属節」に格下げすることはない。",
+      "summaryMy": "ဝါကျနှစ်ခု သို့မဟုတ် စကားလုံးများကို တန်းတူချိတ်ဆက်ခြင်း။",
+      "examples": [
+        {
+          "en": "The cat and the dog run.",
+          "zh": "猫和狗在跑。",
+          "ja": "猫と犬が走る。"
+        },
+        {
+          "en": "The boy reads or the girl sings.",
+          "zh": "男孩读书，或者女孩唱歌。",
+          "ja": "少年が読むか、または少女が歌う。"
+        },
+        {
+          "en": "The boy is tall but the girl is small.",
+          "zh": "男孩个子高，但女孩个子小。",
+          "ja": "少年は背が高いが、少女は小さい。"
+        },
+        {
+          "en": "Mary studies but Tom sleeps.",
+          "zh": "玛丽在学习，但汤姆在睡觉。",
+          "ja": "メアリーは勉強するが、トムは眠る。"
+        }
+      ]
+    },
+    {
+      "id": "i09",
+      "level": "intermediate",
+      "order": 9,
+      "titleEn": "Chapter I09: လက်အောက်ခံ စကားစပ်များနှင့် ဝါကျခွဲများ (Subordinating Conjunctions)",
+      "titleZh": "从属连词与状语从句",
+      "titleJa": "従属接続詞と副詞節",
+      "titleMy": "လက်အောက်ခံ စကားစပ်များနှင့် ဝါကျခွဲများ (Subordinating Conjunctions)",
+      "summaryZh": "从属连词（because / when / if / although）引导一个**不能独立成句**的从句，把它挂到主句上，分别回答“为什么、什么时候、在什么条件下、尽管怎样”。它与并列连词（and/but）不同：从句是主句的“状语”，地位从属。",
+      "summaryJa": "従属接続詞（because / when / if / although）は**単独では文になれない**従属節を導き、主節に結びつけて「なぜ・いつ・どんな条件で・〜にもかかわらず」を答える。等位接続詞（and/but）とは違い、従属節は主節の「副詞」として従属的に働く。",
+      "summaryMy": "because, although, if, while စသည်တို့ဖြင့် အကြောင်းရင်း၊ အခြေအနေပြ ဝါကျခွဲများ ဖန်တီးခြင်း။",
+      "examples": [
+        {
+          "en": "The bird sings because the sun shines.",
+          "zh": "因为太阳照耀，所以鸟儿歌唱。",
+          "ja": "太陽が輝くから、鳥は歌う。"
+        },
+        {
+          "en": "Tom slept because he was tired.",
+          "zh": "汤姆睡了，因为他累了。",
+          "ja": "トムは疲れていたので、眠った。"
+        },
+        {
+          "en": "The girl reads when the teacher sleeps.",
+          "zh": "老师睡觉时，女孩在读书。",
+          "ja": "先生が眠っているとき、少女は本を読む。"
+        },
+        {
+          "en": "The dog will run if Tom comes.",
+          "zh": "如果汤姆来，狗就会跑。",
+          "ja": "もしトムが来たら、犬は走るだろう。"
+        }
+      ]
+    },
+    {
+      "id": "i10",
+      "level": "intermediate",
+      "order": 10,
+      "titleEn": "Chapter I10: တည်ရှိမှုပြ ဝါကျများ: There is / There are နှင့် အရေအတွက်",
+      "titleZh": "there is / there are 与数量",
+      "titleJa": "there is / there are と数量",
+      "titleMy": "တည်ရှိမှုပြ ဝါကျများ: There is / There are နှင့် အရေအတွက်",
+      "summaryZh": "英语用 “there is / there are” 表示“某处存在某物”——这里的 there 只是一个**虚位主语**，没有“那里”的意思，真正的主语在 be 动词后面，be 也跟着它做单复数变化。配合 some / any / many / few 等限定词，就能说出“有一些 / 有许多 / 几乎没有”。",
+      "summaryJa": "英語は「there is / there are」で「ある場所に何かが存在する」ことを表す。この there は**仮の主語**で「あそこ」という意味はなく、本当の主語は be 動詞の後ろに来て、be もそれに合わせて単複が変わる。some / any / many / few などの限定詞と組み合わせると「いくつかある／たくさんある／ほとんどない」が言える。",
+      "summaryMy": "အရာဝတ္ထုများ ရှိနေကြောင်း တည်ရှိမှုပြ ဝါကျဖွဲ့စည်းပုံ။",
+      "examples": [
+        {
+          "en": "There is a book on the table.",
+          "zh": "桌子上有一本书。",
+          "ja": "テーブルの上に本が一冊ある。"
+        },
+        {
+          "en": "There are two books on the table.",
+          "zh": "桌子上有两本书。",
+          "ja": "テーブルの上に本が二冊ある。"
+        },
+        {
+          "en": "There are some apples in the basket.",
+          "zh": "篮子里有一些苹果。",
+          "ja": "かごの中にりんごがいくつかある。"
+        },
+        {
+          "en": "There are not any apples in the basket.",
+          "zh": "篮子里一个苹果也没有。",
+          "ja": "かごの中にりんごが一つもない。"
+        }
+      ]
+    }
+  ],
+  "orthography": {
+    "verbConjugation": {
+      "thirdPersonSingular": [
+        {
+          "condition": "Verbs ending in -s, -sh, -ch, -x, -z, -o",
+          "rule": "Add -es",
+          "examples": [
+            [
+              "pass",
+              "passes"
+            ],
+            [
+              "wash",
+              "washes"
+            ],
+            [
+              "watch",
+              "watches"
+            ],
+            [
+              "fix",
+              "fixes"
+            ],
+            [
+              "go",
+              "goes"
+            ]
+          ]
+        },
+        {
+          "condition": "Consonant + -y",
+          "rule": "Change -y to -ies",
+          "examples": [
+            [
+              "carry",
+              "carries"
+            ],
+            [
+              "study",
+              "studies"
+            ],
+            [
+              "fly",
+              "flies"
+            ]
+          ]
+        },
+        {
+          "condition": "Default regular verbs",
+          "rule": "Add -s",
+          "examples": [
+            [
+              "walk",
+              "walks"
+            ],
+            [
+              "run",
+              "runs"
+            ],
+            [
+              "speak",
+              "speaks"
+            ]
+          ]
+        }
+      ],
+      "pastTense": [
+        {
+          "condition": "Verbs ending in -e",
+          "rule": "Add -d",
+          "examples": [
+            [
+              "live",
+              "lived"
+            ],
+            [
+              "love",
+              "loved"
+            ]
+          ]
+        },
+        {
+          "condition": "Consonant + -y",
+          "rule": "Change -y to -ied",
+          "examples": [
+            [
+              "hurry",
+              "hurried"
+            ],
+            [
+              "try",
+              "tried"
+            ]
+          ]
+        },
+        {
+          "condition": "Short vowel + consonant",
+          "rule": "Double consonant + -ed",
+          "examples": [
+            [
+              "stop",
+              "stopped"
+            ],
+            [
+              "plan",
+              "planned"
+            ]
+          ]
+        },
+        {
+          "condition": "Default regular",
+          "rule": "Add -ed",
+          "examples": [
+            [
+              "walk",
+              "walked"
+            ],
+            [
+              "learn",
+              "learned"
+            ]
+          ]
+        }
+      ]
+    },
+    "nounPlural": [
+      {
+        "condition": "Nouns ending in -s, -sh, -ch, -x, -z",
+        "rule": "Add -es",
+        "examples": [
+          [
+            "bus",
+            "buses"
+          ],
+          [
+            "box",
+            "boxes"
+          ],
+          [
+            "match",
+            "matches"
+          ]
+        ]
+      },
+      {
+        "condition": "Consonant + -y",
+        "rule": "Change -y to -ies",
+        "examples": [
+          [
+            "city",
+            "cities"
+          ],
+          [
+            "baby",
+            "babies"
+          ]
+        ]
+      },
+      {
+        "condition": "Irregular Plurals",
+        "rule": "Mutated vowel or suffix",
+        "examples": [
+          [
+            "woman",
+            "women"
+          ],
+          [
+            "child",
+            "children"
+          ],
+          [
+            "person",
+            "people"
+          ],
+          [
+            "tooth",
+            "teeth"
+          ],
+          [
+            "foot",
+            "feet"
+          ],
+          [
+            "mouse",
+            "mice"
+          ]
+        ]
+      },
+      {
+        "condition": "Default regular",
+        "rule": "Add -s",
+        "examples": [
+          [
+            "cat",
+            "cats"
+          ],
+          [
+            "book",
+            "books"
+          ],
+          [
+            "star",
+            "stars"
+          ]
+        ]
+      }
+    ]
+  }
+}

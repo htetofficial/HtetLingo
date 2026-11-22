@@ -1,0 +1,328 @@
+{
+  "source": "mahavivo/logical-grammar",
+  "title": "Logical Grammar of English (အင်္ဂလိပ်ဘာသာ ယုတ္တိဗေဒ သဒ္ဒါစနစ်)",
+  "sentencePatterns": [
+    {
+      "pattern": "S + V (Subject + Intransitive Verb)",
+      "formula": "ကတ္တား + ကံမလို ကြိယာ",
+      "desc": "ကံပုဒ် (Object) မလိုဘဲ အဓိပ္ပာယ်ပြည့်စုံသော အခြေခံဝါကျပုံစံ",
+      "example": "Birds sing. / She smiled.",
+      "my": "ငှက်များ သီဆိုကြသည်။ / သူမ ပြုံးပြခဲ့သည်။"
+    },
+    {
+      "pattern": "S + V + C (Subject + Linking Verb + Complement)",
+      "formula": "ကတ္တား + ဆက်စပ်ကြိယာ + ဖြည့်စွက်ပုဒ်",
+      "desc": "ကတ္တား၏ အခြေအနေ၊ အရည်အသွေး သို့မဟုတ် အဆင့်အတန်းကို ဖော်ပြသော ဝါကျ",
+      "example": "She is brilliant. / Confidence is key.",
+      "my": "သူမသည် အလွန်ထူးချွန်ထက်မြက်သည်။ / ယုံကြည်မှုသည် အဓိကသော့ချက်ဖြစ်သည်။"
+    },
+    {
+      "pattern": "S + V + O (Subject + Transitive Verb + Object)",
+      "formula": "ကတ္တား + ကံလို ကြိယာ + ကံပုဒ်",
+      "desc": "ကတ္တား၏ လုပ်ဆောင်ချက်သည် ကံပုဒ်အပေါ် တိုက်ရိုက် သက်ရောက်မှုရှိသော ဝါကျ",
+      "example": "Knowledge empowers people.",
+      "my": "အသိပညာသည် လူသားများကို စွမ်းရည်မြှင့်တင်ပေးသည်။"
+    },
+    {
+      "pattern": "S + V + O + O (Subject + Verb + Indirect Object + Direct Object)",
+      "formula": "ကတ္တား + ကြိယာ + သွယ်ဝိုက်ကံပုဒ် + တိုက်ရိုက်ကံပုဒ်",
+      "desc": "တစ်စုံတစ်ဦးထံ တစ်စုံတစ်ခု ပေးအပ်ခြင်း သို့မဟုတ် လုပ်ဆောင်ပေးခြင်းကို ဖော်ပြသော ဝါကျ",
+      "example": "The mentor gave her valuable guidance.",
+      "my": "ဆရာမသည် သူမအား အဖိုးတန်သော လမ်းညွှန်ချက်ကို ပေးအပ်ခဲ့သည်။"
+    },
+    {
+      "pattern": "S + V + O + C (Subject + Verb + Object + Object Complement)",
+      "formula": "ကတ္တား + ကြိယာ + ကံပုဒ် + ကံပုဒ်ဖြည့်စွက်ပုဒ်",
+      "desc": "ကံပုဒ်၏ အခြေအနေ သို့မဟုတ် အမည်နာမကို ထပ်မံဖြည့်စွက်ဖော်ပြသော ဝါကျ",
+      "example": "Hard work made her successful.",
+      "my": "ကြိုးစားအားထုတ်မှုသည် သူမအား အောင်မြင်သူတစ်ဦး ဖြစ်လာစေခဲ့သည်။"
+    }
+  ],
+  "connectorCategories": [
+    {
+      "id": "addition_progression",
+      "titleEn": "Addition & Progression (and, moreover, furthermore)",
+      "titleZh": "顺承、补充与递进",
+      "titleMy": "ဆက်စပ်ခြင်း၊ ဖြည့်စွက်ခြင်းနှင့် အဆင့်ဆင့်တိုးပွားခြင်း",
+      "words": [
+        "and",
+        "what's more",
+        "moreover",
+        "furthermore",
+        "in addition",
+        "additionally",
+        "besides",
+        "apart from",
+        "similarly",
+        "likewise",
+        "also",
+        "as well",
+        "again"
+      ],
+      "examples": [
+        {
+          "en": "The rent is reasonable, and moreover, the location is perfect.",
+          "my": "အိမ်ငှားခ သင့်တင့်သည့်အပြင် နေရာကလည်း အထူးကောင်းမွန်သည်။"
+        },
+        {
+          "en": "I don't want to go; besides, I'm too tired.",
+          "my": "ကျွန်မ မသွားချင်ပါဘူး၊ ဒါ့အပြင် အရမ်းလည်း ပင်ပန်းနေပါပြီ။"
+        }
+      ],
+      "rule": "ဝါကျနှစ်ခု သို့မဟုတ် စိတ်ကူးနှစ်ခုကို ပေါင်းစပ်၍ အချက်အလက်သစ်များ ထပ်မံဖြည့်စွက်ရာတွင် သုံးသည်။"
+    },
+    {
+      "id": "contrast_turning",
+      "titleEn": "Contrast & Opposition (but, however, yet, nevertheless)",
+      "titleZh": "转折与对立",
+      "titleMy": "ဆန့်ကျင်ဘက်နှင့် အလှည့်အပြောင်းပြ စကားဆက်များ",
+      "words": [
+        "but",
+        "however",
+        "yet",
+        "instead",
+        "on the other hand",
+        "on the contrary",
+        "nevertheless",
+        "otherwise",
+        "after all",
+        "unfortunately"
+      ],
+      "examples": [
+        {
+          "en": "It is too hot to go for a walk, let's go swimming instead.",
+          "my": "လမ်းလျှောက်ဖို့ အရမ်းပူလွန်းတယ်၊ ဒါကြောင့် ရေကူးသွားကြရအောင်။"
+        },
+        {
+          "en": "She was nervous; nevertheless, she spoke with immense confidence.",
+          "my": "သူမ စိတ်လှုပ်ရှားနေခဲ့သော်လည်း ကြီးမားသော ယုံကြည်မှုဖြင့် ပြောဆိုခဲ့သည်။"
+        }
+      ],
+      "rule": "ယခင်ပြောခဲ့သော စကားနှင့် ဆန့်ကျင်ဘက် အခြေအနေ သို့မဟုတ် မျှော်လင့်မထားသော ရလဒ်ကို ဖော်ပြရာတွင် သုံးသည်။"
+    },
+    {
+      "id": "causality_reason",
+      "titleEn": "Causality & Consequence (therefore, thus, hence, because)",
+      "titleZh": "因果关系",
+      "titleMy": "အကြောင်းနှင့် အကျိုးပြ စကားဆက်များ",
+      "words": [
+        "because",
+        "since",
+        "as",
+        "for",
+        "therefore",
+        "thus",
+        "hence",
+        "as a result",
+        "consequently"
+      ],
+      "examples": [
+        {
+          "en": "She prepared thoroughly; therefore, she succeeded effortlessly.",
+          "my": "သူမသည် သေချာစွာ ပြင်ဆင်ခဲ့သောကြောင့် လွယ်ကူစွာ အောင်မြင်ခဲ့သည်။"
+        },
+        {
+          "en": "The flight was delayed; consequently, the meeting was postponed.",
+          "my": "လေယာဉ် နောက်ကျခဲ့သောကြောင့် အစည်းအဝေးကို ရွှေ့ဆိုင်းခဲ့ရသည်။"
+        }
+      ],
+      "rule": "အကြောင်းရင်း (Cause) နှင့် ၎င်းကြောင့် ဖြစ်ပေါ်လာသော ရလဒ် (Result) ကို ဆက်စပ်ဖော်ပြသည်။"
+    },
+    {
+      "id": "temporal_sequential",
+      "titleEn": "Temporal & Sequence (when, while, as soon as, simultaneously)",
+      "titleZh": "时间与次序",
+      "titleMy": "အချိန်နှင့် အစီအစဉ်ပြ စကားဆက်များ",
+      "words": [
+        "when",
+        "before",
+        "after",
+        "while",
+        "as soon as",
+        "the moment",
+        "immediately",
+        "meanwhile",
+        "simultaneously",
+        "subsequently"
+      ],
+      "examples": [
+        {
+          "en": "We will leave the moment you are ready.",
+          "my": "သင် အဆင်သင့်ဖြစ်သည်နှင့် တစ်ပြိုင်နက် ကျွန်ုပ်တို့ ထွက်ခွာပါမည်။"
+        },
+        {
+          "en": "She listened attentively; meanwhile, her assistant took notes.",
+          "my": "သူမသည် စိတ်ဝင်တစား နားထောင်နေစဉ် သူမ၏ လက်ထောက်က မှတ်စုရေးမှတ်ခဲ့သည်။"
+        }
+      ],
+      "rule": "လုပ်ဆောင်ချက်များ ဖြစ်ပွားသည့် အချိန်ကာလနှင့် ရှေ့ဆင့်နောက်ဆင့် အစီအစဉ်ကို ဖော်ပြသည်။"
+    },
+    {
+      "id": "concession_condition",
+      "titleEn": "Concession & Condition (although, even if, provided that)",
+      "titleZh": "让步与条件",
+      "titleMy": "အလျော့ပေးခြင်းနှင့် ကန့်သတ်ချက်/စည်းကမ်းပြ စကားဆက်များ",
+      "words": [
+        "although",
+        "even though",
+        "though",
+        "even if",
+        "if",
+        "unless",
+        "provided that",
+        "as long as"
+      ],
+      "examples": [
+        {
+          "en": "Although the task was demanding, she excelled.",
+          "my": "တာဝန်သည် ခက်ခဲပင်ပန်းသော်လည်း သူမသည် ထူးချွန်စွာ ပြီးမြောက်ခဲ့သည်။"
+        },
+        {
+          "en": "You can achieve anything provided that you believe in yourself.",
+          "my": "ကိုယ့်ကိုယ်ကိုယ် ယုံကြည်မှုရှိသရွေ့ မည်သည့်အရာကိုမဆို အောင်မြင်နိုင်ပါသည်။"
+        }
+      ],
+      "rule": "အခက်အခဲ သို့မဟုတ် ကန့်သတ်ချက်များ ရှိလင့်ကစား အောင်မြင်မှု သို့မဟုတ် အခြေအနေကို ဖော်ပြသည်။"
+    },
+    {
+      "id": "exemplification_clarification",
+      "titleEn": "Exemplification & Summary (for example, in other words, in short)",
+      "titleZh": "举例与总结",
+      "titleMy": "ဥပမာပေးခြင်းနှင့် အနှစ်ချုပ်ဖော်ပြခြင်း",
+      "words": [
+        "for example",
+        "for instance",
+        "specifically",
+        "in other words",
+        "that is to say",
+        "in short",
+        "to sum up"
+      ],
+      "examples": [
+        {
+          "en": "Great leaders inspire others; for example, they listen with empathy.",
+          "my": "ခေါင်းဆောင်ကောင်းများသည် အခြားသူများကို ခွန်အားပေးသည်၊ ဥပမာ- သူတို့သည် စာနာစိတ်ဖြင့် နားထောင်ကြသည်။"
+        }
+      ],
+      "rule": "ရှင်းလင်းစေရန် ဥပမာပေးဖော်ပြခြင်း သို့မဟုတ် အဓိကအချက်ကို အနှစ်ချုပ်ပြောဆိုရာတွင် သုံးသည်။"
+    }
+  ],
+  "prepositionClasses": [
+    {
+      "class": "Place & Motion (နေရာနှင့် ရွေ့လျားမှု)",
+      "preps": [
+        "about",
+        "above",
+        "across",
+        "along",
+        "around",
+        "at",
+        "behind",
+        "beneath",
+        "beside",
+        "between",
+        "beyond",
+        "in",
+        "into",
+        "near",
+        "on",
+        "through",
+        "towards",
+        "under"
+      ],
+      "my": "တည်နေရာ သို့မဟုတ် ရွေ့လျားသွားလာသည့် ဦးတည်ရာကို ဖော်ပြသော ဝိဘတ်များ"
+    },
+    {
+      "class": "Time & Duration (အချိန်နှင့် ကြာမြင့်ချိန်)",
+      "preps": [
+        "at",
+        "before",
+        "after",
+        "by",
+        "during",
+        "for",
+        "from",
+        "in",
+        "on",
+        "past",
+        "since",
+        "throughout",
+        "till",
+        "until"
+      ],
+      "my": "အချိန်ကာလ၊ အစအဆုံးနှင့် သတ်မှတ်ချိန်ကို ပြသော ဝိဘတ်များ"
+    },
+    {
+      "class": "Cause & Purpose (အကြောင်းရင်းနှင့် ရည်ရွယ်ချက်)",
+      "preps": [
+        "for",
+        "with",
+        "from",
+        "due to",
+        "owing to"
+      ],
+      "my": "ဖြစ်ပေါ်ရသည့် အကြောင်းရင်း သို့မဟုတ် ရည်ရွယ်ချက်ကို ဖော်ပြသော ဝိဘတ်များ"
+    },
+    {
+      "class": "Means & Manner (နည်းလမ်းနှင့် ပုံစံ)",
+      "preps": [
+        "by",
+        "in",
+        "with",
+        "through",
+        "via"
+      ],
+      "my": "လုပ်ဆောင်သည့် နည်းလမ်း၊ ကိရိယာ သို့မဟုတ် ပုံစံကို ပြသော ဝိဘတ်များ"
+    },
+    {
+      "class": "Concession & Condition (အလျော့ပေးခြင်းနှင့် ကန့်သတ်ချက်)",
+      "preps": [
+        "despite",
+        "in spite of",
+        "notwithstanding",
+        "without",
+        "considering"
+      ],
+      "my": "အခက်အခဲများ ကြားမှ သို့မဟုတ် ကန့်သတ်ချက်များ ရှိနေသည့် အခြေအနေကို ပြသော ဝိဘတ်များ"
+    }
+  ],
+  "attitudinalDisjuncts": [
+    {
+      "category": "How you are speaking (ပြောဆိုသူ၏ ရိုးသားပွင့်လင်းမှု)",
+      "phrases": [
+        "honestly",
+        "frankly",
+        "to be honest",
+        "to put it simply",
+        "strictly speaking",
+        "generally speaking"
+      ],
+      "my": "မိမိပြောဆိုမည့် စကားအပေါ် ထားရှိသော စိတ်နေသဘောထားကို ဖော်ပြသည့် အသုံးများ"
+    },
+    {
+      "category": "Opinion on Likelihood & Truth (သေချာမှုနှင့် ဖြစ်နိုင်ခြေ)",
+      "phrases": [
+        "undoubtedly",
+        "definitely",
+        "clearly",
+        "obviously",
+        "apparently",
+        "presumably",
+        "perhaps"
+      ],
+      "my": "ဖြစ်ရပ်တစ်ခု၏ သေချာမှု သို့မဟုတ် ဖြစ်နိုင်ခြေ အတိုင်းအတာကို ဝေဖန်သုံးသပ်သည့် အသုံးများ"
+    },
+    {
+      "category": "Value Judgment (တန်ဖိုးဖြတ် အကဲဖြတ်ချက်)",
+      "phrases": [
+        "fortunately",
+        "wisely",
+        "remarkably",
+        "surprisingly",
+        "interestingly",
+        "understandably"
+      ],
+      "my": "ဖြစ်ရပ်တစ်ခုအပေါ် ကံကောင်းခြင်း၊ ပညာရှိခြင်း၊ အံ့အားသင့်ဖွယ်ဖြစ်ခြင်း စသည်ဖြင့် အကဲဖြတ်စကားများ"
+    }
+  ]
+}

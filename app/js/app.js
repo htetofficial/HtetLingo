@@ -53,6 +53,12 @@ class HtetLingoApp {
 
     // Search Engine & Datasets State
     this.dictTab = 'all';
+    this.dictMode = 'dict'; // 'dict' | 'pos_analyzer'
+    this.posSentenceInput = 'Empowered women lead with courage and wisdom.';
+    this.selectedPOSToken = null;
+    this.graphemePosData = null;
+    this.logicalGrammarData = null;
+    this.typedGrammarData = null;
     this.lexiconData = [];
     this.femaleNamesData = [];
     this.commonErrorsData = null;
@@ -275,14 +281,23 @@ class HtetLingoApp {
 
     // 3. Fetch quick lexicon, female names & common errors for background search
     try {
-      const [lexRes, namesRes, errorsRes] = await Promise.all([
+      const [lexRes, namesRes, errorsRes, posRes, logicalRes, typedRes] = await Promise.all([
         fetch('./data/lexicon_quick.json').catch(() => null),
         fetch('./data/female_names.json').catch(() => null),
-        fetch('./data/common_errors.json').catch(() => null)
+        fetch('./data/common_errors.json').catch(() => null),
+        fetch('./data/grapheme_pos.json').catch(() => null),
+        fetch('./data/logical_grammar.json').catch(() => null),
+        fetch('./data/typed_grammar.json').catch(() => null)
       ]);
       if (lexRes && lexRes.ok) this.lexiconData = await lexRes.json();
       if (namesRes && namesRes.ok) this.femaleNamesData = await namesRes.json();
       if (errorsRes && errorsRes.ok) this.commonErrorsData = await errorsRes.json();
+      if (posRes && posRes.ok) {
+        this.graphemePosData = await posRes.json();
+        if (window.htetPOSAnalyzer) window.htetPOSAnalyzer.setLexicon(this.graphemePosData);
+      }
+      if (logicalRes && logicalRes.ok) this.logicalGrammarData = await logicalRes.json();
+      if (typedRes && typedRes.ok) this.typedGrammarData = await typedRes.json();
 
       if (window.htetSearchEngine) {
         window.htetSearchEngine.setDatasets({
@@ -761,7 +776,7 @@ class HtetLingoApp {
     });
 
     const categoryTabsHtml = `
-      <div class="auth-segmented-tabs" style="margin-bottom: 1.25rem;">
+      <div class="auth-segmented-tabs" style="margin-bottom: 1.25rem; flex-wrap: wrap;">
         <button class="auth-tab-btn ${this.grammarCategory === 'all' ? 'active' : ''}" onclick="app.setGrammarCategory('all')">
           All (25)
         </button>
@@ -773,6 +788,12 @@ class HtetLingoApp {
         </button>
         <button class="auth-tab-btn ${this.grammarCategory === 'clauses_syntax' ? 'active' : ''}" onclick="app.setGrammarCategory('clauses_syntax')">
           🟣 Clauses & Syntax (11)
+        </button>
+        <button class="auth-tab-btn ${this.grammarCategory === 'logical_grammar' ? 'active' : ''}" onclick="app.setGrammarCategory('logical_grammar')">
+          🔗 Logical (Mahavivo)
+        </button>
+        <button class="auth-tab-btn ${this.grammarCategory === 'typed_grammar' ? 'active' : ''}" onclick="app.setGrammarCategory('typed_grammar')">
+          📐 Typed (31)
         </button>
       </div>
     `;
@@ -893,9 +914,15 @@ class HtetLingoApp {
         <!-- Category Tabs -->
         ${categoryTabsHtml}
 
-        <!-- Chapters List -->
+        <!-- Chapters List or Custom Grammar Modules -->
         <div>
-          ${chaptersHtml || '<div style="padding: 2rem; text-align: center; color: var(--text-muted);">No grammar chapters match your search.</div>'}
+          ${
+            this.grammarCategory === 'logical_grammar'
+              ? this.renderLogicalGrammarSection()
+              : this.grammarCategory === 'typed_grammar'
+              ? this.renderTypedGrammarSection()
+              : (chaptersHtml || '<div style="padding: 2rem; text-align: center; color: var(--text-muted);">No grammar chapters match your search.</div>')
+          }
         </div>
       </div>
     `;
@@ -1276,9 +1303,37 @@ class HtetLingoApp {
   // ========================================================================
   // 3. DICTIONARY SEARCH VIEW (HIGH-ACCURACY MULTI-TIERED SEARCH ENGINE)
   // ========================================================================
+  setDictMode(mode) {
+    this.dictMode = mode;
+    this.renderDictView(document.getElementById('mainViewport'));
+  }
+
+  setPOSPreset(sentence) {
+    this.posSentenceInput = sentence;
+    this.selectedPOSToken = null;
+    this.renderDictView(document.getElementById('mainViewport'));
+  }
+
+  handlePOSAnalyze(val) {
+    this.posSentenceInput = val;
+    this.selectedPOSToken = null;
+    this.updatePOSAnalyzerResults();
+  }
+
+  selectPOSToken(idx) {
+    this.selectedPOSToken = idx;
+    this.updatePOSAnalyzerResults();
+  }
+
   renderDictView(container) {
+    if (this.dictMode === 'pos_analyzer') {
+      this.renderPOSAnalyzerView(container);
+      return;
+    }
+
     container.innerHTML = `
       <div style="max-width: 650px; margin: 0 auto; padding: 1.25rem 1rem 6rem;">
+        <!-- Header -->
         <div style="margin-bottom: 1.25rem;">
           <span style="font-size: 0.8rem; font-weight: 900; text-transform: uppercase; color: var(--rose-primary); background: var(--rose-light); padding: 0.3rem 0.8rem; border-radius: 9999px;">
             🔍 HIGH-PRECISION DICTIONARY
@@ -1287,6 +1342,16 @@ class HtetLingoApp {
           <p style="font-size: 0.88rem; color: var(--text-muted);">
             21,000+ EMDictionary entries, Myanmar female names, Karen vocabulary & phonetics.
           </p>
+        </div>
+
+        <!-- Mode Toggle Tabs -->
+        <div class="auth-segmented-tabs" style="margin-bottom: 1.25rem;">
+          <button class="auth-tab-btn active" onclick="app.setDictMode('dict')">
+            📖 Dictionary Search (အဘိဓာန်)
+          </button>
+          <button class="auth-tab-btn" onclick="app.setDictMode('pos_analyzer')">
+            🏷️ Grapheme POS Analyzer (ဝါကျသဒ္ဒါ)
+          </button>
         </div>
 
         <div style="position: relative; margin-bottom: 1.25rem;">
@@ -1310,6 +1375,250 @@ class HtetLingoApp {
         this.handleDictSearch('empower');
       }
     }, 150);
+  }
+
+  renderPOSAnalyzerView(container) {
+    const analyzer = window.htetPOSAnalyzer;
+    const presets = [
+      "Empowered women lead with courage and wisdom.",
+      "The brilliant teacher explained the complex lesson clearly.",
+      "She made a courageous decision for her future.",
+      "Knowledge empowers people to achieve greatness."
+    ];
+
+    const presetsHtml = presets.map(p => `
+      <button class="vocab-chip-btn" style="font-size: 0.78rem; text-align: left; padding: 0.4rem 0.75rem;" 
+              onclick="app.setPOSPreset('${p.replace(/'/g, "\\'")}')">
+        🌸 ${p}
+      </button>
+    `).join('');
+
+    container.innerHTML = `
+      <div style="max-width: 650px; margin: 0 auto; padding: 1.25rem 1rem 6rem;">
+        <!-- Header -->
+        <div style="margin-bottom: 1.25rem;">
+          <span style="font-size: 0.8rem; font-weight: 900; text-transform: uppercase; color: #8b5cf6; background: rgba(139, 92, 246, 0.12); padding: 0.3rem 0.8rem; border-radius: 9999px;">
+            🏷️ GRAPHEME SYNTAX & POS TAGGER
+          </span>
+          <h2 style="font-size: 1.6rem; font-weight: 900; margin-top: 0.45rem;">Sentence Syntax & POS Analyzer</h2>
+          <p style="font-size: 0.88rem; color: var(--text-muted);">
+            Powered by rossettistone/grapheme & Penn Treebank. Color-coded grammatical parsing with interactive morphological inspection.
+          </p>
+        </div>
+
+        <!-- Mode Toggle Tabs -->
+        <div class="auth-segmented-tabs" style="margin-bottom: 1.25rem;">
+          <button class="auth-tab-btn" onclick="app.setDictMode('dict')">
+            📖 Dictionary Search (အဘိဓာန်)
+          </button>
+          <button class="auth-tab-btn active" onclick="app.setDictMode('pos_analyzer')">
+            🏷️ Grapheme POS Analyzer (ဝါကျသဒ္ဒါ)
+          </button>
+        </div>
+
+        <!-- Sentence Input -->
+        <div style="margin-bottom: 1rem;">
+          <label style="display: block; font-size: 0.82rem; font-weight: 800; color: var(--text-muted); margin-bottom: 0.35rem;">
+            TYPE OR PASTE ANY ENGLISH SENTENCE:
+          </label>
+          <textarea id="posSentenceInput" class="auth-input" style="min-height: 80px; padding: 0.85rem; font-size: 1.05rem; font-family: inherit; resize: vertical;" 
+                    placeholder="Type or paste any English sentence..." 
+                    oninput="app.handlePOSAnalyze(this.value)">${this.posSentenceInput}</textarea>
+        </div>
+
+        <!-- Quick Presets -->
+        <div style="margin-bottom: 1.25rem;">
+          <div style="font-size: 0.76rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.45rem;">
+            Quick Example Sentences:
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 0.4rem;">
+            ${presetsHtml}
+          </div>
+        </div>
+
+        <!-- Tagged Tokens Container -->
+        <div id="posAnalyzerResultsContainer">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+    `;
+
+    this.updatePOSAnalyzerResults();
+  }
+
+  updatePOSAnalyzerResults() {
+    const container = document.getElementById('posAnalyzerResultsContainer');
+    if (!container) return;
+
+    const sentence = this.posSentenceInput || '';
+    if (!sentence.trim()) {
+      container.innerHTML = '<div style="text-align: center; padding: 2rem; color: var(--text-muted);">Please enter a sentence above to analyze.</div>';
+      return;
+    }
+
+    const analyzer = window.htetPOSAnalyzer;
+    if (!analyzer) return;
+
+    if (!analyzer.isLoaded && this.graphemePosData) {
+      analyzer.setLexicon(this.graphemePosData);
+    }
+
+    const tokens = analyzer.analyzeSentence(sentence);
+
+    // Build category count stats
+    const catCounts = {};
+    for (const t of tokens) {
+      if (!t.isPunct) {
+        catCounts[t.category] = (catCounts[t.category] || 0) + 1;
+      }
+    }
+
+    const legendPills = Object.entries(catCounts).map(([cat, count]) => {
+      const info = analyzer.categoryInfo[cat.toLowerCase()] || analyzer.categoryInfo.noun;
+      return `
+        <span style="display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.78rem; font-weight: 800; background: ${info.bg}; color: ${info.color}; padding: 0.2rem 0.6rem; border-radius: 9999px; border: 1px solid ${info.color};">
+          <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: ${info.color};"></span>
+          ${count} ${info.label} (${info.my})
+        </span>
+      `;
+    }).join(' ');
+
+    // Render interactive token badges
+    const tokensHtml = tokens.map((t, idx) => {
+      if (t.isPunct) {
+        return `<span style="font-size: 1.25rem; font-weight: 700; color: #94a3b8; margin: 0 0.15rem;">${t.word}</span>`;
+      }
+
+      const isSelected = this.selectedPOSToken === idx;
+      return `
+        <button onclick="app.selectPOSToken(${idx})" 
+                style="display: inline-flex; flex-direction: column; align-items: center; margin: 0.25rem 0.2rem; padding: 0.35rem 0.65rem; border-radius: 12px; background: ${isSelected ? t.color : t.bgColor}; color: ${isSelected ? '#ffffff' : t.color}; border: 2px solid ${t.color}; cursor: pointer; transition: all 0.2s; box-shadow: ${isSelected ? '0 4px 12px rgba(0,0,0,0.15)' : 'none'};">
+          <span style="font-size: 1.1rem; font-weight: 800;">${t.word}</span>
+          <span style="font-size: 0.68rem; font-weight: 900; text-transform: uppercase; opacity: 0.9; margin-top: 0.1rem;">
+            ${t.category}
+          </span>
+        </button>
+      `;
+    }).join('');
+
+    // If a token is selected, show its deep lexical & morphological inspector card!
+    let inspectorHtml = '';
+    if (this.selectedPOSToken !== null && tokens[this.selectedPOSToken]) {
+      const sel = tokens[this.selectedPOSToken];
+      const grammarEng = window.htetGrammarEngine;
+
+      // Lookup meaning in lexiconData
+      let defText = 'Authentic lexical word parsed via Grapheme Part-of-Speech engine.';
+      let meaningText = `${sel.categoryMy} (${sel.category}) အဖြစ် သဒ္ဒါဖွဲ့စည်းပုံအရ သတ်မှတ်ထားပါသည်။`;
+      let phonetic = sel.cleanWord;
+
+      if (this.lexiconData && this.lexiconData.length) {
+        const found = this.lexiconData.find(it => it.w && it.w.toLowerCase() === sel.cleanWord);
+        if (found) {
+          defText = found.d || defText;
+          meaningText = found.m || meaningText;
+          phonetic = found.p || phonetic;
+        }
+      }
+
+      // Morphological details from typed-english Grammar Engine
+      let morphologyHtml = '';
+      if (grammarEng) {
+        if (sel.categoryKey === 'verb') {
+          const conj = grammarEng.conjugateVerb(sel.cleanWord);
+          if (conj) {
+            morphologyHtml = `
+              <div style="margin-top: 0.85rem; padding-top: 0.75rem; border-top: 1px solid var(--border-color);">
+                <div style="font-size: 0.76rem; font-weight: 900; color: #8b5cf6; text-transform: uppercase; margin-bottom: 0.35rem;">
+                  📐 Typed-English Conjugation Matrix:
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.4rem; font-size: 0.84rem;">
+                  <div><span style="color: var(--text-muted);">Base:</span> <strong>${conj.base}</strong></div>
+                  <div><span style="color: var(--text-muted);">3rd Person:</span> <strong>${conj.thirdPerson}</strong></div>
+                  <div><span style="color: var(--text-muted);">Past Simple:</span> <strong>${conj.past}</strong></div>
+                  <div><span style="color: var(--text-muted);">Gerund (-ing):</span> <strong>${conj.gerund}</strong></div>
+                </div>
+              </div>
+            `;
+          }
+        } else if (sel.categoryKey === 'noun') {
+          const pl = grammarEng.pluralizeNoun(sel.cleanWord);
+          morphologyHtml = `
+            <div style="margin-top: 0.85rem; padding-top: 0.75rem; border-top: 1px solid var(--border-color); font-size: 0.84rem;">
+              <span style="color: var(--text-muted);">Plural Form:</span> <strong>${pl}</strong>
+            </div>
+          `;
+        } else if (sel.categoryKey === 'adjective') {
+          const comp = grammarEng.compareAdjective(sel.cleanWord);
+          const adv = grammarEng.adverbialize(sel.cleanWord);
+          if (comp) {
+            morphologyHtml = `
+              <div style="margin-top: 0.85rem; padding-top: 0.75rem; border-top: 1px solid var(--border-color); font-size: 0.84rem;">
+                <div><span style="color: var(--text-muted);">Comparative:</span> <strong>${comp.comparative}</strong></div>
+                <div><span style="color: var(--text-muted);">Superlative:</span> <strong>${comp.superlative}</strong></div>
+                <div><span style="color: var(--text-muted);">Adverb Form:</span> <strong>${adv}</strong></div>
+              </div>
+            `;
+          }
+        }
+      }
+
+      inspectorHtml = `
+        <div class="card" style="padding: 1.25rem; border-radius: 20px; border: 2px solid ${sel.color}; background: ${sel.bgColor}; margin-top: 1.25rem; animation: fadeIn 0.25s ease;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <div>
+              <div style="display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;">
+                <span style="font-size: 1.4rem; font-weight: 900; color: var(--text-main);">${sel.word}</span>
+                <span style="font-size: 0.75rem; font-weight: 900; background: ${sel.color}; color: #fff; padding: 0.2rem 0.6rem; border-radius: 9999px;">
+                  ${sel.category} • ${sel.categoryMy}
+                </span>
+                <span style="font-size: 0.75rem; font-family: monospace; font-weight: 800; background: var(--bg-card-subtle); border: 1px solid var(--border-color); padding: 0.15rem 0.5rem; border-radius: 6px; color: var(--text-muted);">
+                  Penn Tag: ${sel.tag}
+                </span>
+              </div>
+              <div style="font-size: 0.88rem; color: var(--lavender); font-family: monospace; font-weight: 700; margin-top: 0.2rem;">
+                /${phonetic}/
+              </div>
+            </div>
+
+            <button class="htet-audio-btn" style="width: 38px; height: 38px; font-size: 1.1rem;" 
+                    onclick="app.speakCurrent('${sel.cleanWord.replace(/'/g, "\\'")}', 'en')" title="Pronounce">
+              🔊
+            </button>
+          </div>
+
+          <div style="font-size: 1.05rem; font-weight: 800; color: var(--rose-primary); margin-top: 0.65rem; line-height: 1.4;">
+            ${meaningText}
+          </div>
+
+          <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.35rem; line-height: 1.5;">
+            ${defText}
+          </div>
+
+          ${morphologyHtml}
+        </div>
+      `;
+    }
+
+    container.innerHTML = `
+      <!-- Visual Token Badges Box -->
+      <div class="card" style="padding: 1.35rem; border-radius: 20px; line-height: 2.2; margin-bottom: 1rem;">
+        <div style="font-size: 0.78rem; font-weight: 900; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.65rem;">
+          PARSED SYNTACTIC STRUCTURE (TAP ANY TOKEN):
+        </div>
+        <div style="display: flex; flex-wrap: wrap; align-items: center;">
+          ${tokensHtml}
+        </div>
+      </div>
+
+      <!-- Parts of speech breakdown count legend -->
+      <div style="display: flex; flex-wrap: wrap; gap: 0.45rem; margin-bottom: 0.75rem;">
+        ${legendPills}
+      </div>
+
+      <!-- Inspector Card -->
+      ${inspectorHtml || '<div style="text-align: center; padding: 1.25rem; font-size: 0.88rem; color: var(--text-muted); border: 1px dashed var(--border-color); border-radius: 16px;">💡 Tap any colored word chip above to inspect its morphology, conjugation, and definition.</div>'}
+    `;
   }
 
   handleDictSearch(query) {
