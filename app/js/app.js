@@ -631,11 +631,17 @@ class HtetLingoApp {
 
   async loadExternalDatasets() {
     try {
-      const res = await fetch('./data/eng_myan_quick.json');
-      if (res.ok) {
-        this.engMyanCache = await res.json();
-        console.log('[HtetLingo] EMDictionary database loaded:', this.engMyanCache.length, 'words');
-      }
+      const [emRes, fnRes, eeRes, kwRes] = await Promise.all([
+        fetch('./data/eng_myan_quick.json').catch(() => null),
+        fetch('./data/female_names.json').catch(() => null),
+        fetch('./data/eng_eng_quick.json').catch(() => null),
+        fetch('./data/karen_words.json').catch(() => null)
+      ]);
+      if (emRes && emRes.ok) this.engMyanCache = await emRes.json();
+      if (fnRes && fnRes.ok) this.femaleNamesCache = await fnRes.json();
+      if (eeRes && eeRes.ok) this.engEngCache = await eeRes.json();
+      if (kwRes && kwRes.ok) this.karenCache = await kwRes.json();
+      console.log('[HtetLingo] Datasets preloaded into offline memory cache');
     } catch(e) {}
   }
 
@@ -686,6 +692,48 @@ class HtetLingoApp {
             <div style="font-size: 0.92rem; color: var(--text-main); line-height: 1.6;">
               ${item.d}
             </div>
+          </div>
+        `).join('');
+      }
+    }
+
+    // 3. Query English-to-English Dictionary (LexiVerse / adityasahu252 dataset)
+    if (this.engEngCache) {
+      const eeKeys = Object.keys(this.engEngCache).filter(k => k.toLowerCase().startsWith(q) || k.toLowerCase().includes(q)).slice(0, 6);
+      if (eeKeys.length) {
+        resultsHtml += '<div style="margin: 1.25rem 0 0.6rem; font-weight: 800; color: var(--lavender-dark); font-size: 0.95rem;">📖 English Monolingual Dictionary (LexiVerse Dataset)</div>';
+        resultsHtml += eeKeys.map(k => `
+          <div class="card" style="padding: 1.15rem; margin-bottom: 0.75rem;">
+            <div class="card-header" style="margin-bottom: 0.4rem;">
+              <div>
+                <span style="font-size: 0.72rem; background: var(--lavender-light); color: var(--lavender-dark); padding: 0.15rem 0.55rem; border-radius: var(--radius-full); font-weight: 800;">English-to-English</span>
+                <h3 style="font-size: 1.2rem; font-weight: 900; margin-top: 0.2rem;">${k}</h3>
+              </div>
+              <button class="icon-btn" onclick="app.speakCurrent('${k.replace(/'/g, "\\'")}', 'en')">🔊 Speak</button>
+            </div>
+            <div style="font-size: 0.92rem; color: var(--text-main); line-height: 1.6;">
+              ${this.engEngCache[k]}
+            </div>
+          </div>
+        `).join('');
+      }
+    }
+
+    // 4. Query Myanmar Female Names Dataset (L16H7 dataset)
+    if (this.femaleNamesCache && this.femaleNamesCache.length) {
+      const fnMatches = this.femaleNamesCache.filter(item => {
+        return item.en.toLowerCase().includes(q) || item.mm.includes(q);
+      }).slice(0, 8);
+
+      if (fnMatches.length) {
+        resultsHtml += '<div style="margin: 1.25rem 0 0.6rem; font-weight: 800; color: #d63384; font-size: 0.95rem;">🌸 Myanmar Female Names & Identity (L16H7 Dataset)</div>';
+        resultsHtml += fnMatches.map(item => `
+          <div class="card" style="padding: 0.9rem 1.15rem; margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <div style="font-weight: 800; font-size: 1.1rem; color: var(--text-main);">${item.mm}</div>
+              <div style="font-size: 0.85rem; color: var(--text-muted);">${item.en} • Myanmar Female Name</div>
+            </div>
+            <button class="icon-btn" onclick="app.speakCurrent('${item.en}', 'en')">🔊</button>
           </div>
         `).join('');
       }

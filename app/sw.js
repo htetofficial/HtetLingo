@@ -1,5 +1,5 @@
 // HtetLingo Service Worker - Cute & Feminist Offline-First Learning
-const CACHE_NAME = 'htetlingo-v1.1.0';
+const CACHE_NAME = 'htetlingo-v1.2.0';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -14,6 +14,7 @@ const ASSETS_TO_CACHE = [
   './js/aiTutor.js',
   './data/eng_myan_quick.json',
   './data/female_names.json',
+  './data/eng_eng_quick.json',
   './data/karen_words.json',
   './data/myanmar_common_words.json',
   './icons/icon.svg'
