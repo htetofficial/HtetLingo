@@ -54,6 +54,10 @@
           ⚡ <span id="topEnergyCount">100%</span>
         </div>
 
+        <button id="topUserBtn" class="htet-stat-badge stat-user" title="Account / Profile" onclick="app.handleUserBtnClick()" style="cursor: pointer; border: none; font-size: 0.85rem; padding: 0.35rem 0.65rem;">
+          <span id="topUserAvatar">👤 Login</span>
+        </button>
+
         <button id="themeToggleBtn" class="icon-btn" title="Toggle Light/Dark Theme" aria-label="Toggle theme">
           🌓
         </button>
@@ -72,9 +76,9 @@
         <span>Learn</span>
       </button>
 
-      <button class="nav-tab-item" data-tab="practice">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><polygon points="12 6 12 12 16 14"></polygon></svg>
-        <span>Practice</span>
+      <button class="nav-tab-item" data-tab="vocab">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+        <span>Vocab</span>
       </button>
 
       <button class="nav-tab-item" data-tab="dict">
@@ -98,6 +102,16 @@
       </button>
     </nav>
   </div>
+
+  <!-- HtetLingo Global Modal Container -->
+  <div id="htetModalOverlay" class="htet-modal-overlay" style="display: none;" onclick="app.closeModal(event)">
+    <div id="htetModalCard" class="htet-modal-card" onclick="event.stopPropagation()">
+      <!-- Injected dynamically -->
+    </div>
+  </div>
+
+  <!-- HtetLingo Toast Notification -->
+  <div id="htetToast" class="htet-toast" style="display: none;"></div>
 
   <!-- Application Scripts -->
   <script src="js/sound.js"></script>
