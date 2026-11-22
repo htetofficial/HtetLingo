@@ -63,6 +63,21 @@ class HtetAITutor {
           de: "Gesunde Grenzen zu setzen ist gelebte Selbstfürsorge. 🌷 In welcher Situation möchtest du dich klarer positionieren?",
           ko: "자신만의 건강한 경계를 세우는 것은 스스로를 아끼는 일이에요. 🌷 어떤 상황에서 당당히 의견을 내고 싶으신가요?"
         }
+      },
+      {
+        id: 'grammar_mentor',
+        title: '📘 Grammar Mentor (旋元佑 သဒ္ဒါလက်စွဲ)',
+        description: 'Ask any English grammar question: sentence patterns, clauses, tenses, or reduced clauses.',
+        starter: {
+          en: "Welcome to the English Grammar Masterclass! 📘 I can explain any concept from 旋元佑's 25 chapters—from sentence patterns (S+V+O+C) to reduced clauses and inversions. What grammar rule would you like to master today?",
+          ja: "英文法マスタークラスへようこそ！📘 旋元佑の25章文法体系（基本文型から分詞構文・倒置まで）何でも質問してくださいね。",
+          zh: "欢迎来到旋元佑进阶文法导师课！📘 从五大基本句型、动词时态、关系从句到减化子句，您想探讨哪个文法主题？",
+          my: "旋元佑 အဆင့်မြင့် အင်္ဂလိပ်သဒ္ဒါစကားဝိုင်းမှ ကြိုဆိုပါတယ်ရှင်! 📘 အခြေခံဝါကျဖွဲ့ပုံ (၅) မျိုးမှသည် ကာလ ၁၂ မျိုး၊ ဆက်စပ်ဝါကျခွဲများနှင့် အတိုချုံးဝါကျဖွဲ့နည်းများအထိ ဘယ်သဒ္ဒါစည်းမျဉ်းကို ဆွေးနွေးလေ့လာချင်ပါသလဲရှင်။",
+          th: "ยินดีต้อนรับสู่คลาสไวยากรณ์ภาษาอังกฤษค่ะ! 📘 สอบถามโครงสร้างประโยค กาลเวลา หรือประโยคลดรูปได้เลยนะคะ",
+          fr: "Bienvenue dans le cours de grammaire anglaise avancée ! 📘 Posez-moi vos questions sur la structure des phrases et les propositions réduites.",
+          de: "Willkommen zum englischen Grammatik-Meisterkurs! 📘 Fragen Sie mich gerne zu Satzstrukturen, Zeiten und Relativsätzen.",
+          ko: "고급 영문법 멘토링에 오신 것을 환영합니다! 📘 5대 문형부터 도치구문, 축약절까지 어떤 문법이든 편하게 질문해 주세요."
+        }
       }
     ];
 
@@ -125,6 +140,12 @@ class HtetAITutor {
     }
     if (text.includes('no') || text.includes('stop') || text.includes('bound') || text.includes('ငြင်း') || text.includes('断')) {
       return { reply: langPack.boundary, tip: "🌷 Boundary Master: 'No' is a complete sentence delivered with grace." };
+    }
+    if (text.includes('grammar') || text.includes('pattern') || text.includes('tense') || text.includes('clause') || text.includes('inversion') || text.includes('သဒ္ဒါ') || text.includes('ဝါကျ') || text.includes('svo') || text.includes('文法')) {
+      return {
+        reply: "旋元佑 အဆင့်မြင့် အင်္ဂလိပ်သဒ္ဒါအရ အင်္ဂလိပ်ဝါကျအားလုံးသည် အခြေခံဖွဲ့စည်းပုံ (၅) မျိုး (S+V, S+V+O, S+V+O+O, S+V+C, S+V+O+C) ထဲမှ တစ်ခုခုနှင့် ကိုက်ညီရပါမည်။ ရှုပ်ထွေးသော ဝါကျခွဲများကို Participle သို့မဟုတ် Infinitive ဖြင့် အတိုချုံ့ခြင်း (Clause Reduction) သည် အဆင့်မြင့် အင်္ဂလိပ်စာရေးသားမှု၏ အဓိကသော့ချက်ဖြစ်ပါသည်။ 📘 Vocab tab ရှိ 25-Chapter Grammar Handbook တွင် အခန်းတိုင်းကို ဝင်ရောက်လေ့လာနိုင်ပါတယ်ရှင်!",
+        tip: "📘 旋元佑 Grammar Insight: Master the 5 basic sentence patterns before advancing to clause reductions."
+      };
     }
 
     return {

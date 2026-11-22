@@ -1,5 +1,6 @@
 // ==========================================================================
-// HtetLingo Interactive Multilingual Platform (v2.3.0)
+// HtetLingo Interactive Multilingual Platform (v2.4.0)
+// Integrated English Grammar Handbook (旋元佑 25-Chapter System)
 // Complete Auth (Supabase), Vocabulary Learning Studio (SRS, Flashcards,
 // Speed Match, Word Bank), Smart Search, and Learning Roadmap.
 // Designed with love by Htet for learners & polyglots worldwide. 🌸
@@ -17,6 +18,7 @@ class HtetLingoApp {
     this.energy = parseInt(localStorage.getItem('htetlingo_energy') || '100', 10);
     this.gems = parseInt(localStorage.getItem('htetlingo_gems') || '120', 10);
     this.completedLevels = JSON.parse(localStorage.getItem('htetlingo_completed_levels') || '["ja_u1_l1"]');
+    this.completedGrammarQuizzes = JSON.parse(localStorage.getItem('htetlingo_grammar_quizzes') || '[]');
 
     // Auth State
     this.currentUser = window.htetSupabase?.getCurrentUser() || null;
@@ -33,7 +35,7 @@ class HtetLingoApp {
     this.isAnswerCorrect = false;
 
     // Vocabulary Learning Studio State
-    this.vocabDeck = 'feminism'; // 'feminism', 'em_verbs', 'em_adjectives', 'heritage_names', 'daily_life', 'karen', 'bookmarks'
+    this.vocabDeck = 'feminism'; // 'feminism', 'grammar_book', 'em_verbs', 'em_adjectives', 'heritage_names', 'daily_life', 'karen', 'bookmarks'
     this.vocabMode = 'flashcards'; // 'flashcards', 'match', 'explorer'
     this.vocabCardIndex = 0;
     this.isVocabCardFlipped = false;
@@ -42,6 +44,12 @@ class HtetLingoApp {
     this.vocabSelectedA = null;
     this.vocabSelectedB = null;
     this.vocabMatchedIds = [];
+
+    // English Grammar Handbook State (旋元佑 25 Chapters)
+    this.grammarChapters = [];
+    this.grammarCategory = 'all'; // 'all', 'foundation', 'verbs_tenses', 'clauses_syntax'
+    this.grammarSearchQuery = '';
+    this.activeGrammarChapterId = null;
 
     // Search Engine & Datasets State
     this.dictTab = 'all';
@@ -65,6 +73,13 @@ class HtetLingoApp {
         titleMy: 'အမျိုးသမီးစွမ်းဆောင်ရည်နှင့် တန်းတူညီမျှရေး',
         badge: 'Core',
         items: [] // populated from HTET_DATA.vocabulary
+      },
+      grammar_book: {
+        id: 'grammar_book',
+        title: '📘 Grammar Masterclass (25 Ch)',
+        titleMy: '旋元佑 အဆင့်မြင့် အင်္ဂလိပ်သဒ္ဒါ လက်စွဲ (၂၅ ခန်း)',
+        badge: '旋元佑',
+        items: [] // populated from grammar_handbook.json
       },
       em_verbs: {
         id: 'em_verbs',
@@ -162,8 +177,8 @@ class HtetLingoApp {
 
     if ('serviceWorker' in navigator) {
       try {
-        await navigator.serviceWorker.register('./sw.js?v=2.3.0');
-        console.log('[HtetLingo] Service worker v2.3.0 active');
+        await navigator.serviceWorker.register('./sw.js?v=2.4.0');
+        console.log('[HtetLingo] Service worker v2.4.0 active');
       } catch (e) {}
     }
   }
@@ -238,7 +253,26 @@ class HtetLingoApp {
       });
     }
 
-    // 2. Fetch quick lexicon & female names for background search
+    // 2. Fetch grammar handbook (旋元佑 25 chapters)
+    try {
+      const grammarRes = await fetch('./data/grammar_handbook.json').catch(() => null);
+      if (grammarRes && grammarRes.ok) {
+        const gData = await grammarRes.json();
+        this.grammarChapters = gData.chapters || [];
+        this.decks.grammar_book.items = this.grammarChapters.map(ch => ({
+          word: ch.titleEn,
+          phonetic: `Chapter ${ch.chapter}`,
+          pos: ch.category,
+          my: ch.titleMy,
+          example: ch.formula,
+          chapterData: ch
+        }));
+      }
+    } catch (e) {
+      console.warn('Grammar handbook load failed');
+    }
+
+    // 3. Fetch quick lexicon & female names for background search
     try {
       const [lexRes, namesRes] = await Promise.all([
         fetch('./data/lexicon_quick.json').catch(() => null),
@@ -252,13 +286,17 @@ class HtetLingoApp {
   }
 
   switchTab(tabName) {
-    // Handle alias
     if (tabName === 'practice') tabName = 'vocab';
+    if (tabName === 'grammar') {
+      this.currentTab = 'vocab';
+      this.vocabDeck = 'grammar_book';
+    } else {
+      this.currentTab = tabName;
+    }
 
-    this.currentTab = tabName;
     document.querySelectorAll('.nav-tab-item').forEach(btn => {
       const t = btn.getAttribute('data-tab');
-      btn.classList.toggle('active', t === tabName || (tabName === 'vocab' && t === 'practice'));
+      btn.classList.toggle('active', t === this.currentTab || (this.currentTab === 'vocab' && t === 'practice'));
     });
 
     const viewport = document.getElementById('mainViewport');
@@ -346,6 +384,7 @@ class HtetLingoApp {
     if (type === 'success') icon = '✓';
     if (type === 'error') icon = '⚠️';
     if (type === 'cloud') icon = '☁️';
+    if (type === 'grammar') icon = '📘';
 
     toast.innerHTML = `<span>${icon}</span> <span>${message}</span>`;
     toast.style.display = 'flex';
@@ -512,7 +551,6 @@ class HtetLingoApp {
   async syncProgressToCloud() {
     this.showToast('Syncing with Supabase Cloud...', 'cloud');
     setTimeout(() => {
-      // Record progress sync timestamp
       localStorage.setItem('htetlingo_last_sync', new Date().toISOString());
       this.showToast('☁️ All progress & bookmarks synced to Supabase!', 'success');
       if (this.currentTab === 'profile') this.renderProfileView(document.getElementById('mainViewport'));
@@ -520,7 +558,7 @@ class HtetLingoApp {
   }
 
   // ========================================================================
-  // 1. LEARN STUDIO (ROADMAP VIEW)
+  // 1. LEARN STUDIO (ROADMAP VIEW WITH GRAMMAR MASTERCLASS PROMOTION)
   // ========================================================================
   renderLearnView(container) {
     const cur = window.HTET_CURRICULUM[this.targetLang] || window.HTET_CURRICULUM.ja;
@@ -573,20 +611,51 @@ class HtetLingoApp {
       `;
     });
 
+    // Grammar handbook quick banner
+    const grammarBannerHtml = `
+      <div class="card" style="padding: 1.25rem 1.4rem; border-radius: 20px; border: 2px solid #3b82f6; background: linear-gradient(135deg, light-dark(#eff6ff, #1e293b), light-dark(#dbeafe, #0f172a)); margin-bottom: 2rem; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 1rem; box-shadow: 0 4px 16px rgba(59, 130, 246, 0.14);"
+           onclick="app.openGrammarHandbook()">
+        <div>
+          <span style="font-size: 0.75rem; font-weight: 900; background: #3b82f6; color: white; padding: 0.2rem 0.6rem; border-radius: 9999px;">
+            旋元佑 MASTERCLASS
+          </span>
+          <h3 style="font-size: 1.15rem; font-weight: 900; margin-top: 0.35rem; color: var(--text-main);">
+            📘 25 English Grammar Chapters
+          </h3>
+          <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.15rem;">
+            Master sentence patterns, clauses, inversions, and reduced clauses with audio & quizzes.
+          </p>
+        </div>
+        <div style="font-size: 1.5rem; color: #3b82f6; font-weight: 900;">→</div>
+      </div>
+    `;
+
     container.innerHTML = `
       <div class="htet-roadmap-wrap">
+        ${grammarBannerHtml}
         ${unitsHtml}
       </div>
     `;
   }
 
+  openGrammarHandbook() {
+    this.vocabDeck = 'grammar_book';
+    this.switchTab('vocab');
+  }
+
   // ========================================================================
-  // 2. VOCABULARY LEARNING STUDIO (DEDICATED VOCAB HUB: SRS, MATCH, WORD BANK)
+  // 2. VOCABULARY & GRAMMAR LEARNING STUDIO
   // ========================================================================
   renderVocabView(container) {
     const deck = this.decks[this.vocabDeck] || this.decks.feminism;
     const items = deck.items || [];
     const deckKeys = Object.keys(this.decks);
+
+    // If Grammar Deck is selected, render the dedicated 25-Chapter Grammar Masterclass!
+    if (this.vocabDeck === 'grammar_book') {
+      this.renderGrammarMasterclassView(container);
+      return;
+    }
 
     // Deck pills HTML
     const deckPillsHtml = deckKeys.map(k => {
@@ -646,6 +715,212 @@ class HtetLingoApp {
         ${contentHtml}
       </div>
     `;
+  }
+
+  // ========================================================================
+  // 2B. ENGLISH GRAMMAR MASTERCLASS (旋元佑 25-CHAPTER VIEWER)
+  // ========================================================================
+  renderGrammarMasterclassView(container) {
+    const deckKeys = Object.keys(this.decks);
+    const deckPillsHtml = deckKeys.map(k => {
+      const d = this.decks[k];
+      const count = d.items?.length || 0;
+      const isActive = this.vocabDeck === k;
+      return `
+        <button class="vocab-deck-pill ${isActive ? 'active' : ''}" onclick="app.setVocabDeck('${k}')">
+          <span>${d.title}</span>
+          <span style="font-size: 0.76rem; opacity: 0.85; background: rgba(0,0,0,0.12); padding: 0.15rem 0.45rem; border-radius: 9999px;">${count}</span>
+        </button>
+      `;
+    }).join('');
+
+    // Filter chapters by category & search query
+    const q = this.grammarSearchQuery.toLowerCase().trim();
+    const filteredChapters = this.grammarChapters.filter(ch => {
+      const matchesCat = this.grammarCategory === 'all' || ch.category === this.grammarCategory;
+      if (!matchesCat) return false;
+      if (!q) return true;
+      return (
+        ch.titleEn.toLowerCase().includes(q) ||
+        ch.titleZh.includes(q) ||
+        ch.titleMy.includes(q) ||
+        ch.formula.toLowerCase().includes(q) ||
+        ch.summaryMy.includes(q)
+      );
+    });
+
+    const categoryTabsHtml = `
+      <div class="auth-segmented-tabs" style="margin-bottom: 1.25rem;">
+        <button class="auth-tab-btn ${this.grammarCategory === 'all' ? 'active' : ''}" onclick="app.setGrammarCategory('all')">
+          All (25)
+        </button>
+        <button class="auth-tab-btn ${this.grammarCategory === 'foundation' ? 'active' : ''}" onclick="app.setGrammarCategory('foundation')">
+          🟢 Foundation (7)
+        </button>
+        <button class="auth-tab-btn ${this.grammarCategory === 'verbs_tenses' ? 'active' : ''}" onclick="app.setGrammarCategory('verbs_tenses')">
+          🟡 Verbs & Tenses (7)
+        </button>
+        <button class="auth-tab-btn ${this.grammarCategory === 'clauses_syntax' ? 'active' : ''}" onclick="app.setGrammarCategory('clauses_syntax')">
+          🟣 Clauses & Syntax (11)
+        </button>
+      </div>
+    `;
+
+    const chaptersHtml = filteredChapters.map(ch => {
+      const isQuizDone = this.completedGrammarQuizzes.includes(ch.id);
+
+      const examplesHtml = (ch.examples || []).map(ex => `
+        <div class="grammar-example-box">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem;">
+            <strong style="font-size: 1.05rem; color: var(--text-main);">${ex.en}</strong>
+            <button class="htet-audio-btn" style="width: 34px; height: 34px; font-size: 0.95rem;" 
+                    onclick="app.speakCurrent('${ex.en.replace(/'/g, "\\'")}', 'en')" title="Pronounce">
+              🔊
+            </button>
+          </div>
+          <div style="font-size: 0.78rem; font-weight: 800; color: #3b82f6; margin-top: 0.2rem; font-family: monospace;">
+            [Structure] ${ex.breakdown}
+          </div>
+          <div style="font-size: 0.92rem; color: var(--rose-primary); font-weight: 800; margin-top: 0.25rem;">
+            ${ex.my}
+          </div>
+        </div>
+      `).join('');
+
+      const keyPointsHtml = (ch.keyPoints || []).map(kp => `
+        <li style="margin-bottom: 0.35rem;">🌸 ${kp}</li>
+      `).join('');
+
+      const quiz = ch.quiz;
+      const quizOptionsHtml = quiz.options.map((opt, optIdx) => `
+        <button class="pair-card-cell" style="padding: 0.75rem 1rem; text-align: left; font-size: 0.95rem; width: 100%; margin-bottom: 0.5rem;"
+                onclick="app.answerGrammarQuiz('${ch.id}', ${optIdx}, ${quiz.correct}, '${(quiz.explanation || '').replace(/'/g, "\\'")}')">
+          <span style="font-weight: 900; margin-right: 0.4rem;">${String.fromCharCode(65 + optIdx)}.</span> ${opt}
+        </button>
+      `).join('');
+
+      return `
+        <div class="grammar-chapter-card" id="grammar_card_${ch.id}">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem;">
+            <div>
+              <span style="font-size: 0.75rem; font-weight: 900; background: light-dark(#e0e7ff, #1e1b4b); color: #4338ca; padding: 0.2rem 0.6rem; border-radius: 9999px;">
+                CHAPTER ${ch.chapter} • ${ch.titleZh}
+              </span>
+              <h3 style="font-size: 1.35rem; font-weight: 900; margin-top: 0.4rem; color: var(--text-main);">
+                ${ch.titleEn}
+              </h3>
+              <p style="font-size: 0.95rem; color: var(--rose-primary); font-weight: 800;">
+                ${ch.titleMy}
+              </p>
+            </div>
+            ${isQuizDone ? '<span style="font-size: 0.8rem; font-weight: 900; background: #ecfdf5; color: #047857; padding: 0.25rem 0.65rem; border-radius: 9999px;">✓ PASSED (+15 XP)</span>' : ''}
+          </div>
+
+          <div class="grammar-formula-chip">
+            📐 FORMULA: ${ch.formula}
+          </div>
+
+          <div style="font-size: 0.92rem; color: var(--text-main); line-height: 1.6; margin-bottom: 1rem; background: var(--bg-card-subtle); padding: 0.85rem 1.1rem; border-radius: 14px;">
+            ${ch.summaryMy}
+          </div>
+
+          <ul style="list-style: none; padding: 0; margin: 0 0 1.25rem; font-size: 0.88rem; line-height: 1.6;">
+            ${keyPointsHtml}
+          </ul>
+
+          <h4 style="font-size: 1rem; font-weight: 900; margin-bottom: 0.65rem; color: var(--text-main);">
+            ✨ Core Authentic Examples:
+          </h4>
+          <div style="margin-bottom: 1.25rem;">
+            ${examplesHtml}
+          </div>
+
+          <!-- Interactive Chapter Quiz -->
+          <div class="grammar-quiz-box" id="quiz_box_${ch.id}">
+            <div style="font-size: 0.8rem; font-weight: 900; color: #3b82f6; text-transform: uppercase; margin-bottom: 0.4rem;">
+              🧠 Chapter ${ch.chapter} Mastery Check (+15 Bloom XP)
+            </div>
+            <div style="font-size: 1.05rem; font-weight: 900; margin-bottom: 0.85rem; color: var(--text-main);">
+              ${quiz.question}
+            </div>
+            <div>
+              ${quizOptionsHtml}
+            </div>
+            <div id="quiz_feedback_${ch.id}" style="margin-top: 0.6rem; font-size: 0.9rem; font-weight: 800;"></div>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    container.innerHTML = `
+      <div style="max-width: 650px; margin: 0 auto; padding: 1.25rem 1rem 6rem;">
+        <!-- Header -->
+        <div style="margin-bottom: 1.25rem;">
+          <span style="font-size: 0.8rem; font-weight: 900; text-transform: uppercase; color: #3b82f6; background: light-dark(#eff6ff, #1e293b); padding: 0.3rem 0.8rem; border-radius: 9999px;">
+            📘 旋元佑 ADVANCED ENGLISH GRAMMAR (25 CHAPTERS)
+          </span>
+          <h2 style="font-size: 1.6rem; font-weight: 900; margin-top: 0.45rem; color: var(--text-main);">
+            English Grammar Handbook
+          </h2>
+          <p style="font-size: 0.9rem; color: var(--text-muted);">
+            Master all 25 chapters from basic sentence patterns to clause reductions with formulas, audio, and quizzes.
+          </p>
+        </div>
+
+        <!-- Deck Selector Horizontal Scroll -->
+        <div class="vocab-deck-scroller">
+          ${deckPillsHtml}
+        </div>
+
+        <!-- Search Bar -->
+        <div style="margin-bottom: 1.25rem;">
+          <input type="text" class="auth-input" placeholder="Search grammar rules (e.g. inversion, relative clause, tenses, S+V+C)..." 
+                 value="${this.grammarSearchQuery}" 
+                 oninput="app.filterGrammarHandbook(this.value)">
+        </div>
+
+        <!-- Category Tabs -->
+        ${categoryTabsHtml}
+
+        <!-- Chapters List -->
+        <div>
+          ${chaptersHtml || '<div style="padding: 2rem; text-align: center; color: var(--text-muted);">No grammar chapters match your search.</div>'}
+        </div>
+      </div>
+    `;
+  }
+
+  setGrammarCategory(cat) {
+    this.grammarCategory = cat;
+    this.renderVocabView(document.getElementById('mainViewport'));
+  }
+
+  filterGrammarHandbook(val) {
+    this.grammarSearchQuery = val;
+    this.renderVocabView(document.getElementById('mainViewport'));
+  }
+
+  answerGrammarQuiz(chId, selectedOpt, correctOpt, explanation) {
+    const feedbackEl = document.getElementById(`quiz_feedback_${chId}`);
+    if (selectedOpt === correctOpt) {
+      if (!this.completedGrammarQuizzes.includes(chId)) {
+        this.completedGrammarQuizzes.push(chId);
+        localStorage.setItem('htetlingo_grammar_quizzes', JSON.stringify(this.completedGrammarQuizzes));
+        this.xp += 15;
+        localStorage.setItem('htetlingo_xp', this.xp);
+      }
+      if (window.htetSound) window.htetSound.playDing();
+      if (feedbackEl) {
+        feedbackEl.innerHTML = `<span style="color: #059669;">✓ Correct! Brilliant understanding! +15 Bloom XP 🌸</span><div style="font-weight: normal; margin-top: 0.2rem; color: var(--text-muted);">${explanation}</div>`;
+      }
+      this.showToast('✓ Chapter rule mastered! +15 Bloom XP', 'grammar');
+    } else {
+      if (window.htetSound) window.htetSound.playBuzz();
+      if (feedbackEl) {
+        feedbackEl.innerHTML = `<span style="color: #dc2626;">✕ Incorrect. Review rule and try again!</span><div style="font-weight: normal; margin-top: 0.2rem; color: var(--text-muted);">${explanation}</div>`;
+      }
+    }
+    this.updateStatusHeader();
   }
 
   setVocabDeck(deckKey) {
@@ -785,14 +1060,12 @@ class HtetLingoApp {
 
     const cur = items[this.vocabCardIndex % items.length];
 
-    // Award XP
     let xpGain = 5;
     if (rating === 'good') xpGain = 10;
     if (rating === 'easy') xpGain = 20;
     this.xp += xpGain;
     localStorage.setItem('htetlingo_xp', this.xp);
 
-    // Update IndexedDB SRS
     if (window.htetDB) {
       await window.htetDB.updateSRSProgress(cur.word, this.targetLang, rating);
     }
@@ -800,7 +1073,6 @@ class HtetLingoApp {
     if (window.htetSound) window.htetSound.playDing();
     this.showToast(`+${xpGain} Bloom XP! (${rating.toUpperCase()})`, 'success');
 
-    // Advance to next card
     this.vocabCardIndex += 1;
     this.isVocabCardFlipped = false;
     this.updateStatusHeader();
@@ -817,7 +1089,6 @@ class HtetLingoApp {
     this.vocabSelectedB = null;
     this.vocabMatchedIds = [];
 
-    // Shuffle left and right independently
     this.vocabLeftWords = items.map((it, i) => ({ id: i, word: it.word })).sort(() => 0.5 - Math.random());
     this.vocabRightMeanings = items.map((it, i) => ({ id: i, my: it.my })).sort(() => 0.5 - Math.random());
   }
@@ -892,14 +1163,12 @@ class HtetLingoApp {
 
     if (this.vocabSelectedA !== null && this.vocabSelectedB !== null) {
       if (this.vocabSelectedA === this.vocabSelectedB) {
-        // Correct Match!
         this.vocabMatchedIds.push(this.vocabSelectedA);
         this.xp += 10;
         localStorage.setItem('htetlingo_xp', this.xp);
         if (window.htetSound) window.htetSound.playDing();
         this.showToast('🌸 Matched! +10 Bloom XP', 'success');
       } else {
-        // Incorrect
         if (window.htetSound) window.htetSound.playBuzz();
         this.showToast('Try again! Keep going.', 'error');
       }
@@ -1023,7 +1292,6 @@ class HtetLingoApp {
       </div>
     `;
 
-    // Trigger initial sample query
     setTimeout(() => {
       const inp = document.getElementById('dictQueryInput');
       if (inp) {
@@ -1203,8 +1471,8 @@ class HtetLingoApp {
             <div style="font-size: 0.8rem; font-weight: 800; color: var(--text-muted);">BLOOM XP</div>
           </div>
           <div class="card" style="padding: 1.25rem; text-align: center; border-radius: 20px;">
-            <div style="font-size: 1.85rem; font-weight: 900; color: #06b6d4;">⭐ ${this.bookmarks.length}</div>
-            <div style="font-size: 0.8rem; font-weight: 800; color: var(--text-muted);">SAVED WORDS</div>
+            <div style="font-size: 1.85rem; font-weight: 900; color: #3b82f6;">📘 ${this.completedGrammarQuizzes.length}</div>
+            <div style="font-size: 0.8rem; font-weight: 800; color: var(--text-muted);">GRAMMAR MASTERY</div>
           </div>
           <div class="card" style="padding: 1.25rem; text-align: center; border-radius: 20px;">
             <div style="font-size: 1.85rem; font-weight: 900; color: #10b981;">🏆 ${this.completedLevels.length}</div>

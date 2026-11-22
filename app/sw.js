@@ -1,5 +1,5 @@
 // HtetLingo Service Worker - Original Learning Studio Offline-First
-const CACHE_NAME = 'htetlingo-v2.3.0';
+const CACHE_NAME = 'htetlingo-v2.4.0';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -16,6 +16,7 @@ const ASSETS_TO_CACHE = [
   './js/supabaseClient.js',
   './js/revenueCat.js',
   './js/aiTutor.js',
+  './data/grammar_handbook.json',
   './data/lexicon_quick.json',
   './data/eng_myan_quick.json',
   './data/female_names.json',

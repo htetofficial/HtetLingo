@@ -1,0 +1,994 @@
+{
+  "metadata": {
+    "title": "English Grammar Masterclass & Handbook",
+    "titleMy": "旋元佑 အဆင့်မြင့် အင်္ဂလိပ်သဒ္ဒါ လက်စွဲ (၂၅ ခန်း)",
+    "author": "旋元佑 (Yuan-You Xuan)",
+    "source": "https://github.com/codeyu/EnglishGrammarBook",
+    "totalChapters": 25,
+    "version": "1.0.0"
+  },
+  "chapters": [
+    {
+      "chapter": 1,
+      "id": "ch1",
+      "filename": "SimpleSentences.md",
+      "titleEn": "Basic Sentence Patterns",
+      "titleZh": "基本句型",
+      "titleMy": "အခြေခံဝါကျပုံစံ ၅ မျိုး (5 Basic Sentence Patterns)",
+      "category": "foundation",
+      "formula": "S + V | S + V + O | S + V + O + O | S + V + C | S + V + O + C",
+      "summaryMy": "အင်္ဂလိပ်ဘာသာတွင် ရိုးရိုးဝါကျ (Simple Sentence) အားလုံးသည် ကြိယာအမျိုးအစားပေါ်မူတည်၍ အခြေခံဖွဲ့စည်းပုံ (၅) မျိုးထဲမှ တစ်ခုခုနှင့် ကိုက်ညီရမည်ဖြစ်ပါသည်။ ကတ္တား (Subject) နှင့် မဏ္ဍိုင်ကြိယာ (Finite Verb) ပါဝင်မှသာ ပြည့်စုံသောဝါကျတစ်ခု ဖြစ်တည်နိုင်ပါသည်။",
+      "keyPoints": [
+        "S + V (Intransitive Verb): ကံပုဒ်မလိုသော ကြိယာ (ဥပမာ- The dog barked.)",
+        "S + V + O (Transitive Verb): ကံပုဒ်လိုသော ကြိယာ (ဥပမာ- She achieved her dream.)",
+        "S + V + O + O (Ditransitive): ကံပုဒ်နှစ်ခု (Indirect Object + Direct Object) လိုသော ကြိယာ",
+        "S + V + C (Linking Verb + Complement): ကတ္တား၏ အခြေအနေကို ဖြည့်စွက်ဖော်ပြသော ပုဒ် (ဥပမာ- She is brilliant.)",
+        "S + V + O + C (Complex Transitive): ကံပုဒ်၏ အခြေအနေကို ဖြည့်စွက်ဖော်ပြသော ပုဒ် (Object Complement)"
+      ],
+      "examples": [
+        {
+          "en": "The courageous woman spoke with clarity.",
+          "breakdown": "S + V + Adverbial Modifier",
+          "my": "ရဲရင့်သောအမျိုးသမီးသည် ရှင်းလင်းပြတ်သားစွာ ပြောဆိုခဲ့သည်။"
+        },
+        {
+          "en": "Education empowers millions of young girls.",
+          "breakdown": "S + V + Object",
+          "my": "ပညာရေးသည် သန်းပေါင်းများစွာသော မိန်းကလေးငယ်များ၏ စွမ်းရည်ကို မြှင့်တင်ပေးသည်။"
+        },
+        {
+          "en": "The mentor taught her essential leadership skills.",
+          "breakdown": "S + V + Indirect O (her) + Direct O (skills)",
+          "my": "ဆရာမသည် သူမအား အရေးကြီးသော ခေါင်းဆောင်မှုစွမ်းရည်များကို သင်ကြားပေးခဲ့သည်။"
+        },
+        {
+          "en": "Her vision remains inspiring and clear.",
+          "breakdown": "S + Linking Verb + Subject Complement",
+          "my": "သူမ၏ မျှော်မှန်းချက်သည် စိတ်အားတက်ကြွဖွယ်နှင့် ရှင်းလင်းပြတ်သားဆဲဖြစ်သည်။"
+        },
+        {
+          "en": "The community elected her president unanimously.",
+          "breakdown": "S + V + Object + Object Complement",
+          "my": "လူထုသည် သူမအား သမ္မတအဖြစ် တညီတညွတ်တည်း ရွေးကောက်တင်မြှောက်ခဲ့သည်။"
+        }
+      ],
+      "quiz": {
+        "question": "Which sentence follows the S + V + C (Subject + Linking Verb + Complement) pattern?",
+        "options": [
+          "She achieved her goal.",
+          "She became a brilliant scientist.",
+          "She gave him the book.",
+          "She slept peacefully."
+        ],
+        "correct": 1,
+        "explanation": "'became' is a linking verb connecting the subject 'She' with the subject complement 'a brilliant scientist'."
+      }
+    },
+    {
+      "chapter": 2,
+      "id": "ch2",
+      "filename": "NounPhrases.md",
+      "titleEn": "Noun Phrases & Determiners",
+      "titleZh": "名词片语",
+      "titleMy": "နာမ်ပုဒ်စုများနှင့် ညွှန်းပုဒ်များ (Noun Phrases)",
+      "category": "foundation",
+      "formula": "Determiner + (Adjective) + Head Noun",
+      "summaryMy": "နာမ်ပုဒ်စု (Noun Phrase) တစ်ခုတွင် မူရင်းနာမ် (Head Noun) ၏ ရှေ့၌ သတ်မှတ်ညွှန်းပုဒ် (Determiner - a, an, the, this, every) နှင့် နာမဝိသေသန (Adjective) တို့ တွဲဖက်ပါဝင်ပြီး ဝါကျတွင် ကတ္တား (Subject) သို့မဟုတ် ကံပုဒ် (Object) အဖြစ် တာဝန်ယူပါသည်။",
+      "keyPoints": [
+        "Determiners: သတ်မှတ်ညွှန်းပုဒ်များ (Articles: a, an, the; Demonstratives: this, that; Possessives: my, her)",
+        "Quantifiers: အရေအတွက်ပြပုဒ်များ (all, many, each, several, few, little)",
+        "Head Noun: နာမ်ပုဒ်စု၏ အဓိကဗဟိုစကားလုံး (Countable vs. Uncountable)"
+      ],
+      "examples": [
+        {
+          "en": "Every independent woman values her autonomy.",
+          "breakdown": "Determiner (Every) + Adj (independent) + Noun (woman)",
+          "my": "ကိုယ့်အားကိုယ်ကိုးသော အမျိုးသမီးတိုင်းသည် မိမိ၏လွတ်လပ်ခွင့်ကို တန်ဖိုးထားကြသည်။"
+        },
+        {
+          "en": "The remarkable scientific discovery changed medical history.",
+          "breakdown": "Determiner + Adj + Adj + Head Noun",
+          "my": "ထူးခြားပြောင်မြောက်သော သိပ္ပံနည်းကျရှာဖွေတွေ့ရှိမှုသည် ဆေးပညာသမိုင်းကို ပြောင်းလဲစေခဲ့သည်။"
+        }
+      ],
+      "quiz": {
+        "question": "In the noun phrase 'Those three brilliant young female engineers', which word is the Head Noun?",
+        "options": [
+          "Those",
+          "brilliant",
+          "engineers",
+          "female"
+        ],
+        "correct": 2,
+        "explanation": "'engineers' is the core head noun being modified by all preceding determiners and adjectives."
+      }
+    },
+    {
+      "chapter": 3,
+      "id": "ch3",
+      "filename": "Pronouns.md",
+      "titleEn": "Pronouns & Antecedents",
+      "titleZh": "代名词",
+      "titleMy": "နာမ်စားများနှင့် ကိုယ်စားပြုမှု (Pronouns)",
+      "category": "foundation",
+      "formula": "Subject Pronoun | Object Pronoun | Reflexive (-self) | Possessive",
+      "summaryMy": "နာမ်စား (Pronoun) သည် ယခင်ဖော်ပြခဲ့ပြီးသော နာမ် (Antecedent) ကို ထပ်ခါတလဲလဲ မဖြစ်စေရန် အစားထိုးသုံးစွဲခြင်းဖြစ်ပြီး လိင်အမျိုးအစားနှင့် အနည်း/အများ ကိန်းဂဏန်း ကိုက်ညီရပါမည်။",
+      "keyPoints": [
+        "Subjective vs Objective Cases: I/me, she/her, they/them",
+        "Reflexive Pronouns: myself, herself, themselves (အလေးပေးဖော်ပြခြင်းနှင့် မိမိကိုယ်တိုင် ပြန်လည်သက်ရောက်ခြင်း)",
+        "Indefinite Pronouns: everyone, somebody, neither, each"
+      ],
+      "examples": [
+        {
+          "en": "Htet designed the platform herself.",
+          "breakdown": "Reflexive pronoun (herself) used for emphatic assertion",
+          "my": "ထက် သည် ပလက်ဖောင်းကို သူမကိုယ်တိုင် ဒီဇိုင်းရေးဆွဲခဲ့သည်။"
+        },
+        {
+          "en": "When a leader listens, she gains genuine respect.",
+          "breakdown": "Pronoun 'she' agrees with antecedent 'a leader'",
+          "my": "ခေါင်းဆောင်တစ်ဦးသည် အခြားသူများ၏စကားကို နားထောင်သောအခါ သူမသည် စစ်မှန်သောလေးစားမှုကို ရရှိသည်။"
+        }
+      ],
+      "quiz": {
+        "question": "Identify the correct pronoun: 'Neither of the directors signed _____ approval yet.'",
+        "options": [
+          "their",
+          "her",
+          "they",
+          "them"
+        ],
+        "correct": 1,
+        "explanation": "'Neither' is grammatically singular, so it takes the singular pronoun 'her' (or 'his/her')."
+      }
+    },
+    {
+      "chapter": 4,
+      "id": "ch4",
+      "filename": "Adjective.md",
+      "titleEn": "Adjectives: Attributive & Predicative",
+      "titleZh": "形容词",
+      "titleMy": "နာမဝိသေသနများနှင့် အနေအထား (Adjectives)",
+      "category": "foundation",
+      "formula": "Attributive (Adj + Noun) | Predicative (Linking Verb + Adj)",
+      "summaryMy": "နာမဝိသေသနများသည် နာမ်၏ အရည်အသွေး၊ အခြေအနေနှင့် သွင်ပြင်ကို ဖော်ပြပေးပါသည်။ နာမ်ရှေ့တွင် ကပ်လျက်ထည့်သွင်းခြင်း (Attributive) နှင့် Linking Verb နောက်တွင် ဖြည့်စွက်ပုဒ်အဖြစ် သုံးခြင်း (Predicative) ဟူ၍ နှစ်မျိုးရှိပါသည်။",
+      "keyPoints": [
+        "Attributive: a brilliant scholar, a resilient community",
+        "Predicative: The scholar is brilliant; She looks confident.",
+        "Order of Adjectives: Opinion -> Size -> Age -> Shape -> Color -> Origin -> Material -> Purpose"
+      ],
+      "examples": [
+        {
+          "en": "A courageous young advocate delivered a powerful speech.",
+          "breakdown": "Opinion (courageous) + Age (young) + Noun (advocate)",
+          "my": "ရဲရင့်သော လူငယ်ရှေ့နေမလေးသည် အားကောင်းသော မိန့်ခွန်းတစ်ခုကို ပြောကြားခဲ့သည်။"
+        },
+        {
+          "en": "The future of multilingual education looks bright.",
+          "breakdown": "Subject + Linking Verb (looks) + Predicative Adj (bright)",
+          "my": "ဘာသာစကားစုံပညာရေး၏ အနာဂတ်သည် တောက်ပလျက်ရှိသည်။"
+        }
+      ],
+      "quiz": {
+        "question": "Which of the following is in the correct standard adjective order?",
+        "options": [
+          "A silk beautiful French scarf",
+          "A beautiful French silk scarf",
+          "A French beautiful silk scarf",
+          "A silk French beautiful scarf"
+        ],
+        "correct": 1,
+        "explanation": "Opinion (beautiful) precedes Origin (French), which precedes Material (silk)."
+      }
+    },
+    {
+      "chapter": 5,
+      "id": "ch5",
+      "filename": "Adverb.md",
+      "titleEn": "Adverbs: Modifiers of Verbs & Sentences",
+      "titleZh": "副词",
+      "titleMy": "ကြိယာဝိသေသနများနှင့် ဝါကျမွမ်းမံမှု (Adverbs)",
+      "category": "foundation",
+      "formula": "Adverb modifying Verb / Adjective / Another Adverb / Entire Sentence",
+      "summaryMy": "ကြိယာဝိသေသန (Adverb) များသည် မည်သို့ပြုလုပ်သည် (Manner)၊ မည်သည့်နေရာ (Place)၊ မည်သည့်အချိန် (Time)၊ မည်မျှအကြိမ် (Frequency) နှင့် မည်မျှအတိုင်းအတာ (Degree) စသည်တို့ကို အသေးစိတ် မွမ်းမံဖော်ပြပေးပါသည်။",
+      "keyPoints": [
+        "Adverbs of Manner (-ly): carefully, brilliantly, bravely",
+        "Adverbs of Frequency: always, frequently, seldom, never",
+        "Sentence Adverbs: Fortunately, Undoubtedly, Remarkably"
+      ],
+      "examples": [
+        {
+          "en": "She articulately presented her research findings.",
+          "breakdown": "Manner adverb 'articulately' modifying verb 'presented'",
+          "my": "သူမသည် သူမ၏သုတေသနတွေ့ရှိချက်များကို ရှင်းလင်းပြတ်သားစွာ တင်ပြခဲ့သည်။"
+        },
+        {
+          "en": "Remarkably, the team completed the project ahead of schedule.",
+          "breakdown": "Sentence adverb 'Remarkably' modifying the whole clause",
+          "my": "အံ့ဩဖွယ်ကောင်းလောက်အောင်ပင် အဖွဲ့သည် စီမံကိန်းကို သတ်မှတ်ရက်ထက်စော၍ ပြီးမြောက်ခဲ့သည်။"
+        }
+      ],
+      "quiz": {
+        "question": "In 'The professor spoke unusually softly', what does 'unusually' modify?",
+        "options": [
+          "The professor",
+          "spoke",
+          "softly",
+          "the whole sentence"
+        ],
+        "correct": 2,
+        "explanation": "'unusually' is a degree adverb modifying another adverb 'softly'."
+      }
+    },
+    {
+      "chapter": 6,
+      "id": "ch6",
+      "filename": "ComparativePattern.md",
+      "titleEn": "Comparative & Superlative Patterns",
+      "titleZh": "比较句法",
+      "titleMy": "နှိုင်းယှဉ်ပြဝါကျဖွဲ့နည်းများ (Comparatives)",
+      "category": "foundation",
+      "formula": "as + Adj/Adv + as | more/-er than | the most/-est",
+      "summaryMy": "အရာဝတ္ထု သို့မဟုတ် လူနှစ်ဦးကြား တူညီမှုပြ (as...as)၊ သာလွန်မှုပြ (more...than / -er than) နှင့် အားလုံးထဲတွင် အသာလွန်ဆုံးပြ (Superlative - the most / -est) ပုံစံများကို တိကျမှန်ကန်သော နှိုင်းယှဉ်မှုစည်းမျဉ်းများနှင့် ရေးသားရပါမည်။",
+      "keyPoints": [
+        "Equal Comparison: as courageous as, as fluent as",
+        "Comparative: stronger than, more resilient than",
+        "Parallel Increase: The more you practice, the more fluent you become."
+      ],
+      "examples": [
+        {
+          "en": "Empathy is as vital as technical expertise in leadership.",
+          "breakdown": "Equal comparison pattern (as + vital + as)",
+          "my": "ခေါင်းဆောင်မှုတွင် နည်းပညာကျွမ်းကျင်မှုနည်းတူ စာနာနားလည်မှုသည်လည်း အရေးပါလှသည်။"
+        },
+        {
+          "en": "The more languages you learn, the broader your worldview becomes.",
+          "breakdown": "The + comparative, the + comparative (Parallel proportional structure)",
+          "my": "သင် ဘာသာစကား ပိုမိုသင်ယူလေလေ၊ သင့်ကမ္ဘာ့အမြင် ပိုမိုကျယ်ပြန့်လာလေလေ ဖြစ်သည်။"
+        }
+      ],
+      "quiz": {
+        "question": "Complete the parallel structure: 'The higher the obstacle, _____ the victory.'",
+        "options": [
+          "the sweeter",
+          "sweeter",
+          "sweetest",
+          "most sweet"
+        ],
+        "correct": 0,
+        "explanation": "Double comparative structure requires 'The + comparative..., the + comparative...'."
+      }
+    },
+    {
+      "chapter": 7,
+      "id": "ch7",
+      "filename": "Prepositions.md",
+      "titleEn": "Prepositions & Prepositional Phrases",
+      "titleZh": "介系词",
+      "titleMy": "ဝိဘတ်များနှင့် ဝိဘတ်ပုဒ်စုများ (Prepositions)",
+      "category": "foundation",
+      "formula": "Preposition + Noun Phrase (Object of Preposition)",
+      "summaryMy": "ဝိဘတ် (Preposition) သည် နာမ်ပုဒ်စုတစ်ခုနှင့် ပေါင်းစပ်ကာ ဝိဘတ်ပုဒ်စု (Prepositional Phrase) ဖြစ်လာပြီး ဝါကျတွင် နာမဝိသေသန (Adjective) သို့မဟုတ် ကြိယာဝိသေသန (Adverb) အဖြစ် အချိန်၊ နေရာ၊ အကြောင်းရင်းနှင့် ဦးတည်ရာကို ဖော်ပြပေးပါသည်။",
+      "keyPoints": [
+        "Prepositions of Place: in, on, at, under, across, through",
+        "Prepositions of Time: in (months/years), on (days/dates), at (exact time)",
+        "Idiomatic Collocations: participate in, dedicated to, capable of"
+      ],
+      "examples": [
+        {
+          "en": "She arrived at the summit at dawn on Monday.",
+          "breakdown": "Place (at the summit) + Time (at dawn) + Date (on Monday)",
+          "my": "သူမသည် တနင်္လာနေ့ အရုဏ်တက်ချိန်တွင် တောင်ထိပ်သို့ ရောက်ရှိခဲ့သည်။"
+        },
+        {
+          "en": "Women are capable of transforming entire economies.",
+          "breakdown": "Adjective + Preposition collocation (capable of + V-ing)",
+          "my": "အမျိုးသမီးများသည် စီးပွားရေးတစ်ခုလုံးကို အသွင်ပြောင်းလဲပစ်နိုင်စွမ်း ရှိကြသည်။"
+        }
+      ],
+      "quiz": {
+        "question": "Choose the correct preposition: 'She is firmly committed _____ advancing human rights.'",
+        "options": [
+          "for",
+          "to",
+          "with",
+          "in"
+        ],
+        "correct": 1,
+        "explanation": "The idiom is 'committed to' followed by a gerund or noun phrase."
+      }
+    },
+    {
+      "chapter": 8,
+      "id": "ch8",
+      "filename": "Participles.md",
+      "titleEn": "Participles: Present & Past Participles",
+      "titleZh": "分词",
+      "titleMy": "ကြိယာအစိတ်အပိုင်းများ: V-ing နှင့် V-ed (Participles)",
+      "category": "verbs_tenses",
+      "formula": "Present Participle (V-ing, Active) | Past Participle (V-ed, Passive)",
+      "summaryMy": "Participles များသည် ကြိယာမှ ဆင်းသက်လာသော နာမဝိသေသနများ ဖြစ်ကြပါသည်။ V-ing သည် ပြုလုပ်နေဆဲ သို့မဟုတ် ပြုလုပ်သူ (Active) ကို ရည်ညွှန်းပြီး၊ V-ed သည် ပြုလုပ်ခံရပြီး (Passive / Completed) အခြေအနေကို ရည်ညွှန်းပါသည်။",
+      "keyPoints": [
+        "Active / Ongoing: an inspiring leader, a blooming lotus",
+        "Passive / Completed: an empowered community, a closed door",
+        "Participle Phrases: Walking through the valley, she saw the sunrise."
+      ],
+      "examples": [
+        {
+          "en": "Inspired by her mother, Thazin pursued astrophysics.",
+          "breakdown": "Past participle phrase indicating passive cause",
+          "my": "မိခင်ဖြစ်သူ၏ အားပေးလှုံ့ဆော်မှုကြောင့် သဇင်သည် နက္ခတ္တရူပဗေဒပညာကို ဆက်လက်ဆည်းပူးခဲ့သည်။"
+        },
+        {
+          "en": "Standing on the stage, she delivered a radiant speech.",
+          "breakdown": "Present participle phrase indicating active simultaneous action",
+          "my": "စင်မြင့်ပေါ်တွင် ရပ်လျက် သူမသည် တောက်ပပြောင်မြောက်သော မိန့်ခွန်းတစ်ခုကို ပြောကြားခဲ့သည်။"
+        }
+      ],
+      "quiz": {
+        "question": "Select the correct participle: 'The results of the election were truly _____.'",
+        "options": [
+          "astonished",
+          "astonishing",
+          "astonish",
+          "astonishment"
+        ],
+        "correct": 1,
+        "explanation": "The results cause the feeling (active property), so present participle 'astonishing' is correct."
+      }
+    },
+    {
+      "chapter": 9,
+      "id": "ch9",
+      "filename": "VerbTenses.md",
+      "titleEn": "Verb Tenses: 12 Master Tenses",
+      "titleZh": "动词时态",
+      "titleMy": "ကြိယာကာလ ၁၂ မျိုးနှင့် အချိန်ပြဝါကျများ (Verb Tenses)",
+      "category": "verbs_tenses",
+      "formula": "Simple | Continuous (be + V-ing) | Perfect (have + V3) | Perfect Continuous",
+      "summaryMy": "အင်္ဂလိပ်သဒ္ဒါတွင် အချိန်ကာလ (Past, Present, Future) နှင့် အခြေအနေ (Simple, Continuous, Perfect, Perfect Continuous) ပေါင်းစပ်မှုမှ ကာလ (၁၂) မျိုး ပေါ်ထွက်လာပါသည်။ 旋元佑 သဒ္ဒါအရ အဓိကအားဖြင့် အချိန်မှတ် (Point of Time) နှင့် အချိန်အပိုင်းအခြား (Period of Time) အပေါ် မူတည်၍ ရွေးချယ်သုံးစွဲရပါသည်။",
+      "keyPoints": [
+        "Present Simple: အမြဲမှန်သောအမှန်တရားနှင့် အလေ့အထ (Habitual & Factual)",
+        "Present Perfect (have + V3): အတိတ်မှ စတင်ပြီး လက်ရှိအချိန်ထိ ဆက်စပ်နေသော အကျိုးသက်ရောက်မှု",
+        "Past Continuous vs Past Simple: လုပ်ဆောင်နေစဉ် အခြားအရာတစ်ခု ဝင်ရောက်ဖြစ်ပွားခြင်း"
+      ],
+      "examples": [
+        {
+          "en": "Htet has studied Japanese for five years.",
+          "breakdown": "Present Perfect indicating continuous experience up to now",
+          "my": "ထက် သည် ဂျပန်စာကို လေ့လာခဲ့သည်မှာ ငါးနှစ်ရှိပြီဖြစ်သည်။"
+        },
+        {
+          "en": "While she was coding the algorithm, a breakthrough occurred.",
+          "breakdown": "Past Continuous interrupted by Past Simple",
+          "my": "သူမသည် အယ်လ်ဂိုရီသမ်ကို ရေးသားနေစဉ် အရေးကြီးသော ထိုးထွင်းတွေ့ရှိချက်တစ်ခု ဖြစ်ပေါ်ခဲ့သည်။"
+        }
+      ],
+      "quiz": {
+        "question": "'By the time the conference starts tomorrow, the delegation _____ in Geneva.'",
+        "options": [
+          "arrives",
+          "will arrive",
+          "will have arrived",
+          "arrived"
+        ],
+        "correct": 2,
+        "explanation": "Action completed prior to a future reference point requires Future Perfect (will have arrived)."
+      }
+    },
+    {
+      "chapter": 10,
+      "id": "ch10",
+      "filename": "Voice.md",
+      "titleEn": "Active & Passive Voice",
+      "titleZh": "语态",
+      "titleMy": "ပြုလုပ်သူပြနှင့် အပြုခံပြဝါကျများ (Passive Voice)",
+      "category": "verbs_tenses",
+      "formula": "Subject + be + Past Participle (V3) + (by Agent)",
+      "summaryMy": "ပြုလုပ်သူ (Agent) ထက် အပြုခံရသောအရာ (Receiver) သို့မဟုတ် ရလဒ်ကို အလေးပေးဖော်ပြလိုသောအခါ Passive Voice ကို သုံးပါသည်။ အထူးသဖြင့် သိပ္ပံနည်းကျ စာတမ်းများ၊ ဥပဒေရေးရာများနှင့် သတင်းများတွင် တွင်ကျယ်စွာ အသုံးပြုပါသည်။",
+      "keyPoints": [
+        "Passive Transformation: Object becomes Subject; Verb becomes 'be + V3'",
+        "Agent omission: ပြုလုပ်သူကို မသိသောအခါ သို့မဟုတ် မလိုအပ်သောအခါ 'by...' ကို ချန်လှပ်နိုင်ခြင်း",
+        "Get-passive vs Be-passive: informal action vs state"
+      ],
+      "examples": [
+        {
+          "en": "The historic declaration was signed by twenty world leaders.",
+          "breakdown": "Passive structure: was + signed (Past Simple Passive)",
+          "my": "သမိုင်းဝင်ကြေညာစာတမ်းကို ကမ္ဘာ့ခေါင်းဆောင် ၂၀ ဦးက လက်မှတ်ရေးထိုးခဲ့ကြသည်။"
+        },
+        {
+          "en": "New policies are being implemented to ensure equal pay.",
+          "breakdown": "Present Continuous Passive: are being + implemented",
+          "my": "တန်းတူညီမျှသောလုပ်ခလစာ သေချာစေရန် မူဝါဒအသစ်များကို အကောင်အထည်ဖော်ဆောင်ရွက်နေပြီဖြစ်သည်။"
+        }
+      ],
+      "quiz": {
+        "question": "What is the passive form of: 'The architect has designed a groundbreaking campus'?",
+        "options": [
+          "A groundbreaking campus was designed by the architect.",
+          "A groundbreaking campus has been designed by the architect.",
+          "A groundbreaking campus is designed by the architect.",
+          "A groundbreaking campus had been designed by the architect."
+        ],
+        "correct": 1,
+        "explanation": "Present Perfect active (has designed) transforms into Present Perfect passive (has been designed)."
+      }
+    },
+    {
+      "chapter": 11,
+      "id": "ch11",
+      "filename": "Auxiliaries.md",
+      "titleEn": "Modal Auxiliaries",
+      "titleZh": "语气助动词",
+      "titleMy": "အကူကြိယာများ (Modal Auxiliaries: Can, Must, Should)",
+      "category": "verbs_tenses",
+      "formula": "Subject + Modal (can, may, must, should, would) + Base Verb",
+      "summaryMy": "Modal Auxiliaries များသည် ကြိယာ၏ စွမ်းဆောင်နိုင်မှု (Ability)၊ ဖြစ်နိုင်ခြေ (Possibility)၊ ခွင့်ပြုချက် (Permission)၊ မဖြစ်မနေလိုအပ်ချက် (Obligation) နှင့် အကြံပြုချက် (Advice) စသည့် စိတ်နေသဘောထားများကို ဖော်ပြပေးပါသည်။",
+      "keyPoints": [
+        "Ability & Permission: can, could, may",
+        "Obligation & Necessity: must, have to, should",
+        "Past Deduction: must have + V3 (သေချာပေါက်ဖြစ်ခဲ့သည်), could have + V3 (ဖြစ်နိုင်ခဲ့သည်)"
+      ],
+      "examples": [
+        {
+          "en": "Every young student must have access to quality education.",
+          "breakdown": "Modal 'must' expressing absolute necessity",
+          "my": "ကျောင်းသားလူငယ်တိုင်းသည် အရည်အသွေးမြင့် ပညာရေးကို မဖြစ်မနေ ရရှိရမည်။"
+        },
+        {
+          "en": "She could have chosen the easy path, but she persevered.",
+          "breakdown": "could have + V3 expressing past unexercised capability",
+          "my": "သူမသည် လွယ်ကူသောလမ်းကို ရွေးချယ်နိုင်ခဲ့သော်လည်း ဇွဲဖြင့် ဆက်လက်ကြိုးစားခဲ့သည်။"
+        }
+      ],
+      "quiz": {
+        "question": "Which modal phrase indicates strong deduction about a past event?",
+        "options": [
+          "must go",
+          "must have gone",
+          "should go",
+          "can have gone"
+        ],
+        "correct": 1,
+        "explanation": "'must have + past participle' expresses a logical conclusion about something that happened in the past."
+      }
+    },
+    {
+      "chapter": 12,
+      "id": "ch12",
+      "filename": "Moods.md",
+      "titleEn": "Subjunctive Mood & Conditionals",
+      "titleZh": "语气",
+      "titleMy": "စိတ်ကူးယဉ်နှင့် အခြေအနေပြဝါကျများ (Conditionals & Subjunctive)",
+      "category": "verbs_tenses",
+      "formula": "If + Past, would + Base | If + Past Perfect, would have + V3",
+      "summaryMy": "လက်တွေ့မဖြစ်နိုင်သော အခြေအနေများ (Counterfactual)၊ ဆန္ဒဖော်ပြချက်များ (Wishes) နှင့် တောင်းဆိုချက်များ (Mandatives: insist that S + base verb) တွင် သာမန်ကာလပြောင်းလဲမှုမဟုတ်ဘဲ Subjunctive Mood ကို သုံးပါသည်။",
+      "keyPoints": [
+        "Second Conditional (Unreal Present): If I were you, I would speak up.",
+        "Third Conditional (Unreal Past): If she had known, she would have intervened.",
+        "Mandative Subjunctive: The board insisted that she lead the initiative."
+      ],
+      "examples": [
+        {
+          "en": "If women were equally represented, world peace would be closer.",
+          "breakdown": "Second conditional with subjunctive 'were'",
+          "my": "အမျိုးသမီးများ တန်းတူညီမျှ ပါဝင်ခွင့်ရခဲ့ပါက ကမ္ဘာ့ငြိမ်းချမ်းရေးသည် ပိုမိုနီးကပ်လာပေလိမ့်မည်။"
+        },
+        {
+          "en": "The committee recommended that she receive the national award.",
+          "breakdown": "Mandative subjunctive (base verb 'receive' without -s)",
+          "my": "ကော်မတီသည် သူမအား နိုင်ငံတော်ဆု ချီးမြှင့်သင့်ကြောင်း အကြံပြုထောက်ခံခဲ့သည်။"
+        }
+      ],
+      "quiz": {
+        "question": "Choose the correct verb: 'It is essential that every member _____ present at the vote.'",
+        "options": [
+          "is",
+          "be",
+          "was",
+          "are"
+        ],
+        "correct": 1,
+        "explanation": "After expressions of necessity ('essential that...'), the subjunctive base verb 'be' is used."
+      }
+    },
+    {
+      "chapter": 13,
+      "id": "ch13",
+      "filename": "Gerund.md",
+      "titleEn": "Gerunds: Verb-Nouns in Action",
+      "titleZh": "动名词",
+      "titleMy": "ကြိယာနာမ်များ (Gerunds: V-ing as Noun)",
+      "category": "verbs_tenses",
+      "formula": "V-ing functioning as Subject, Direct Object, or Object of Preposition",
+      "summaryMy": "Gerund သည် ကြိယာတစ်ခုကို '-ing' ပေါင်းထည့်ကာ နာမ် (Noun) အဖြစ် ပြောင်းလဲလိုက်ခြင်း ဖြစ်ပါသည်။ ဝါကျတွင် ကတ္တား၊ ကံပုဒ် နှင့် ဝိဘတ်နောက်လိုက်ပုဒ် အဖြစ် နေရာယူနိုင်ပြီး မိမိကိုယ်တိုင်လည်း ကံပုဒ်ကို ပြန်လည်ယူဆောင်နိုင်စွမ်း ရှိပါသည်။",
+      "keyPoints": [
+        "Subject: Learning languages broadens your empathy.",
+        "Object of Preposition: She succeeded by persevering through adversity.",
+        "Verbs followed by Gerund: enjoy, admit, avoid, consider, practice, suggest"
+      ],
+      "examples": [
+        {
+          "en": "Empowering women transforms entire societies.",
+          "breakdown": "Gerund 'Empowering' taking object 'women' as the sentence subject",
+          "my": "အမျိုးသမီးများအား စွမ်းရည်မြှင့်တင်ပေးခြင်းသည် လူ့အဖွဲ့အစည်းတစ်ခုလုံးကို အသွင်ပြောင်းလဲစေသည်။"
+        },
+        {
+          "en": "She enjoys collaborating with diverse international teams.",
+          "breakdown": "Gerund phrase functioning as direct object of 'enjoys'",
+          "my": "သူမသည် မတူကွဲပြားသော နိုင်ငံတကာအဖွဲ့များနှင့် ပူးပေါင်းလုပ်ဆောင်ရသည်ကို နှစ်သက်သည်။"
+        }
+      ],
+      "quiz": {
+        "question": "Which verb must be followed by a gerund rather than an infinitive?",
+        "options": [
+          "decide",
+          "avoid",
+          "hope",
+          "plan"
+        ],
+        "correct": 1,
+        "explanation": "'avoid' requires a gerund object (e.g. 'avoid making mistakes')."
+      }
+    },
+    {
+      "chapter": 14,
+      "id": "ch14",
+      "filename": "Infinitive.md",
+      "titleEn": "Infinitive Phrases",
+      "titleZh": "不定词片语",
+      "titleMy": "To + Verb ပုံစံများနှင့် အသုံးများ (Infinitives)",
+      "category": "verbs_tenses",
+      "formula": "to + Base Verb (Noun, Adjective, or Adverb function)",
+      "summaryMy": "Infinitive (to + Verb) သည် နာမ်အဖြစ် (To learn is essential)၊ နာမဝိသေသနအဖြစ် (a dream to pursue) နှင့် ကြိယာဝိသေသနအဖြစ် ရည်ရွယ်ချက်ဖော်ပြရန် (She studied to succeed) အသုံးပြုနိုင်ပါသည်။",
+      "keyPoints": [
+        "Expressing Purpose: in order to, so as to",
+        "Bare Infinitive (without to): after modal verbs, let, make, have, see, hear",
+        "Split Infinitive: to boldly go (modern accepted usage)"
+      ],
+      "examples": [
+        {
+          "en": "She fought tirelessly to protect fundamental rights.",
+          "breakdown": "Adverbial infinitive phrase expressing noble purpose",
+          "my": "သူမသည် အခြေခံလူ့အခွင့်အရေးများကို ကာကွယ်ရန် မမောမပန်း တိုက်ပွဲဝင်ခဲ့သည်။"
+        },
+        {
+          "en": "Her ability to inspire others is unparalleled.",
+          "breakdown": "Adjectival infinitive phrase modifying 'ability'",
+          "my": "အခြားသူများအား စိတ်ဓာတ်တက်ကြွစေနိုင်သော သူမ၏စွမ်းရည်သည် ပြိုင်ဘက်ကင်းလှသည်။"
+        }
+      ],
+      "quiz": {
+        "question": "Identify the sentence with a bare infinitive:",
+        "options": [
+          "She decided to attend the summit.",
+          "The mentor made her rethink her assumptions.",
+          "She wants to innovate.",
+          "To err is human."
+        ],
+        "correct": 1,
+        "explanation": "Causative verb 'make' takes a bare infinitive without 'to' ('rethink')."
+      }
+    },
+    {
+      "chapter": 15,
+      "id": "ch15",
+      "filename": "Conjunction.md",
+      "titleEn": "Coordinating & Correlative Conjunctions",
+      "titleZh": "对等连接词",
+      "titleMy": "စကားစပ်များနှင့် တန်းတူချိတ်ဆက်နည်းများ (Conjunctions)",
+      "category": "clauses_syntax",
+      "formula": "FANBOYS (for, and, nor, but, or, yet, so) | Correlative (both...and, not only...but also)",
+      "summaryMy": "တန်းတူစကားစပ် (Coordinating Conjunction) များသည် သဒ္ဒါဖွဲ့စည်းပုံတူညီသော စကားလုံး၊ ပုဒ်စု သို့မဟုတ် ဝါကျကြီးနှစ်ခုကို တန်းတူချိတ်ဆက်ပေးပါသည်။ Parallelism (သဒ္ဒါတူညီမှု) စည်းမျဉ်းကို အထူးလိုက်နာရပါမည်။",
+      "keyPoints": [
+        "FANBOYS: For, And, Nor, But, Or, Yet, So",
+        "Correlative Conjunctions: not only A but also B, neither A nor B, either A or B",
+        "Parallel Structure: She likes swimming, hiking, and to read (INCORRECT) -> ...and reading (CORRECT)"
+      ],
+      "examples": [
+        {
+          "en": "She was not only a brilliant mathematician but also a pioneering educator.",
+          "breakdown": "Correlative conjunction connecting two parallel noun phrases",
+          "my": "သူမသည် ထူးချွန်သော သင်္ချာပညာရှင်တစ်ဦးသာမက ရှေ့ဆောင်လမ်းပြ ဆရာမကြီးတစ်ဦးလည်း ဖြစ်ခဲ့သည်။"
+        },
+        {
+          "en": "The law must be fair, transparent, and accessible.",
+          "breakdown": "Parallel series of three adjectives linked by 'and'",
+          "my": "ဥပဒေသည် တရားမျှတရမည်၊ ပွင့်လင်းမြင်သာရမည်၊ လူတိုင်းလက်လှမ်းမီနိုင်ရမည်။"
+        }
+      ],
+      "quiz": {
+        "question": "Fix the parallelism: 'She excels in writing code, solving puzzles, and _____ teams.'",
+        "options": [
+          "to lead",
+          "leading",
+          "leads",
+          "leadership"
+        ],
+        "correct": 1,
+        "explanation": "Must match the gerund pattern: writing, solving, and leading."
+      }
+    },
+    {
+      "chapter": 16,
+      "id": "ch16",
+      "filename": "CompoundSentences.md",
+      "titleEn": "Compound Sentences & Semicolons",
+      "titleZh": "合句",
+      "titleMy": "ပေါင်းစပ်ဝါကျများနှင့် ကော်မာစည်းမျဉ်းများ (Compound Sentences)",
+      "category": "clauses_syntax",
+      "formula": "Independent Clause ; Independent Clause | Independent Clause, conj Independent Clause",
+      "summaryMy": "သီးခြားရပ်တည်နိုင်သော ဝါကျနှစ်ခု (Independent Clauses) ကို ဆက်စပ်ရာတွင် ကော်မာတစ်ခုတည်းဖြင့် ဆက်၍မရပါ (Comma Splice အမှားဖြစ်သည်)။ Coordinating Conjunction သို့မဟုတ် Semicolon (;) ကို သုံးရပါမည်။",
+      "keyPoints": [
+        "Comma Splice Error: She spoke, he listened (Incorrect) -> She spoke, and he listened.",
+        "Semicolon Usage: She had no doubts; her preparation was flawless.",
+        "Conjunctive Adverbs: however, therefore, furthermore, nevertheless"
+      ],
+      "examples": [
+        {
+          "en": "The challenge seemed insurmountable; nevertheless, she persevered.",
+          "breakdown": "Independent clause + semicolon + conjunctive adverb + comma + independent clause",
+          "my": "စိန်ခေါ်မှုသည် ကျော်လွှားနိုင်ဖွယ်မရှိဟု ထင်ရသော်လည်း သူမသည် ဇွဲမလျှော့ဘဲ ဆက်လက်ကြိုးစားခဲ့သည်။"
+        }
+      ],
+      "quiz": {
+        "question": "Which sentence correctly avoids a comma splice?",
+        "options": [
+          "The summit ended, the delegates signed the treaty.",
+          "The summit ended; the delegates signed the treaty.",
+          "The summit ended, however the delegates signed.",
+          "The summit ended delegates signed the treaty."
+        ],
+        "correct": 1,
+        "explanation": "A semicolon correctly joins two closely related independent clauses without a conjunction."
+      }
+    },
+    {
+      "chapter": 17,
+      "id": "ch17",
+      "filename": "NounClauses.md",
+      "titleEn": "Noun Clauses",
+      "titleZh": "名词子句",
+      "titleMy": "နာမ်ဝါကျခွဲများ (Noun Clauses: That, Whether, Wh-)",
+      "category": "clauses_syntax",
+      "formula": "that / whether / if / wh- word + Subject + Verb (acting as Noun)",
+      "summaryMy": "နာမ်ဝါကျခွဲ (Noun Clause) သည် ဝါကျခွဲတစ်ခုလုံးအနေဖြင့် နာမ် (Noun) ကဲ့သို့ ကတ္တား၊ ကံပုဒ် သို့မဟုတ် ဖြည့်စွက်ပုဒ်အဖြစ် နေရာယူခြင်း ဖြစ်ပါသည်။",
+      "keyPoints": [
+        "That-clause: That education changes lives is universally accepted.",
+        "Whether/If-clause: She asked whether the proposal was approved.",
+        "Wh-clause: What she achieved inspired generations."
+      ],
+      "examples": [
+        {
+          "en": "What women accomplish through solidarity reshapes the world.",
+          "breakdown": "Wh-noun clause 'What women accomplish...' functioning as the main subject",
+          "my": "အမျိုးသမီးများ ညီညွတ်စွာ စွမ်းဆောင်နိုင်သည့်အရာများသည် ကမ္ဘာကြီးကို ပြန်လည်ပုံဖော်ပေးသည်။"
+        },
+        {
+          "en": "Scientists confirmed that the climate data was accurate.",
+          "breakdown": "That-clause functioning as direct object of 'confirmed'",
+          "my": "သိပ္ပံပညာရှင်များသည် ရာသီဥတုအချက်အလက်များ တိကျမှန်ကန်ကြောင်း အတည်ပြုခဲ့ကြသည်။"
+        }
+      ],
+      "quiz": {
+        "question": "In 'I do not know what she will decide', what role does the underlined clause play?",
+        "options": [
+          "Subject",
+          "Direct Object",
+          "Adverb modifier",
+          "Adjective modifier"
+        ],
+        "correct": 1,
+        "explanation": "'what she will decide' acts as the direct object of the verb 'know'."
+      }
+    },
+    {
+      "chapter": 18,
+      "id": "ch18",
+      "filename": "AdverbClauses.md",
+      "titleEn": "Adverb Clauses of Time, Cause & Concession",
+      "titleZh": "副词子句",
+      "titleMy": "ကြိယာဝိသေသနဝါကျခွဲများ (Adverb Clauses)",
+      "category": "clauses_syntax",
+      "formula": "Subordinating Conjunction (although, because, when, since) + S + V",
+      "summaryMy": "ကြိယာဝိသေသနဝါကျခွဲ (Adverb Clause) သည် မူရင်းဝါကျကြီးကို အချိန် (Time)၊ အကြောင်းရင်း (Cause)၊ ရည်ရွယ်ချက် (Purpose)၊ အခြေအနေ (Condition) နှင့် ဆန့်ကျင်ဘက်အလျှော့ပေးမှု (Concession) စသည်တို့ဖြင့် မွမ်းမံပေးပါသည်။",
+      "keyPoints": [
+        "Concession: although, even though, while, whereas",
+        "Cause & Reason: because, since, as",
+        "Time: when, before, after, as soon as, until"
+      ],
+      "examples": [
+        {
+          "en": "Although the journey was arduous, she never lost faith in her vision.",
+          "breakdown": "Adverb clause of concession modifying the main clause",
+          "my": "ခရီးလမ်းသည် အလွန်ကြမ်းတမ်းခက်ခဲခဲ့သော်လည်း သူမသည် သူမ၏မျှော်မှန်းချက်အပေါ် ယုံကြည်မှု ဘယ်သောအခါမှ မပျက်ယွင်းခဲ့ပေ။"
+        },
+        {
+          "en": "As soon as the bill passed, citizens celebrated in the streets.",
+          "breakdown": "Adverb clause of time placed at the beginning",
+          "my": "ဥပဒေကြမ်း အတည်ပြုပြီးသည်နှင့်တပြိုင်နက် ပြည်သူများသည် လမ်းပေါ်ထွက်ကာ အောင်ပွဲခံခဲ့ကြသည်။"
+        }
+      ],
+      "quiz": {
+        "question": "Which subordinating conjunction introduces an adverb clause of concession?",
+        "options": [
+          "because",
+          "although",
+          "since",
+          "so that"
+        ],
+        "correct": 1,
+        "explanation": "'although' introduces a contrasting or concession clause."
+      }
+    },
+    {
+      "chapter": 19,
+      "id": "ch19",
+      "filename": "RelativeClauses.md",
+      "titleEn": "Relative Clauses: Defining & Non-Defining",
+      "titleZh": "关系子句",
+      "titleMy": "ဆက်စပ်ဝါကျခွဲများ (Relative Clauses: Who, Which, That)",
+      "category": "clauses_syntax",
+      "formula": "Noun + (who / whom / whose / which / that) + S + V",
+      "summaryMy": "Relative Clause သည် နာမ်တစ်ခု၏ အဓိပ္ပာယ်ကို နာမဝိသေသနသဖွယ် တိုးချဲ့ရှင်းလင်းပေးသော ဝါကျခွဲ ဖြစ်ပါသည်။ ကော်မာမပါသော Defining (ကန့်သတ်ဖော်ပြချက်) နှင့် ကော်မာပါသော Non-defining (ဖြည့်စွက်အချက်အလက်) ဟူ၍ နှစ်မျိုးရှိပါသည်။",
+      "keyPoints": [
+        "Relative Pronouns: who (people subject), whom (people object), whose (possession), which (things), that",
+        "Defining vs Non-defining: My sister who lives in Tokyo (defines which sister) vs My sister, who lives in Tokyo, (extra info)",
+        "Preposition + Which: the room in which they met = where they met"
+      ],
+      "examples": [
+        {
+          "en": "The scientist who pioneered the vaccine was awarded the Nobel Prize.",
+          "breakdown": "Defining relative clause specifying the exact scientist",
+          "my": "ကာကွယ်ဆေးကို ရှေ့ဆောင်တီထွင်ခဲ့သော သိပ္ပံပညာရှင်မကြီးသည် နိုဘယ်လ်ဆုကို ချီးမြှင့်ခြင်းခံခဲ့ရသည်။"
+        },
+        {
+          "en": "Yangon, which is Myanmar's largest city, has a rich cultural heritage.",
+          "breakdown": "Non-defining relative clause providing supplemental details",
+          "my": "မြန်မာနိုင်ငံ၏ အကြီးဆုံးမြို့ဖြစ်သော ရန်ကုန်မြို့သည် ကြွယ်ဝသော ယဉ်ကျေးမှုအမွေအနှစ်များ ရှိသည်။"
+        }
+      ],
+      "quiz": {
+        "question": "Choose the correct pronoun: 'The woman _____ research transformed modern AI spoke yesterday.'",
+        "options": [
+          "who",
+          "whom",
+          "whose",
+          "which"
+        ],
+        "correct": 2,
+        "explanation": "Possessive relative pronoun 'whose' modifies the following noun 'research'."
+      }
+    },
+    {
+      "chapter": 20,
+      "id": "ch20",
+      "filename": "SubjectVerbAgreement.md",
+      "titleEn": "Subject-Verb Agreement Master Rules",
+      "titleZh": "主词动词一致性",
+      "titleMy": "ကတ္တားနှင့် ကြိယာ လိုက်လျောညီထွေဖြစ်မှု (Subject-Verb Agreement)",
+      "category": "clauses_syntax",
+      "formula": "Singular Subject + Singular Verb | Plural Subject + Plural Verb",
+      "summaryMy": "ဝါကျတစ်ခုတွင် ကတ္တားအနည်းဖြစ်ပါက ကြိယာအနည်း (is, has, verb+s)၊ ကတ္တားအများဖြစ်ပါက ကြိယာအများ (are, have, base verb) သုံးစွဲရပါမည်။ ရှုပ်ထွေးသော ကြားခံစကားစုများ (Intervening phrases) ကြောင့် အဓိကကတ္တားကို မမှားယွင်းစေရန် သတိပြုရပါမည်။",
+      "keyPoints": [
+        "Intervening phrases do not affect agreement: The leader, along with her ministers, was present.",
+        "Indefinite pronouns: Each, either, neither, everyone, someone take singular verbs.",
+        "Either...or / Neither...nor: Verb agrees with the nearer subject."
+      ],
+      "examples": [
+        {
+          "en": "The collection of rare Myanmar manuscripts is preserved in the archive.",
+          "breakdown": "Singular head noun 'The collection' takes singular verb 'is'",
+          "my": "ရှားပါးမြန်မာ့ပေစာလက်ရေးမူများ စုစည်းမှုအား မော်ကွန်းတိုက်တွင် ထိန်းသိမ်းထားရှိသည်။"
+        },
+        {
+          "en": "Neither the manager nor the engineers were aware of the defect.",
+          "breakdown": "Verb agrees with the nearer plural subject 'the engineers'",
+          "my": "မန်နေဂျာရော အင်ဂျင်နီယာများပါ အဆိုပါချို့ယွင်းချက်ကို သတိမထားမိခဲ့ကြပေ။"
+        }
+      ],
+      "quiz": {
+        "question": "'A diverse group of polyglots and linguists _____ gathered in the auditorium.'",
+        "options": [
+          "has",
+          "have",
+          "were",
+          "are"
+        ],
+        "correct": 0,
+        "explanation": "The head subject noun is the singular 'A diverse group', requiring singular verb 'has'."
+      }
+    },
+    {
+      "chapter": 21,
+      "id": "ch21",
+      "filename": "Inversion.md",
+      "titleEn": "Inversion Patterns",
+      "titleZh": "倒装句",
+      "titleMy": "ဝါကျပြောင်းပြန်ဖွဲ့နည်းများ (Inversion: Never have I...)",
+      "category": "clauses_syntax",
+      "formula": "Negative Word (Never / Seldom / Rarely) + Auxiliary + Subject + Verb",
+      "summaryMy": "အငြင်းသဘော သို့မဟုတ် ကန့်သတ်သဘောဆောင်သော စကားလုံးများ (Negative or Restrictive adverbs) ကို ဝါကျအစတွင်ထား၍ စကားလုံးအလေးအနက်ဖော်ပြလိုသောအခါ အကူကြိယာသည် ကတ္တား၏ရှေ့သို့ ရောက်ရှိလာရပါမည် (Inversion)။",
+      "keyPoints": [
+        "Negative Adverbs: Never, Seldom, Rarely, Hardly, Barely, Scarcely",
+        "Not only... but also: Not only did she win, but she also set a new world record.",
+        "Only after / Only when: Only after years of effort did her breakthrough occur."
+      ],
+      "examples": [
+        {
+          "en": "Seldom has a community demonstrated such extraordinary resilience.",
+          "breakdown": "Negative adverb 'Seldom' triggers auxiliary 'has' before subject",
+          "my": "လူ့အဖွဲ့အစည်းတစ်ခုသည် ဤမျှထူးခြားသော ကြံ့ခိုင်မှုကို ပြသနိုင်ခဲ့သည်မှာ အလွန်ရှားပါးလှသည်။"
+        },
+        {
+          "en": "Not only did she master English, but she also became fluent in Japanese.",
+          "breakdown": "Inversion after 'Not only' requires 'did she master'",
+          "my": "သူမသည် အင်္ဂလိပ်စာကို ကျွမ်းကျင်ရုံသာမက ဂျပန်စကားကိုလည်း ကျွမ်းကျင်စွာ ပြောဆိုနိုင်ခဲ့သည်။"
+        }
+      ],
+      "quiz": {
+        "question": "Which sentence correctly demonstrates negative inversion?",
+        "options": [
+          "Never I have seen such dedication.",
+          "Never have I seen such dedication.",
+          "Never saw I such dedication.",
+          "I have seen never such dedication."
+        ],
+        "correct": 1,
+        "explanation": "'Never' at the start inverts auxiliary and subject: 'Never have I seen'."
+      }
+    },
+    {
+      "chapter": 22,
+      "id": "ch22",
+      "filename": "ReducedClauses.md",
+      "titleEn": "Reduced Clauses Overview",
+      "titleZh": "减化子句概论",
+      "titleMy": "ဝါကျခွဲများကို အတိုချုံးနည်း အခြေခံ (Reduced Clauses)",
+      "category": "clauses_syntax",
+      "formula": "Full Clause -> Participle Phrase / Infinitive / Prepositional Phrase",
+      "summaryMy": "旋元佑 သဒ္ဒါ၏ အဓိကကျဆုံးသော အဆင့်မြင့်စနစ်မှာ ရှည်လျားသော ဝါကျခွဲများကို စာဖတ်သူအတွက် ပိုမိုကျစ်လျစ်သပ်ရပ်စေရန် တိုတိုတုတ်တုတ် ချုံ့ပစ်ခြင်း (Clause Reduction) ဖြစ်ပါသည်။ ကတ္တားတူညီပါက ပိုလျှံသော Conjunction နှင့် Be-verb များကို ဖြုတ်ကာ Participle သို့မဟုတ် Infinitive အဖြစ် ပြောင်းလဲပါသည်။",
+      "keyPoints": [
+        "Efficiency principle: စာဖတ်သူနားလည်နိုင်သော ပိုလျှံစကားလုံးများကို ချုံ့ပစ်ခြင်း",
+        "Active clause reduces to Present Participle (V-ing)",
+        "Passive clause reduces to Past Participle (V-ed)"
+      ],
+      "examples": [
+        {
+          "en": "Because she was motivated by equality, she spoke out -> Motivated by equality, she spoke out.",
+          "breakdown": "Full adverbial clause reduced to past participle phrase",
+          "my": "တန်းတူညီမျှရေးကို လိုလားသောကြောင့် သူမသည် ရဲဝံ့စွာ ထုတ်ဖော်ပြောဆိုခဲ့သည်။"
+        }
+      ],
+      "quiz": {
+        "question": "Reduce: 'While she was working in the laboratory, she made an unexpected discovery.'",
+        "options": [
+          "Working in the laboratory, she made an unexpected discovery.",
+          "Worked in the laboratory, she made an unexpected discovery.",
+          "Having work in the laboratory, she made an unexpected discovery.",
+          "Work in the laboratory, she made an unexpected discovery."
+        ],
+        "correct": 0,
+        "explanation": "Active ongoing action reduces cleanly to the present participle phrase 'Working in the laboratory'."
+      }
+    },
+    {
+      "chapter": 23,
+      "id": "ch23",
+      "filename": "RelativeClausesReduced.md",
+      "titleEn": "Reduced Relative Clauses",
+      "titleZh": "关系从句减化",
+      "titleMy": "ဆက်စပ်ဝါကျခွဲများကို အတိုချုံးခြင်း (Reduced Relative Clauses)",
+      "category": "clauses_syntax",
+      "formula": "Noun + [who/which + is] + V-ing/V-ed -> Noun + V-ing/V-ed",
+      "summaryMy": "Relative Pronoun (who, which, that) နှင့် Be-verb ကို ဖြုတ်ပစ်ကာ ကျန်ရှိသော Participle သို့မဟုတ် Adjective Phrase ဖြင့် နာမ်ကို တိုက်ရိုက်မွမ်းမံစေသော အလွန်အသုံးများသည့် အဆင့်မြင့်နည်းလမ်း ဖြစ်ပါသည်။",
+      "keyPoints": [
+        "The woman who is leading the protest -> The woman leading the protest",
+        "The treaty that was signed in Paris -> The treaty signed in Paris",
+        "The candidate who was most qualified -> The candidate most qualified"
+      ],
+      "examples": [
+        {
+          "en": "Students desiring fluency must practice active listening daily.",
+          "breakdown": "Reduced from: Students [who desire] fluency...",
+          "my": "ဘာသာစကား ကျွမ်းကျင်လိုသော ကျောင်းသားများသည် နေ့စဉ် အာရုံစိုက်နားထောင်ခြင်းကို လေ့ကျင့်ရမည်။"
+        },
+        {
+          "en": "Artifacts discovered in Bagan reflect master craftsmanship.",
+          "breakdown": "Reduced from: Artifacts [that were] discovered in Bagan...",
+          "my": "ပုဂံတွင် တွေ့ရှိခဲ့သော ရှေးဟောင်းပစ္စည်းများသည် ထူးချွန်သော လက်မှုပညာကို ထင်ဟပ်စေသည်။"
+        }
+      ],
+      "quiz": {
+        "question": "Which sentence contains a correctly reduced relative clause?",
+        "options": [
+          "The books writing by Htet are popular.",
+          "The books written by Htet are popular.",
+          "The books were written by Htet are popular.",
+          "The books which written by Htet are popular."
+        ],
+        "correct": 1,
+        "explanation": "Passive relative clause reduces to past participle 'written by Htet'."
+      }
+    },
+    {
+      "chapter": 24,
+      "id": "ch24",
+      "filename": "NounClausesReduced.md",
+      "titleEn": "Reduced Noun Clauses",
+      "titleZh": "名词子句减化",
+      "titleMy": "နာမ်ဝါကျခွဲများကို အတိုချုံးခြင်း (Reduced Noun Clauses)",
+      "category": "clauses_syntax",
+      "formula": "that S + V / whether S + should V -> Infinitive (to + V) or Gerund (V-ing)",
+      "summaryMy": "နာမ်ဝါကျခွဲတစ်ခုတွင် မူရင်းဝါကျ၏ ကတ္တားနှင့် နာမ်ဝါကျခွဲ၏ ကတ္တား တူညီသောအခါ သို့မဟုတ် ယေဘုယျသဘောဖြစ်သောအခါ Infinitive (how to do, whether to go) သို့မဟုတ် Gerund အဖြစ်သို့ အတိုချုံ့နိုင်ပါသည်။",
+      "keyPoints": [
+        "Wh- + Infinitive: She knows what she should do -> She knows what to do.",
+        "Whether to: She debated whether she should resign -> She debated whether to resign.",
+        "Fact that: The fact that she succeeded -> Her success"
+      ],
+      "examples": [
+        {
+          "en": "The committee discussed where to allocate the research funds.",
+          "breakdown": "Reduced from: ...where they should allocate the research funds",
+          "my": "ကော်မတီသည် သုတေသနရန်ပုံငွေများကို မည်သည့်နေရာတွင် ခွဲဝေသုံးစွဲရမည်ကို ဆွေးနွေးခဲ့ကြသည်။"
+        },
+        {
+          "en": "Learning how to navigate setbacks is the true mark of leadership.",
+          "breakdown": "Reduced wh-infinitive phrase acting as the subject of the sentence",
+          "my": "အခက်အခဲများကို မည်သို့ကျော်လွှားရမည်ကို သင်ယူခြင်းသည် ခေါင်းဆောင်မှု၏ စစ်မှန်သော အမှတ်အသားဖြစ်သည်။"
+        }
+      ],
+      "quiz": {
+        "question": "Reduce: 'She taught the students how they could code interactive apps.'",
+        "options": [
+          "She taught the students how coding interactive apps.",
+          "She taught the students how to code interactive apps.",
+          "She taught the students to code how interactive apps.",
+          "She taught the students how code interactive apps."
+        ],
+        "correct": 1,
+        "explanation": "'how they could code' reduces cleanly to wh-infinitive 'how to code'."
+      }
+    },
+    {
+      "chapter": 25,
+      "id": "ch25",
+      "filename": "AdverbClausesReduced.md",
+      "titleEn": "Reduced Adverb Clauses: Dangling Participle Cautions",
+      "titleZh": "副词子句减化",
+      "titleMy": "ကြိယာဝိသေသနဝါကျခွဲများကို အတိုချုံးခြင်းနှင့် သတိပြုရန်အချက်များ (Reduced Adverb Clauses)",
+      "category": "clauses_syntax",
+      "formula": "Conjunction + V-ing/V-ed, Main Subject + Verb",
+      "summaryMy": "အချိန်၊ အကြောင်းပြ နှင့် အလျှော့ပေးပြ Adverb Clauses များကို အတိုချုံ့သောအခါ ပင်မဝါကျ၏ ကတ္တားသည်သာ ချုံ့လိုက်သော Participle ၏ ပြုလုပ်သူဖြစ်ရပါမည်။ မဟုတ်ပါက Dangling Participle (လွင့်မျောနေသော participle အမှား) ဖြစ်ပေါ်သွားနိုင်ပါသည်။",
+      "keyPoints": [
+        "Retaining Conjunction: While walking, After finishing, Although tired",
+        "Dangling Participle Error: Walking into the room, the window was broken (Incorrect: the window did not walk!)",
+        "Correct: Walking into the room, she noticed the broken window."
+      ],
+      "examples": [
+        {
+          "en": "While analyzing the data, the scientist discovered a rare genetic marker.",
+          "breakdown": "Reduced adverb clause with conjunction retained; subject 'the scientist' matches action",
+          "my": "အချက်အလက်များကို ခွဲခြမ်းစိတ်ဖြာနေစဉ်အတွင်း သိပ္ပံပညာရှင်သည် ရှားပါးမျိုးရိုးဗီဇအမှတ်အသားတစ်ခုကို ရှာဖွေတွေ့ရှိခဲ့သည်။"
+        },
+        {
+          "en": "Once approved by the council, the initiative will receive full funding.",
+          "breakdown": "Reduced passive adverb clause with past participle",
+          "my": "ကောင်စီက အတည်ပြုပြီးသည်နှင့်တပြိုင်နက် အဆိုပါစီမံချက်သည် အပြည့်အဝရန်ပုံငွေကို ရရှိမည်ဖြစ်သည်။"
+        }
+      ],
+      "quiz": {
+        "question": "Which sentence correctly avoids a dangling participle error?",
+        "options": [
+          "Running down the street, my hat blew off.",
+          "Running down the street, I lost my hat.",
+          "Having eaten dinner, the dishes were washed.",
+          "Barking loudly, the mailman ran from the dog."
+        ],
+        "correct": 1,
+        "explanation": "In 'Running down the street, I lost my hat', the subject 'I' is the person who was running."
+      }
+    }
+  ]
+}

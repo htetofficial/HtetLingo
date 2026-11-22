@@ -900,3 +900,50 @@ mark.hl-match {
   color: #eab308;
   transform: scale(1.15);
 }
+
+/* ==========================================================================
+   HtetLingo English Grammar Handbook (旋元佑 25-Chapter System)
+   ========================================================================== */
+.grammar-chapter-card {
+  background: var(--bg-card);
+  border: 2px solid var(--border-color);
+  border-radius: 22px;
+  padding: 1.5rem;
+  margin-bottom: 1.25rem;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+}
+
+.grammar-chapter-card:hover {
+  border-color: var(--rose-primary);
+  box-shadow: 0 8px 24px rgba(244, 63, 94, 0.12);
+}
+
+.grammar-formula-chip {
+  display: inline-block;
+  background: light-dark(#fdf2f8, #2a1320);
+  color: var(--rose-primary);
+  border: 1.5px solid #fbcfe8;
+  padding: 0.35rem 0.85rem;
+  border-radius: 12px;
+  font-family: monospace;
+  font-weight: 800;
+  font-size: 0.92rem;
+  margin: 0.6rem 0 1rem;
+}
+
+.grammar-example-box {
+  background: var(--bg-card-subtle);
+  border-left: 3.5px solid var(--rose-primary);
+  border-radius: 0 14px 14px 0;
+  padding: 0.85rem 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.grammar-quiz-box {
+  background: light-dark(#f8fafc, #1a1622);
+  border: 2px dashed var(--border-color);
+  border-radius: 18px;
+  padding: 1.25rem;
+  margin-top: 1.25rem;
+}
