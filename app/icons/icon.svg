@@ -1,52 +1,79 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
   <defs>
-    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#4F46E5" />
-      <stop offset="50%" stop-color="#7C3AED" />
-      <stop offset="100%" stop-color="#EC4899" />
-    </linearGradient>
-    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#38BDF8" />
+    <!-- Cute Rose & Lavender Feminist Gradient -->
+    <linearGradient id="roseLilacGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FB7185" />
+      <stop offset="40%" stop-color="#F43F5E" />
+      <stop offset="75%" stop-color="#C084FC" />
       <stop offset="100%" stop-color="#818CF8" />
     </linearGradient>
-    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
-      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-opacity="0.25" flood-color="#0F172A" />
+
+    <!-- Sakura Pastel Shimmer -->
+    <linearGradient id="sakuraGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF1F2" />
+      <stop offset="100%" stop-color="#FCE7F3" />
+    </linearGradient>
+
+    <!-- Golden Sparkle Gradient -->
+    <linearGradient id="sparkleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDE047" />
+      <stop offset="100%" stop-color="#F59E0B" />
+    </linearGradient>
+
+    <filter id="cuteShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="14" stdDeviation="18" flood-opacity="0.25" flood-color="#831843" />
     </filter>
   </defs>
-  
-  <!-- Rounded Base Background -->
-  <rect width="512" height="512" rx="128" fill="url(#bgGrad)" />
-  
-  <!-- Subtle Grid Circles -->
-  <circle cx="256" cy="256" r="180" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="2" />
-  <circle cx="256" cy="256" r="120" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="2" />
 
-  <!-- Main Speech Bubble 1 (Left / Back) -->
-  <path d="M140 180 C140 135.8 175.8 100 220 100 L300 100 C344.2 100 380 135.8 380 180 L380 230 C380 274.2 344.2 310 300 310 L220 310 L160 360 L170 310 C151.7 300 140 280 140 256 Z" 
-        fill="rgba(255, 255, 255, 0.2)" 
-        stroke="rgba(255,255,255,0.4)" 
-        stroke-width="3"
-        filter="url(#shadow)" />
+  <!-- Rounded Squircle Base -->
+  <rect width="512" height="512" rx="140" fill="url(#roseLilacGrad)" />
 
-  <!-- Main Speech Bubble 2 (Front Accent) -->
-  <path d="M170 210 C170 171.3 201.3 140 240 140 L330 140 C368.7 140 400 171.3 400 210 L400 260 C400 298.7 368.7 330 330 330 L270 330 L200 380 L212 330 C187 320 170 296 170 268 Z" 
-        fill="#FFFFFF" 
-        filter="url(#shadow)" />
+  <!-- Background Cute Subtle Circles -->
+  <circle cx="256" cy="256" r="195" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="2" />
+  <circle cx="256" cy="256" r="140" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="2" stroke-dasharray="6 8" />
 
-  <!-- Global Culture Nodes (Language glyphs styling) -->
-  <!-- 'H' and 'L' stylized inside bubble -->
-  <text x="240" y="255" font-family="system-ui, -apple-system, sans-serif" font-size="78" font-weight="900" fill="#4F46E5" text-anchor="middle">H</text>
-  <text x="315" y="275" font-family="system-ui, -apple-system, sans-serif" font-size="72" font-weight="900" fill="#EC4899" text-anchor="middle">L</text>
-  
-  <!-- Mini Language accents -->
-  <!-- Asian glyph accent dot / soundwaves -->
-  <circle cx="350" cy="190" r="14" fill="url(#accentGrad)" />
-  <circle cx="365" cy="180" r="6" fill="#F43F5E" />
-  
-  <!-- Sound / Translation Waves -->
-  <path d="M365 220 Q378 230 365 240" fill="none" stroke="#6366F1" stroke-width="4" stroke-linecap="round" />
-  <path d="M375 212 Q395 230 375 248" fill="none" stroke="#6366F1" stroke-width="4" stroke-linecap="round" />
+  <!-- Cute Chat Bubble with Heart Shape Accent -->
+  <g filter="url(#cuteShadow)">
+    <!-- Back Speech Bubble (Lavender Tint) -->
+    <path d="M150 170 C150 125 186 90 230 90 L310 90 C354 90 390 125 390 170 L390 230 C390 274 354 310 310 310 L220 310 L160 365 L175 310 C158 298 150 276 150 250 Z" 
+          fill="rgba(255, 255, 255, 0.28)" 
+          stroke="rgba(255,255,255,0.5)" 
+          stroke-width="3" />
 
-  <!-- Burmese cultural touch accent -->
-  <path d="M190 285 Q205 275 215 288" fill="none" stroke="#8B5CF6" stroke-width="3.5" stroke-linecap="round" />
+    <!-- Main Front Cute Speech Bubble -->
+    <path d="M180 200 C180 158 214 125 255 125 L340 125 C381 125 415 158 415 200 L415 260 C415 301 381 335 340 335 L270 335 L205 385 L218 335 C195 324 180 300 180 270 Z" 
+          fill="#FFFFFF" />
+  </g>
+
+  <!-- Feminist Venus / Empowerment Sign in Speech Bubble -->
+  <!-- Cute stylized Venus circle with heart center -->
+  <circle cx="265" cy="225" r="46" fill="none" stroke="#F43F5E" stroke-width="12" stroke-linecap="round" />
+  <!-- Venus cross -->
+  <line x1="265" y1="271" x2="265" y2="305" stroke="#F43F5E" stroke-width="12" stroke-linecap="round" />
+  <line x1="248" y1="288" x2="282" y2="288" stroke="#F43F5E" stroke-width="12" stroke-linecap="round" />
+
+  <!-- Cute Heart inside the Venus symbol -->
+  <path d="M265 235 C265 235 250 220 250 210 C250 202 256 196 264 196 C268 196 272 199 274 203 C276 199 280 196 284 196 C292 196 298 202 298 210 C298 220 283 235 283 235 L274 243 Z"
+        fill="#FB7185" />
+
+  <!-- Stylized "HL" Monogram Accent (HtetLingo) -->
+  <text x="350" y="245" font-family="system-ui, -apple-system, sans-serif" font-size="52" font-weight="900" fill="#A855F7" text-anchor="middle">HL</text>
+
+  <!-- Cute Sparkles & Stars (✨) -->
+  <!-- Sparkle 1 (Top Right) -->
+  <path d="M380 90 Q395 105 410 105 Q395 105 380 120 Q365 105 350 105 Q365 105 380 90 Z" fill="url(#sparkleGrad)" />
+  <circle cx="410" cy="85" r="6" fill="#FDE047" />
+
+  <!-- Sparkle 2 (Bottom Left) -->
+  <path d="M125 310 Q138 322 150 322 Q138 322 125 335 Q112 322 100 322 Q112 322 125 310 Z" fill="url(#sparkleGrad)" />
+
+  <!-- Cute Sakura Blossom (🌸) Accent on Top-Left -->
+  <g transform="translate(130, 115) scale(0.65)">
+    <circle cx="25" cy="0" r="18" fill="#FDA4AF" />
+    <circle cx="50" cy="25" r="18" fill="#FDA4AF" />
+    <circle cx="40" cy="55" r="18" fill="#FDA4AF" />
+    <circle cx="10" cy="55" r="18" fill="#FDA4AF" />
+    <circle cx="0" cy="25" r="18" fill="#FDA4AF" />
+    <circle cx="25" cy="32" r="12" fill="#FDE047" />
+  </g>
 </svg>

@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Interactive Static Demo — HtetLingo</title>
-  <meta name="description" content="Try HtetLingo flashcards, dictionary search, and native pronunciation in an interactive browser demo.">
+  <title>Interactive Sisterhood Demo — HtetLingo</title>
+  <meta name="description" content="Try HtetLingo cute & feminist flashcards, dictionary search, and native pronunciation in an interactive browser demo.">
   
   <meta name="color-scheme" content="light dark">
   <script>
@@ -21,29 +21,36 @@
       max-width: 600px;
       margin: 2rem auto;
       background: var(--bg-card);
-      border: 2px solid var(--border-color);
-      border-radius: 20px;
+      border: 2.5px solid var(--border-color);
+      border-radius: 24px;
       padding: 2.5rem 2rem;
       text-align: center;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      box-shadow: 0 14px 28px rgba(244, 63, 94, 0.12);
       cursor: pointer;
       position: relative;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .demo-card-box:hover {
+      transform: translateY(-4px);
+      border-color: var(--rose-primary);
     }
     .demo-word {
-      font-size: 2.5rem;
+      font-size: 2.4rem;
       font-weight: 900;
       margin-bottom: 0.5rem;
+      color: var(--text-main);
     }
     .demo-phonetic {
       font-size: 1.15rem;
-      color: var(--primary);
+      color: var(--lavender);
       font-family: monospace;
       margin-bottom: 1.25rem;
+      font-weight: 700;
     }
     .demo-trans {
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: var(--text-muted);
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--rose-primary);
       margin-bottom: 1rem;
     }
   </style>
@@ -55,14 +62,14 @@
     <div class="header-inner">
       <a href="index.html" class="logo-brand">
         <img src="assets/logo.svg" alt="HtetLingo" class="logo-img">
-        <span class="logo-text">HtetLingo Demo</span>
+        <span class="logo-text">HtetLingo Demo 🌸</span>
       </a>
 
       <ul class="nav-links">
         <li><a href="index.html" class="nav-link">Home</a></li>
         <li><a href="docs.html" class="nav-link">Docs</a></li>
         <li>
-          <a href="https://htetlingo.pages.dev" target="_blank" class="btn-launch">Launch Full App ↗</a>
+          <a href="https://htetlingo.pages.dev" target="_blank" class="btn-launch">Launch Web App 💖</a>
         </li>
       </ul>
     </div>
@@ -70,29 +77,29 @@
 
   <main style="max-width: 900px; margin: 3rem auto; padding: 0 1.5rem;">
     <div style="text-align: center;">
-      <span style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--primary); background: var(--primary-light); padding: 0.3rem 0.8rem; border-radius: 9999px;">
-        Interactive Static Demo
+      <span style="font-size: 0.82rem; font-weight: 800; text-transform: uppercase; color: var(--rose-primary); background: var(--rose-light); padding: 0.35rem 0.95rem; border-radius: 9999px;">
+        ✨ Interactive Sisterhood Demo
       </span>
-      <h1 style="font-size: 2.2rem; font-weight: 900; margin-top: 0.5rem;">Try HtetLingo in Action</h1>
-      <p style="color: var(--text-muted); font-size: 1rem;">
-        Click the audio button to hear native speech, flip the flashcard, or search words below.
+      <h1 style="font-size: 2.3rem; font-weight: 900; margin-top: 0.6rem;">Try HtetLingo in Action</h1>
+      <p style="color: var(--text-muted); font-size: 1.05rem;">
+        Click the audio button to hear native speech, flip flashcards, or search empowering words below.
       </p>
     </div>
 
     <!-- Interactive Flashcard Demo -->
     <div class="demo-card-box" id="demoCard" onclick="toggleCard()">
-      <div style="position: absolute; top: 1rem; left: 1.5rem; font-size: 0.8rem; font-weight: 700; color: var(--primary);">
-        JAPANESE • JLPT N5
+      <div style="position: absolute; top: 1.2rem; left: 1.5rem; font-size: 0.82rem; font-weight: 800; color: var(--rose-primary);">
+        🌸 FEMINISM & SOLIDARITY
       </div>
-      <div class="demo-word" id="cardWord">ありがとうございます</div>
-      <div class="demo-phonetic" id="cardPhonetic">Arigatō gozaimasu</div>
-      <div class="demo-trans" id="cardTrans">ကျေးဇူးတင်ပါတယ် • Thank you very much</div>
+      <div class="demo-word" id="cardWord">シスターフッド</div>
+      <div class="demo-phonetic" id="cardPhonetic">Shisutāhuddo • Japanese</div>
+      <div class="demo-trans" id="cardTrans">ညီအစ်မစည်းလုံးညီညွတ်မှု • Sisterhood & Mutual Support</div>
       
       <div style="display: flex; gap: 0.75rem; justify-content: center; margin-top: 1.5rem;">
-        <button class="btn-hero-primary" style="padding: 0.5rem 1.25rem; font-size: 0.9rem;" onclick="event.stopPropagation(); playAudio();">
+        <button class="btn-hero-primary" style="padding: 0.6rem 1.35rem; font-size: 0.92rem;" onclick="event.stopPropagation(); playAudio();">
           🔊 Speak Pronunciation
         </button>
-        <button class="btn-hero-secondary" style="padding: 0.5rem 1.25rem; font-size: 0.9rem;" onclick="event.stopPropagation(); nextCard();">
+        <button class="btn-hero-secondary" style="padding: 0.6rem 1.35rem; font-size: 0.92rem;" onclick="event.stopPropagation(); nextCard();">
           Next Card →
         </button>
       </div>
@@ -100,9 +107,9 @@
 
     <!-- Mini Dictionary Lookup Demo -->
     <div style="margin-top: 4rem;">
-      <h2 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 0.75rem;">Instant Multilingual Search</h2>
-      <input type="text" id="demoSearch" placeholder="Type a word (e.g. language, friend, culture)..." 
-             style="width: 100%; padding: 0.85rem 1rem; border-radius: 12px; border: 1px solid var(--border-color); background: var(--bg-card); color: var(--text-main); font-size: 1rem; outline: none; margin-bottom: 1rem;" 
+      <h2 style="font-size: 1.55rem; font-weight: 900; margin-bottom: 0.85rem;">Instant Lexical & Names Search</h2>
+      <input type="text" id="demoSearch" placeholder="Type a word (e.g. empower, sisterhood, equality, courage, Thazin, May)..." 
+             style="width: 100%; padding: 0.9rem 1.15rem; border-radius: 14px; border: 1.5px solid var(--border-color); background: var(--bg-card); color: var(--text-main); font-size: 1rem; outline: none; margin-bottom: 1.25rem;" 
              oninput="filterSearch(this.value)">
 
       <div id="searchResults" style="display: flex; flex-direction: column; gap: 0.75rem;">
@@ -113,10 +120,11 @@
 
   <script>
     const sampleCards = [
-      { word: 'ありがとうございます', phonetic: 'Arigatō gozaimasu', trans: 'ကျေးဇူးတင်ပါတယ် • Thank you very much', lang: 'ja' },
-      { word: 'မင်္ဂလာပါ', phonetic: 'Mingalaba', trans: 'Hello / Good day (Burmese greeting)', lang: 'my' },
-      { word: '你好', phonetic: 'Nǐ hǎo', trans: 'မင်္ဂလာပါ • Hello (Mandarin Chinese)', lang: 'zh' },
-      { word: 'ขอบคุณครับ', phonetic: 'Khop khun khrap', trans: 'ကျေးဇူးတင်ပါတယ် • Thank you (Thai male)', lang: 'th' }
+      { word: 'シスターフッド', phonetic: 'Shisutāhuddo (Japanese)', trans: 'ညီအစ်မစည်းလုံးညီညွတ်မှု • Sisterhood', lang: 'ja' },
+      { word: 'Empowerment', phonetic: '/ɪmˈpaʊ.ər.mənt/ (English)', trans: 'စွမ်းရည်မြှင့်တင်မှု • Giving agency & power', lang: 'en' },
+      { word: 'တန်းတူညီမျှရေး', phonetic: 'Tan-tu-nyi-hmya-yei (Burmese)', trans: 'Gender Equality • ความเท่าเทียมกัน', lang: 'my' },
+      { word: '女性専用車両', phonetic: 'Josei sen\'yō sharyō (Japanese)', trans: 'Women-only transit carriage', lang: 'ja' },
+      { word: '身体自主权', phonetic: 'Shēntǐ zìzhǔquán (Mandarin)', trans: 'Bodily Autonomy & Consent', lang: 'zh' }
     ];
     let cardIdx = 0;
 
@@ -133,26 +141,28 @@
       if ('speechSynthesis' in window) {
         window.speechSynthesis.cancel();
         const u = new SpeechSynthesisUtterance(c.word);
-        u.lang = c.lang === 'ja' ? 'ja-JP' : (c.lang === 'zh' ? 'zh-CN' : (c.lang === 'th' ? 'th-TH' : 'en-US'));
+        u.lang = c.lang === 'ja' ? 'ja-JP' : (c.lang === 'zh' ? 'zh-CN' : 'en-US');
         window.speechSynthesis.speak(u);
       }
     }
 
     const dictItems = [
-      { en: 'Language', my: 'ဘာသာစကား', ja: '言語 (Gengo)', zh: '语言 (Yǔyán)', th: 'ภาษา (Pha-sa)' },
-      { en: 'Culture', my: 'ယဉ်ကျေးမှု', ja: '文化 (Bunka)', zh: '文化 (Wénhuà)', th: 'วัฒนธรรม' },
-      { en: 'Friend', my: 'သူငယ်ချင်း / မိတ်ဆွေ', ja: '友達 (Tomodachi)', zh: '朋友 (Péngyou)', th: 'เพื่อน' },
-      { en: 'Learn', my: 'လေ့လာသင်ယူသည်', ja: '学ぶ (Manabu)', zh: '学习 (Xuéxí)', th: 'เรียนรู้' }
+      { en: 'Empowerment', my: 'စွမ်းရည်မြှင့်တင်မှု', ja: 'エンパワーメント', zh: '赋权 (Fùquán)', th: 'การเสริมพลัง' },
+      { en: 'Sisterhood', my: 'ညီအစ်မစည်းလုံးညီညွတ်မှု', ja: 'シスターフッド', zh: '姐妹情谊', th: 'ความเป็นพี่น้อง' },
+      { en: 'Equality', my: 'တန်းတူညီမျှရေး', ja: 'ジェンダー平等', zh: '平等 (Píngděng)', th: 'ความเท่าเทียม' },
+      { en: 'Courage', my: 'ရဲရင့်ခြင်း / သတ္တိ', ja: '勇気 (Yūki)', zh: '勇气 (Yǒngqì)', th: 'ความกล้าหาญ' },
+      { en: 'Thazin (သဇင်)', my: 'တော်ဝင်သဇင်ပန်း', ja: '純潔と優雅の蘭', zh: '高雅纯洁的兰花', th: 'กล้วยไม้หลวงอันสง่างาม' },
+      { en: 'May (မေ)', my: 'ချစ်ခင်မြတ်နိုးဖွယ်ကောင်းသော သမီးငယ်', ja: '愛される娘', zh: '被挚爱的女儿', th: 'ลูกสาวอันเป็นที่รัก' }
     ];
 
     function renderDict(items) {
       const container = document.getElementById('searchResults');
       container.innerHTML = items.map(d => `
-        <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 1rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+        <div style="background: var(--bg-card); border: 1.5px solid var(--border-color); border-radius: 14px; padding: 1rem 1.25rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
           <div>
-            <strong>${d.en}</strong> • <span style="color: var(--primary);">${d.my}</span>
+            <strong style="color: var(--rose-primary); font-size: 1.05rem;">${d.en}</strong> • <span>${d.my}</span>
           </div>
-          <div style="font-size: 0.85rem; color: var(--text-muted);">
+          <div style="font-size: 0.88rem; color: var(--text-muted); font-family: monospace;">
             🇯🇵 ${d.ja} | 🇨🇳 ${d.zh} | 🇹🇭 ${d.th}
           </div>
         </div>

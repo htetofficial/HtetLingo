@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Documentation — HtetLingo Platform & Architecture</title>
-  <meta name="description" content="Technical documentation, database schema, cross-platform architecture, and open-source dataset roadmap for HtetLingo.">
+  <title>Documentation — HtetLingo Platform & Open Source Datasets</title>
+  <meta name="description" content="Technical documentation, open source dictionary integration, and cute feminist design architecture for HtetLingo.">
   
   <meta name="color-scheme" content="light dark">
   <script>
@@ -24,14 +24,14 @@
     <div class="header-inner">
       <a href="index.html" class="logo-brand">
         <img src="assets/logo.svg" alt="HtetLingo" class="logo-img">
-        <span class="logo-text">HtetLingo Docs</span>
+        <span class="logo-text">HtetLingo Docs 🌸</span>
       </a>
 
       <ul class="nav-links">
         <li><a href="index.html" class="nav-link">Home</a></li>
-        <li><a href="demo.html" class="nav-link">Interactive Demo</a></li>
+        <li><a href="demo.html" class="nav-link">Live Demo</a></li>
         <li><a href="https://github.com/htetofficial/HtetLingo" target="_blank" class="nav-link">GitHub</a></li>
-        <li><a href="https://htetlingo.pages.dev" target="_blank" class="btn-launch">Launch App ↗</a></li>
+        <li><a href="https://htetlingo.pages.dev" target="_blank" class="btn-launch">Launch App 💖</a></li>
       </ul>
     </div>
   </header>
@@ -42,12 +42,12 @@
     <!-- Sidebar Menu -->
     <aside class="docs-sidebar">
       <ul class="docs-menu">
-        <li><a href="#overview" class="docs-menu-link active">1. Platform Overview</a></li>
-        <li><a href="#architecture" class="docs-menu-link">2. Cross-Platform Architecture</a></li>
-        <li><a href="#offline" class="docs-menu-link">3. Offline-First Storage Engine</a></li>
-        <li><a href="#supabase" class="docs-menu-link">4. Supabase Backend & RLS</a></li>
-        <li><a href="#revenuecat" class="docs-menu-link">5. RevenueCat Monetization</a></li>
-        <li><a href="#datasets" class="docs-menu-link">6. Open-Source Datasets Roadmap</a></li>
+        <li><a href="#overview" class="docs-menu-link active">1. Vision & Feminism Philosophy</a></li>
+        <li><a href="#datasets" class="docs-menu-link">2. Open Source Datasets Integrated</a></li>
+        <li><a href="#architecture" class="docs-menu-link">3. Cross-Platform Architecture</a></li>
+        <li><a href="#offline" class="docs-menu-link">4. Offline Storage Engine</a></li>
+        <li><a href="#supabase" class="docs-menu-link">5. Supabase Backend & RLS</a></li>
+        <li><a href="#revenuecat" class="docs-menu-link">6. RevenueCat Subscriptions</a></li>
         <li><a href="#getting-started" class="docs-menu-link">7. Developer Quickstart</a></li>
       </ul>
     </aside>
@@ -59,23 +59,58 @@
       <section id="overview">
         <h1>Platform Documentation</h1>
         <p>
-          <strong>HtetLingo</strong> is an ambitious, community-rooted multilingual learning, dictionary, translation, and AI tutoring platform founded by Htet. It bridges global communication across English, Burmese (မြန်မာ), Japanese (日本語), Chinese (中文), Thai (ภาษาไทย), French, German, and Korean.
+          <strong>HtetLingo</strong> is a cute, feminist multilingual learning, dictionary, and AI tutoring platform founded by Htet. It bridges global communication across English, Burmese (မြန်မာ), Japanese (日本語), Chinese (中文), Thai (ภาษาไทย), French, German, and Korean.
         </p>
         <p>
-          Unlike legacy dictionary apps that merely display static word translations, HtetLingo is built around <strong>cognitive acquisition</strong>: Spaced Repetition (SRS), structured cross-cultural grammar guides, speech pronunciation feedback, and conversational AI tutoring.
+          The platform centers women, girls, and marginalized voices: emphasizing <strong>assertive communication, sisterhood, self-love, and personal safety</strong>. Rather than passive rote memorization, HtetLingo equips learners to speak with conviction, navigate the world independently, and connect deeply across cultures.
         </p>
       </section>
 
       <!-- Section 2 -->
-      <section id="architecture">
-        <h2>2. Cross-Platform Architecture</h2>
+      <section id="datasets">
+        <h2>2. Open Source Lexical Datasets Integrated</h2>
         <p>
-          HtetLingo uses a <strong>Web-first, Offline-first, Cross-platform</strong> architecture. The core application is engineered with modern web standards (Progressive Web App), designed to compile into native platforms without rewriting business logic:
+          HtetLingo integrates and cross-references a rich ecosystem of open source dictionary databases, wordlists, and linguistic resources:
+        </p>
+        
+        <div style="display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.5rem;">
+          <div style="background: var(--bg-card-subtle); padding: 1rem; border-radius: 12px; border: 1.5px solid var(--border-color);">
+            <strong>1. EngMyanDictionary (soeminnminn/EngMyanDictionary-MAC):</strong><br/>
+            Complete SQLite database containing <strong>21,984 English-Myanmar dictionary entries</strong> with definitions, phonetics, and usage examples.
+          </div>
+
+          <div style="background: var(--bg-card-subtle); padding: 1rem; border-radius: 12px; border: 1.5px solid var(--border-color);">
+            <strong>2. English-to-English Dictionaries (adityasahu252 & LexiVerse):</strong><br/>
+            Comprehensive English monolingual lexicon with over <strong>49,537 detailed word definitions</strong>.
+          </div>
+
+          <div style="background: var(--bg-card-subtle); padding: 1rem; border-radius: 12px; border: 1.5px solid var(--border-color);">
+            <strong>3. Myanmar Female Names & Bilingual Mappings (L16H7 & MgHla):</strong><br/>
+            Curated list of <strong>2,304 Myanmar female names</strong> with cultural meanings, paired with <strong>12,044 English-Myanmar name transliterations</strong>.
+          </div>
+
+          <div style="background: var(--bg-card-subtle); padding: 1rem; border-radius: 12px; border: 1.5px solid var(--border-color);">
+            <strong>4. Myanmar Words & Segmentation (myanmartools, lwinmoe, trhura):</strong><br/>
+            Over <strong>41,343 segmented Burmese words</strong> and 28,854 common lexical items for spellchecking and syllable breaking.
+          </div>
+
+          <div style="background: var(--bg-card-subtle); padding: 1rem; border-radius: 12px; border: 1.5px solid var(--border-color);">
+            <strong>5. Regional & Specialized Collections (Awesome Myanmar Wordlists):</strong><br/>
+            Myanmar-Karen wordlists, Myanmar calendar (mmcal), postal codes, and HuggingFace Myanmar NLP models (nara-mini-v1).
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3 -->
+      <section id="architecture">
+        <h2>3. Cross-Platform Architecture</h2>
+        <p>
+          HtetLingo is built with a <strong>Web-first, Offline-first, Cross-platform</strong> architecture:
         </p>
         <ul>
-          <li><strong>Cloudflare Pages (Web):</strong> Global edge distribution with zero cold starts and fast load times.</li>
-          <li><strong>Android Native (Capacitor):</strong> Wraps web components into an Android Studio Gradle project with native speech and offline storage access.</li>
-          <li><strong>iPadOS & macOS Native (Capacitor / Mac Catalyst):</strong> Adapts layout dynamically to iPad multi-column split view and native desktop window controls.</li>
+          <li><strong>Cloudflare Pages (Web):</strong> Global edge distribution hosting the Progressive Web App at <code>htetlingo.pages.dev</code>.</li>
+          <li><strong>Android Native (Capacitor):</strong> Wraps web components into a native Android APK/AAB with native speech synthesis and persistent offline storage.</li>
+          <li><strong>iPadOS & macOS Native:</strong> Fluid multi-column tablet and desktop layout supporting Apple Silicon.</li>
         </ul>
 
         <div class="code-block">
@@ -87,9 +122,9 @@ npx cap sync
         </div>
       </section>
 
-      <!-- Section 3 -->
+      <!-- Section 4 -->
       <section id="offline">
-        <h2>3. Offline-First Storage Engine</h2>
+        <h2>4. Offline-First Storage Engine</h2>
         <p>
           Learners in regions with intermittent connectivity (such as Myanmar) can use HtetLingo with complete reliability.
         </p>
@@ -98,9 +133,9 @@ npx cap sync
         </p>
       </section>
 
-      <!-- Section 4 -->
+      <!-- Section 5 -->
       <section id="supabase">
-        <h2>4. Supabase Backend & RLS</h2>
+        <h2>5. Supabase Backend & RLS</h2>
         <p>
           Cloud synchronization and authentication are powered by <strong>Supabase</strong>. Every database table enforces Row Level Security (RLS) so users can only access their own learning progress.
         </p>
@@ -120,32 +155,17 @@ CREATE POLICY "Users access own learning progress"
         </div>
       </section>
 
-      <!-- Section 5 -->
+      <!-- Section 6 -->
       <section id="revenuecat">
-        <h2>5. RevenueCat Monetization & Subscriptions</h2>
+        <h2>6. RevenueCat Monetization & Subscriptions</h2>
         <p>
           HtetLingo provides a sustainable business model powered by <strong>RevenueCat</strong> (API Key: <code>test_MlxZnHIsSDemVwtetEoTrDHUrrB</code>):
         </p>
         <ul>
-          <li><strong>Free Starter:</strong> Unlimited core vocabulary, basic dictionary search, and daily practice quizzes.</li>
-          <li><strong>Premium Subscription ($7.99/mo):</strong> Unlimited AI Tutor roleplay, advanced grammar courses, speech pronunciation scoring, and cloud sync.</li>
+          <li><strong>Free Sisterhood:</strong> Unlimited core vocabulary, basic dictionary search, and daily practice quizzes.</li>
+          <li><strong>VIP Subscription ($7.99/mo):</strong> Unlimited HtetAI Tutor roleplay, advanced assertive grammar courses, speech pronunciation scoring, and cloud sync.</li>
           <li><strong>Lifetime VIP ($79.99 one-time):</strong> Permanent VIP access to all present and future languages and packs.</li>
           <li><strong>Specialty Packs:</strong> Standalone language packages (e.g. JLPT N5–N1, HSK 1–6, Business English).</li>
-        </ul>
-      </section>
-
-      <!-- Section 6 -->
-      <section id="datasets">
-        <h2>6. Open-Source Datasets Roadmap</h2>
-        <p>
-          To expand the vocabulary database to hundreds of thousands of words, HtetLingo is designed to seamlessly integrate with prominent open-source lexical projects:
-        </p>
-        <ul>
-          <li><strong>Tatoeba Project:</strong> Large-scale open collaborative database of contextual sentence pairs with translations in Burmese, English, Japanese, Chinese, and Thai.</li>
-          <li><strong>JMdict & Kanjidic (EDRDG):</strong> The gold standard open-source Japanese-English electronic dictionary files.</li>
-          <li><strong>CC-CEDICT:</strong> Comprehensive open Chinese-to-English dictionary database with Pinyin and character variants.</li>
-          <li><strong>SEAlang Library & OpenBurmese:</strong> Authentic Southeast Asian linguistic resources for Burmese and Thai phonetic mappings.</li>
-          <li><strong>Wiktionary Dumps:</strong> Open multilingual lexical database with pronunciations and etymology.</li>
         </ul>
       </section>
 
@@ -177,7 +197,7 @@ CLOUDFLARE_API_TOKEN="&lt;token&gt;" npx wrangler pages deploy app --project-nam
       <div>
         <a href="index.html" style="color: var(--text-muted); text-decoration: none;">Home</a> • 
         <a href="demo.html" style="color: var(--text-muted); text-decoration: none;">Demo</a> • 
-        <a href="https://htetlingo.pages.dev" target="_blank" style="color: var(--primary); text-decoration: none; font-weight: 700;">Launch App ↗</a>
+        <a href="https://htetlingo.pages.dev" target="_blank" style="color: var(--rose-primary); text-decoration: none; font-weight: 800;">Launch App ↗</a>
       </div>
     </div>
   </footer>
