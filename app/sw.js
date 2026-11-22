@@ -1,5 +1,5 @@
 // HtetLingo Service Worker - Duolingo Interactive Offline-First Learning
-const CACHE_NAME = 'htetlingo-v2.0.0';
+const CACHE_NAME = 'htetlingo-v2.1.0';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -26,7 +26,7 @@ const ASSETS_TO_CACHE = [
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      console.log('[HtetLingo SW] Pre-caching Duolingo offline assets');
+      console.log('[HtetLingo SW v2.1.0] Pre-caching Duolingo offline assets');
       return cache.addAll(ASSETS_TO_CACHE);
     }).then(() => self.skipWaiting())
   );
@@ -38,7 +38,7 @@ self.addEventListener('activate', (event) => {
       return Promise.all(
         keyList.map((key) => {
           if (key !== CACHE_NAME) {
-            console.log('[HtetLingo SW] Removing old cache:', key);
+            console.log('[HtetLingo SW] Clearing outdated cache:', key);
             return caches.delete(key);
           }
         })
@@ -47,34 +47,22 @@ self.addEventListener('activate', (event) => {
   );
 });
 
+// Network-First with Cache Fallback strategy
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
   const url = new URL(event.request.url);
 
   if (url.origin === location.origin) {
     event.respondWith(
-      caches.match(event.request).then((cachedResponse) => {
-        if (cachedResponse) {
-          fetch(event.request).then((networkResponse) => {
-            if (networkResponse && networkResponse.status === 200) {
-              caches.open(CACHE_NAME).then((cache) => cache.put(event.request, networkResponse));
-            }
-          }).catch(() => {});
-          return cachedResponse;
-        }
-        return fetch(event.request).then((networkResponse) => {
-          if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
-            return networkResponse;
+      fetch(event.request)
+        .then((networkResponse) => {
+          if (networkResponse && networkResponse.status === 200) {
+            const responseToCache = networkResponse.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, responseToCache));
           }
-          const responseToCache = networkResponse.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, responseToCache));
           return networkResponse;
-        });
-      }).catch(() => {
-        if (event.request.headers.get('accept')?.includes('text/html')) {
-          return caches.match('./index.html');
-        }
-      })
+        })
+        .catch(() => caches.match(event.request).then((cached) => cached || (event.request.headers.get('accept')?.includes('text/html') ? caches.match('./index.html') : null)))
     );
   }
 });

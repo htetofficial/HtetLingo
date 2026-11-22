@@ -49,10 +49,10 @@ class HtetLingoApp {
     this.renderCurrentTab();
     this.checkOnlineStatus();
 
-    // Register Service Worker
+    // Register Service Worker with cache busting
     if ('serviceWorker' in navigator) {
       try {
-        await navigator.serviceWorker.register('./sw.js');
+        await navigator.serviceWorker.register('./sw.js?v=2.1.0');
         console.log('[HtetLingo] Duolingo Kawaii Service Worker active');
       } catch (e) {}
     }
