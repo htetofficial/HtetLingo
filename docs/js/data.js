@@ -50,12 +50,12 @@ window.HTET_DATA = {
       category: 'feminism',
       level: 'Empowerment',
       translations: {
-        en: { word: 'Empowerment', phonetic: '/ɪmˈpaʊ.ər.mənt/', example: 'Education is the ultimate foundation for women's empowerment.' },
+        en: { word: 'Empowerment', phonetic: '/ɪmˈpaʊ.ər.mənt/', example: "Education is the ultimate foundation for women's empowerment." },
         my: { word: 'စွမ်းရည်မြှင့်တင်မှု / လုပ်ပိုင်ခွင့်', phonetic: 'Swan-yei myin-tin-hmu', example: 'ပညာရေးသည် အမျိုးသမီးများ၏ စွမ်းရည်မြှင့်တင်မှုအတွက် အဓိကသော့ချက်ဖြစ်ပါတယ်။' },
         ja: { word: 'エンパワーメント / 力量強化', phonetic: 'Empawāmento', example: '女性のエンパワーメントが社会をより豊かにします。' },
         zh: { word: '赋权 / 女性赋能', phonetic: 'Fùquán / Nǚxìng fùnéng', example: '教育是实现女性赋能最根本的基石。' },
         th: { word: 'การเสริมพลัง / เพิ่มศักยภาพ', phonetic: 'Karn serm phalang', example: 'การศึกษาคือรากฐานสำคัญของการเสริมพลังสตรี' },
-        fr: { word: 'Autonomisation / Émancipation', phonetic: '/o.tɔ.nɔ.mi.za.sjɔ̃/', example: 'L'émancipation des femmes transforme le monde.' },
+        fr: { word: 'Autonomisation / Émancipation', phonetic: '/o.tɔ.nɔ.mi.za.sjɔ̃/', example: "L'émancipation des femmes transforme le monde." },
         de: { word: 'Ermächtigung / Selbstbestimmung', phonetic: '/ɛɐ̯ˈmɛçtɪɡʊŋ/', example: 'Bildung ist die Grundlage für Selbstbestimmung.' },
         ko: { word: '역량 강화 / 임파워먼트', phonetic: 'Yeongryang ganghwa', example: '여성의 역량 강화는 사회 발전의 핵심입니다.' }
       }
@@ -85,7 +85,7 @@ window.HTET_DATA = {
         ja: { word: 'ジェンダー平等', phonetic: 'Jendā byōdō', example: 'ジェンダー平等は持続可能な未来への必須条件です。' },
         zh: { word: '性别平等', phonetic: 'Xìngbié píngděng', example: '性别平等是每个人最基本的权利。' },
         th: { word: 'ความเท่าเทียมทางเพศ', phonetic: 'Khwam thao thiam thang phet', example: 'ความเท่าเทียมทางเพศคือสิทธิมนุษยชนขั้นพื้นฐาน' },
-        fr: { word: 'Égalité des genres', phonetic: '/e.ɡa.li.te de ʒɑ̃ʁ/', example: 'L'égalité des genres profite à toute la société.' },
+        fr: { word: 'Égalité des genres', phonetic: '/e.ɡa.li.te de ʒɑ̃ʁ/', example: "L'égalité des genres profite à toute la société." },
         de: { word: 'Geschlechtergerechtigkeit', phonetic: '/ɡəˈʃlɛçtɐɡəˌʁɛçtɪçkaɪt/', example: 'Geschlechtergerechtigkeit ist ein Menschenrecht.' },
         ko: { word: '성평등', phonetic: 'Seong-pyeong-deung', example: '성평등은 더 나은 사회를 위한 필수 조건입니다.' }
       }
@@ -117,7 +117,7 @@ window.HTET_DATA = {
         ja: { word: '私は自分に自信と価値がある', phonetic: 'Watashi wa jishin ga aru', example: '私は自分の強さを信じ、胸を張って歩みます。' },
         zh: { word: '我充满自信与价值', phonetic: 'Wǒ chōngmǎn zìxìn yǔ jiàzhí', example: '我有独特的闪光点，我值得一切美好。' },
         th: { word: 'ฉันมั่นใจและมีคุณค่าในตัวเอง', phonetic: 'Chan man-jai lae mee khun-kha', example: 'ฉันภาคภูมิใจในตัวตนและเชื่อมั่นในพลังของฉัน' },
-        fr: { word: 'J'ai confiance en moi et j'ai de la valeur', phonetic: '/kɔ̃.fjɑ̃s/', example: 'J'ai toute confiance en mes capacités.' },
+        fr: { word: "J'ai confiance en moi et j'ai de la valeur", phonetic: "/kɔ̃.fjɑ̃s/", example: "J'ai toute confiance en mes capacités." },
         de: { word: 'Ich bin selbstbewusst und wertvoll', phonetic: '/ˈzɛlpstbəˌvʊst/', example: 'Ich vertraue meiner inneren Stärke.' },
         ko: { word: '나는 자신감 있고 소중한 존재다', phonetic: 'Naneun jasinsogam issgo sojunghan jonjaeda', example: '나는 내 모습 그대로 소중하고 당당합니다.' }
       }
@@ -132,7 +132,7 @@ window.HTET_DATA = {
         ja: { word: '私の声には力がある', phonetic: 'Watashi no koe ni wa chikara ga aru', example: '私の意見には価値があり、遠慮する必要はありません。' },
         zh: { word: '我的声音值得被倾听', phonetic: 'Wǒ de shēngyīn zhídé bèi qīngtīng', example: '勇敢表达自己，我的想法无比重要。' },
         th: { word: 'เสียงและความคิดของฉันมีคุณค่า', phonetic: 'Siang khong chan mee khun-kha', example: 'ฉันกล้าพูดและแสดงออกอย่างมั่นใจ' },
-        fr: { word: 'Ma voix mérite d'être entendue', phonetic: '/vwa me.ʁit/', example: 'Mes opinions comptent et méritent d'être partagées.' },
+        fr: { word: "Ma voix mérite d'être entendue", phonetic: '/vwa me.ʁit/', example: "Mes opinions comptent et méritent d'être partagées." },
         de: { word: 'Meine Stimme zählt', phonetic: '/ˈʃtɪmə tsɛːlt/', example: 'Ich habe das Recht, meine Meinung klar zu äußern.' },
         ko: { word: '내 목소리는 존중받을 자격이 있다', phonetic: 'Nae moksorineun jonjung badeul jagyeogi issda', example: '내 생각과 목소리는 소중하고 힘이 있습니다.' }
       }
@@ -193,10 +193,10 @@ window.HTET_DATA = {
       translations: {
         en: { word: 'Women-only Carriage / Safe Zone', phonetic: '/ˈwɪm.ɪn ˈəʊn.li/', example: 'Where is the designated women-only subway carriage?' },
         my: { word: 'အမျိုးသမီးသီးသန့် တွဲ / လုံခြုံရေးဇုန်', phonetic: 'A-myo-tha-mee thee-than', example: 'အမျိုးသမီးသီးသန့် ရထားတွဲ ဘယ်ဘက်မှာ ရှိပါသလဲရှင်။' },
-        ja: { word: '女性専用車両 (じょせいせんようしゃりょう)', phonetic: 'Josei sen'yō sharyō', example: '女性専用車両は何号車ですか？' },
+        ja: { word: "女性専用車両 (じょせいせんようしゃりょう)", phonetic: "Josei sen'yō sharyō", example: "女性専用車両は何号車ですか？" },
         zh: { word: '女性专用车厢 / 女性安全区', phonetic: 'Nǚxìng zhuānyòng chēxiāng', example: '请问女性专用车厢在几号站台？' },
         th: { word: 'ตู้โดยสารเฉพาะสุภาพสตรี', phonetic: 'Dtoo doy-sarn cha-phor su-phap satree', example: 'ตู้รถไฟเฉพาะผู้หญิงอยู่ตรงไหนคะ?' },
-        fr: { word: 'Espace sécurisé réservé aux femmes', phonetic: '/ɛs.pas se.ky.ʁi.ze/', example: 'Où se situe l'espace sécurisé pour les voyageuses ?' },
+        fr: { word: "Espace sécurisé réservé aux femmes", phonetic: "/ɛs.pas se.ky.ʁi.ze/", example: "Où se situe l'espace sécurisé pour les voyageuses ?" },
         de: { word: 'Frauen-Schutzzone / Frauenabteil', phonetic: '/ˈfʁaʊ̯ən.apˌtaɪ̯l/', example: 'Gibt es einen gesonderten Bereich für alleinreisende Frauen?' },
         ko: { word: '여성 전용 칸 / 여성 안심 구역', phonetic: 'Yeoseong jeon-yong kan', example: '여성 전용 지하철 칸은 어디에 있나요?' }
       }
@@ -343,7 +343,7 @@ window.HTET_DATA = {
         'Where can I purchase a ticket?'
       ],
       answerIndex: 1,
-      explanation: 'The sentence was "女性専用車両は何号車ですか" (Josei sen'yō sharyō wa nan-gōsha desu ka?), asking for the women-only train car number.'
+      explanation: "The sentence was \"女性専用車両は何号車ですか\" (Josei sen'yō sharyō wa nan-gōsha desu ka?), asking for the women-only train car number."
     },
     {
       id: 'q_fem_03',
@@ -367,13 +367,13 @@ window.HTET_DATA = {
       topic: 'Sisterhood & Empowerment',
       question: 'မြန်မာဘာသာဖြင့် "မိန်းကလေးများ၏ စွမ်းရည်မြှင့်တင်မှု" ကို အင်္ဂလိပ်လို အတိအကျ မည်သို့ခေါ်ဆိုသနည်း။',
       options: [
-        'Women's Empowerment',
-        'Women's Employment',
-        'Women's Entertainment',
-        'Women's Environment'
+        'Women\'s Empowerment',
+        'Women\'s Employment',
+        'Women\'s Entertainment',
+        'Women\'s Environment'
       ],
       answerIndex: 0,
-      explanation: '"Women's Empowerment" သည် အမျိုးသမီးများ၏ လုပ်ပိုင်ခွင့်၊ ဆုံးဖြတ်ခွင့်နှင့် စွမ်းဆောင်ရည်မြှင့်တင်မှုကို ဖော်ညွှန်းသည့် ဝေါဟာရဖြစ်ပါသည်။'
+      explanation: "\"Women's Empowerment\" သည် အမျိုးသမီးများ၏ လုပ်ပိုင်ခွင့်၊ ဆုံးဖြတ်ခွင့်နှင့် စွမ်းဆောင်ရည်မြှင့်တင်မှုကို ဖော်ညွှန်းသည့် ဝေါဟာရဖြစ်ပါသည်။"
     }
   ],
 
@@ -494,12 +494,12 @@ window.HTET_DATA = {
       ipa: '/vɔɪs/',
       source: 'EMDictionary',
       translations: {
-        en: 'The sound produced in a person's larynx; the right to express an opinion.',
+        en: "The sound produced in a person's larynx; the right to express an opinion.",
         my: 'အသံ။ စကားသံ။ မိမိဆန္ဒသဘောထားကို ထုတ်ဖော်ပြောဆိုခွင့်။',
         ja: '声 (こえ - Koe)、発言権',
         zh: '声音、发言权 (Shēngyīn)',
         th: 'เสียง, สิทธิ์ในการออกเสียง',
-        fr: 'Voix, droit de s'exprimer',
+        fr: "Voix, droit de s'exprimer",
         de: 'Stimme, Mitspracherecht',
         ko: '목소리, 발언권'
       },

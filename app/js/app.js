@@ -560,33 +560,238 @@ class HtetLingoApp {
   }
 
   // 5. Multilingual Dictionary View (EMDictionary & Open Source Lexicon)
+  setDictTab(tab) {
+    this.dictTab = tab;
+    this.renderCurrentTab();
+  }
+
   renderDictView(container) {
-    const dict = window.HTET_DATA.dictionary;
+    if (!this.dictTab) this.dictTab = 'all';
 
     container.innerHTML = `
-      <div style="margin-bottom: 1.25rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
-        <div>
-          <h2 style="font-size: 1.4rem; font-weight: 900;">📖 Multilingual Dictionary</h2>
-          <p style="font-size: 0.85rem; color: var(--text-muted);">
-            Cross-referenced with EMDictionary (21,984 entries) and Lexiverse datasets.
-          </p>
+      <div style="margin-bottom: 1.25rem;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.75rem;">
+          <div>
+            <h2 style="font-size: 1.45rem; font-weight: 900; color: var(--rose-primary);">📖 Multilingual Lexicon & Datasets</h2>
+            <p style="font-size: 0.85rem; color: var(--text-muted);">
+              Integrated with 21,984 EMDictionary entries, 2,304 Myanmar Female Names, 49,500+ English definitions & Karen lexicon.
+            </p>
+          </div>
         </div>
-        <button class="pill-btn" onclick="app.renderFemaleNamesView(document.getElementById('mainViewport'))" style="background: var(--sakura-light); color: var(--sakura-pink); border-color: var(--sakura-pink);">
-          🌸 Female Names & Meanings
-        </button>
+
+        <!-- Dataset Category Tabs -->
+        <div class="category-pills" style="margin-bottom: 1rem; overflow-x: auto; white-space: nowrap; padding-bottom: 0.25rem; display: flex; gap: 0.5rem;">
+          <button class="pill-btn ${this.dictTab === 'all' ? 'active' : ''}" onclick="app.setDictTab('all')">🌸 All Datasets</button>
+          <button class="pill-btn ${this.dictTab === 'em' ? 'active' : ''}" onclick="app.setDictTab('em')">📚 EMDictionary (21,984)</button>
+          <button class="pill-btn ${this.dictTab === 'names' ? 'active' : ''}" onclick="app.setDictTab('names')">🌸 Female Names (2,304)</button>
+          <button class="pill-btn ${this.dictTab === 'eng' ? 'active' : ''}" onclick="app.setDictTab('eng')">📖 English Monolingual</button>
+          <button class="pill-btn ${this.dictTab === 'karen' ? 'active' : ''}" onclick="app.setDictTab('karen')">🌿 Karen Lexicon</button>
+          <button class="pill-btn ${this.dictTab === 'sources' ? 'active' : ''}" onclick="app.setDictTab('sources')">🗂️ Stored Datasets (15)</button>
+        </div>
+
+        <div class="search-input-group">
+          <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="dictSearchInput" class="search-input" placeholder="Search words or names in English, မြန်မာ, 日本語, 中文..." oninput="app.searchDict(this.value)">
+        </div>
       </div>
 
-      <div class="search-input-group">
-        <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="11" cy="11" r="8"></circle>
-          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-        </svg>
-        <input type="text" id="dictSearchInput" class="search-input" placeholder="Search words in English, Burmese, Japanese, Chinese..." oninput="app.searchDict(this.value)">
+      <div id="dictResultsList" style="display: flex; flex-direction: column; gap: 0.85rem;">
+        ${this.renderActiveDictTabContent()}
       </div>
+    `;
+  }
 
-      <div id="dictResultsList" style="display: flex; flex-direction: column; gap: 1rem;">
-        ${dict.map(item => this.formatDictEntry(item)).join('')}
+  renderActiveDictTabContent() {
+    if (this.dictTab === 'em') {
+      const items = (this.engMyanCache || []).slice(0, 30);
+      if (!items.length) {
+        return `<div class="card" style="text-align: center; padding: 2rem;">Loading EMDictionary database (21,984 entries)...</div>`;
+      }
+      return `
+        <div style="font-weight: 800; color: var(--rose-primary); font-size: 0.95rem;">
+          📚 EMDictionary Database (Showing top 30 of ${this.engMyanCache.length.toLocaleString()} words)
+        </div>
+        ${items.map(item => `
+          <div class="card" style="padding: 1.15rem;">
+            <div class="card-header" style="margin-bottom: 0.4rem;">
+              <div>
+                <span style="font-size: 0.72rem; background: var(--rose-light); color: var(--rose-primary); padding: 0.15rem 0.55rem; border-radius: var(--radius-full); font-weight: 800;">EMDictionary</span>
+                <h3 style="font-size: 1.25rem; font-weight: 900; margin-top: 0.2rem;">${item.w}</h3>
+              </div>
+              <button class="icon-btn" onclick="app.speakCurrent('${item.w.replace(/'/g, "\\'")}', 'en')">🔊 Speak</button>
+            </div>
+            <div style="font-size: 0.92rem; color: var(--text-main); line-height: 1.6;">${item.d}</div>
+          </div>
+        `).join('')}
+      `;
+    }
+
+    if (this.dictTab === 'names') {
+      const items = (this.femaleNamesCache || []).slice(0, 30);
+      if (!items.length) {
+        return `<div class="card" style="text-align: center; padding: 2rem;">Loading Myanmar Female Names (2,304 entries)...</div>`;
+      }
+      return `
+        <div style="font-weight: 800; color: #d63384; font-size: 0.95rem;">
+          🌸 Myanmar Female Names & Identity (Showing top 30 of ${this.femaleNamesCache.length.toLocaleString()} names)
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0.75rem;">
+          ${items.map(item => `
+            <div class="card" style="padding: 0.9rem 1.15rem; display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <div style="font-weight: 900; font-size: 1.15rem; color: var(--rose-primary);">${item.mm}</div>
+                <div style="font-size: 0.85rem; color: var(--text-muted);">${item.en} • Female Name</div>
+              </div>
+              <button class="icon-btn" onclick="app.speakCurrent('${item.en}', 'en')">🔊</button>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    if (this.dictTab === 'eng') {
+      const keys = Object.keys(this.engEngCache || {}).slice(0, 25);
+      if (!keys.length) {
+        return `<div class="card" style="text-align: center; padding: 2rem;">Loading English Monolingual Dictionary...</div>`;
+      }
+      return `
+        <div style="font-weight: 800; color: var(--lavender-dark); font-size: 0.95rem;">
+          📖 English Monolingual Lexicon (Showing top 25 definitions)
+        </div>
+        ${keys.map(k => `
+          <div class="card" style="padding: 1.15rem;">
+            <div class="card-header" style="margin-bottom: 0.4rem;">
+              <div>
+                <span style="font-size: 0.72rem; background: var(--lavender-light); color: var(--lavender-dark); padding: 0.15rem 0.55rem; border-radius: var(--radius-full); font-weight: 800;">LexiVerse Monolingual</span>
+                <h3 style="font-size: 1.2rem; font-weight: 900; margin-top: 0.2rem;">${k}</h3>
+              </div>
+              <button class="icon-btn" onclick="app.speakCurrent('${k.replace(/'/g, "\\'")}', 'en')">🔊 Speak</button>
+            </div>
+            <div style="font-size: 0.92rem; color: var(--text-main); line-height: 1.6;">${this.engEngCache[k]}</div>
+          </div>
+        `).join('')}
+      `;
+    }
+
+    if (this.dictTab === 'karen') {
+      const items = (this.karenCache || []).filter(w => !w.startsWith('#')).slice(0, 30);
+      return `
+        <div style="font-weight: 800; color: #059669; font-size: 0.95rem;">
+          🌿 Sgaw & Pwo Karen Words & Syllables
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.6rem;">
+          ${items.map(w => `
+            <div class="card" style="padding: 0.75rem 1rem; font-weight: 800; font-size: 1.05rem; color: var(--text-main); text-align: center;">
+              ${w}
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    if (this.dictTab === 'sources') {
+      return `
+        <div class="card" style="padding: 1.5rem;">
+          <h3 style="font-size: 1.25rem; font-weight: 900; color: var(--rose-primary); margin-bottom: 0.5rem;">
+            🗂️ Stored Open Source Datasets in HtetLingo
+          </h3>
+          <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1.25rem;">
+            All datasets provided have been downloaded directly into the repository <code>data/</code> folder and indexed.
+          </p>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border-color); color: var(--text-muted);">
+                  <th style="padding: 0.5rem;">Dataset</th>
+                  <th style="padding: 0.5rem;">File Path</th>
+                  <th style="padding: 0.5rem;">Size / Entries</th>
+                  <th style="padding: 0.5rem;">Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 0.6rem; font-weight: 800;">EMDictionary</td>
+                  <td style="padding: 0.6rem; font-family: monospace;">data/EMDictionary.db</td>
+                  <td style="padding: 0.6rem;">35.8 MB (21,984 words)</td>
+                  <td style="padding: 0.6rem;">Eng-Myan SQLite DB by soeminnminn</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 0.6rem; font-weight: 800;">English Monolingual</td>
+                  <td style="padding: 0.6rem; font-family: monospace;">data/english_to_english.json</td>
+                  <td style="padding: 0.6rem;">4.7 MB (49,537 words)</td>
+                  <td style="padding: 0.6rem;">English-to-English dictionary</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 0.6rem; font-weight: 800;">dwyl English Words</td>
+                  <td style="padding: 0.6rem; font-family: monospace;">data/words_alpha.txt</td>
+                  <td style="padding: 0.6rem;">4.0 MB (370k words)</td>
+                  <td style="padding: 0.6rem;">dwyl/english-words wordlist</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 0.6rem; font-weight: 800;">MCFNLP Dictionary</td>
+                  <td style="padding: 0.6rem; font-family: monospace;">data/mcfnlp/*.xls</td>
+                  <td style="padding: 0.6rem;">13.2 MB</td>
+                  <td style="padding: 0.6rem;">Myanmar Computer Federation NLP</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 0.6rem; font-weight: 800;">Burmese Segment</td>
+                  <td style="padding: 0.6rem; font-family: monospace;">data/burmese-word-list.txt</td>
+                  <td style="padding: 0.6rem;">1.1 MB (41,343 words)</td>
+                  <td style="padding: 0.6rem;">lwinmoe/segment wordlist</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 0.6rem; font-weight: 800;">Myanmar Common</td>
+                  <td style="padding: 0.6rem; font-family: monospace;">data/mydict-common-words.txt</td>
+                  <td style="padding: 0.6rem;">771 KB (28,854 words)</td>
+                  <td style="padding: 0.6rem;">trhura/pango-myanmar</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 0.6rem; font-weight: 800;">Myanmar Names EN-MM</td>
+                  <td style="padding: 0.6rem; font-family: monospace;">data/MyanmarName-en-mm.csv</td>
+                  <td style="padding: 0.6rem;">341 KB (12,044 pairs)</td>
+                  <td style="padding: 0.6rem;">MgHla/Myanmar-Name_en-2-mm</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 0.6rem; font-weight: 800;">Female Names</td>
+                  <td style="padding: 0.6rem; font-family: monospace;">data/sorted_females.txt</td>
+                  <td style="padding: 0.6rem;">28 KB (2,304 names)</td>
+                  <td style="padding: 0.6rem;">L16H7/Myanmar_Names</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 0.6rem; font-weight: 800;">Karen Wordlists</td>
+                  <td style="padding: 0.6rem; font-family: monospace;">data/sgaw-word-list.txt</td>
+                  <td style="padding: 0.6rem;">354 KB</td>
+                  <td style="padding: 0.6rem;">dangerchitthu/myanmar-karen</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 0.6rem; font-weight: 800;">Myanmar Calendar</td>
+                  <td style="padding: 0.6rem; font-family: monospace;">data/mmcal/</td>
+                  <td style="padding: 0.6rem;">250 KB</td>
+                  <td style="padding: 0.6rem;">yan9a/mmcal JS & dynasties</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 0.6rem; font-weight: 800;">Nara Mini v1 (TTS)</td>
+                  <td style="padding: 0.6rem; font-family: monospace;">data/nara-mini-v1/</td>
+                  <td style="padding: 0.6rem;">25 KB</td>
+                  <td style="padding: 0.6rem;">YeeNyunn G2P & phonemes</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    }
+
+    // Default 'all'
+    const dict = window.HTET_DATA.dictionary;
+    return `
+      <div style="font-weight: 800; color: var(--rose-primary); font-size: 0.95rem; margin-bottom: 0.25rem;">
+        🌸 Curated Sisterhood & Multilingual Vocabulary
       </div>
+      ${dict.map(item => this.formatDictEntry(item)).join('')}
     `;
   }
 
@@ -650,7 +855,7 @@ class HtetLingoApp {
     if (!list) return;
     const q = query.toLowerCase().trim();
     if (!q) {
-      list.innerHTML = window.HTET_DATA.dictionary.map(item => this.formatDictEntry(item)).join('');
+      list.innerHTML = this.renderActiveDictTabContent();
       return;
     }
 
@@ -665,6 +870,7 @@ class HtetLingoApp {
     });
 
     if (curatedMatches.length) {
+      resultsHtml += '<div style="margin-bottom: 0.5rem; font-weight: 800; color: var(--rose-primary); font-size: 0.95rem;">🌸 Sisterhood Curated Terms</div>';
       resultsHtml += curatedMatches.map(item => this.formatDictEntry(item)).join('');
     }
 
@@ -697,7 +903,27 @@ class HtetLingoApp {
       }
     }
 
-    // 3. Query English-to-English Dictionary (LexiVerse / adityasahu252 dataset)
+    // 3. Query Myanmar Female Names Dataset (L16H7 dataset with authentic Burmese script)
+    if (this.femaleNamesCache && this.femaleNamesCache.length) {
+      const fnMatches = this.femaleNamesCache.filter(item => {
+        return item.en.toLowerCase().includes(q) || item.mm.includes(q);
+      }).slice(0, 8);
+
+      if (fnMatches.length) {
+        resultsHtml += '<div style="margin: 1.25rem 0 0.6rem; font-weight: 800; color: #d63384; font-size: 0.95rem;">🌸 Myanmar Female Names & Identity (L16H7 Collection)</div>';
+        resultsHtml += fnMatches.map(item => `
+          <div class="card" style="padding: 0.9rem 1.15rem; margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <div style="font-weight: 900; font-size: 1.15rem; color: var(--rose-primary);">${item.mm}</div>
+              <div style="font-size: 0.85rem; color: var(--text-muted);">${item.en} • Myanmar Female Name</div>
+            </div>
+            <button class="icon-btn" onclick="app.speakCurrent('${item.en}', 'en')">🔊</button>
+          </div>
+        `).join('');
+      }
+    }
+
+    // 4. Query English-to-English Dictionary (LexiVerse / adityasahu252 dataset)
     if (this.engEngCache) {
       const eeKeys = Object.keys(this.engEngCache).filter(k => k.toLowerCase().startsWith(q) || k.toLowerCase().includes(q)).slice(0, 6);
       if (eeKeys.length) {
@@ -719,35 +945,14 @@ class HtetLingoApp {
       }
     }
 
-    // 4. Query Myanmar Female Names Dataset (L16H7 dataset)
-    if (this.femaleNamesCache && this.femaleNamesCache.length) {
-      const fnMatches = this.femaleNamesCache.filter(item => {
-        return item.en.toLowerCase().includes(q) || item.mm.includes(q);
-      }).slice(0, 8);
-
-      if (fnMatches.length) {
-        resultsHtml += '<div style="margin: 1.25rem 0 0.6rem; font-weight: 800; color: #d63384; font-size: 0.95rem;">🌸 Myanmar Female Names & Identity (L16H7 Dataset)</div>';
-        resultsHtml += fnMatches.map(item => `
-          <div class="card" style="padding: 0.9rem 1.15rem; margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center;">
-            <div>
-              <div style="font-weight: 800; font-size: 1.1rem; color: var(--text-main);">${item.mm}</div>
-              <div style="font-size: 0.85rem; color: var(--text-muted);">${item.en} • Myanmar Female Name</div>
-            </div>
-            <button class="icon-btn" onclick="app.speakCurrent('${item.en}', 'en')">🔊</button>
-          </div>
-        `).join('');
-      }
-    }
-
     if (resultsHtml) {
       list.innerHTML = resultsHtml;
     } else {
       list.innerHTML = `
         <div style="text-align: center; padding: 2.5rem 1rem; color: var(--text-muted); background: var(--bg-card); border-radius: var(--radius-md); border: 1.5px dashed var(--border-color);">
           <div style="font-size: 2rem; margin-bottom: 0.5rem;">🌸</div>
-          No exact match found for "<strong>${query}</strong>".<br/>
-          Try searching in our Myanmar Female Names dictionary or use the Phrasebook below!<br/>
-          <button class="pill-btn" style="margin-top: 1rem; background: var(--rose-primary); color: white; border: none;" onclick="app.switchTab('translate')">Open Live Phrasebook →</button>
+          No exact match found for "<strong>${query}</strong>" across open source datasets.<br/>
+          Try another word or explore Myanmar Female Names!
         </div>
       `;
     }
@@ -1222,6 +1427,27 @@ class HtetLingoApp {
   }
 }
 
-window.addEventListener('DOMContentLoaded', () => {
-  window.app = new HtetLingoApp();
-});
+function startApp() {
+  if (!window.app) {
+    try {
+      window.app = new HtetLingoApp();
+    } catch (e) {
+      console.error('App init error:', e);
+      const viewport = document.getElementById('mainViewport');
+      if (viewport) {
+        viewport.innerHTML = `
+          <div style="padding: 2.5rem 1.5rem; text-align: center; color: var(--rose-primary);">
+            <h2>🌸 Welcome to HtetLingo</h2>
+            <p>Initializing platform components... Please refresh if this persists.</p>
+          </div>
+        `;
+      }
+    }
+  }
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', startApp);
+} else {
+  startApp();
+}
