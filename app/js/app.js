@@ -55,6 +55,7 @@ class HtetLingoApp {
     this.dictTab = 'all';
     this.lexiconData = [];
     this.femaleNamesData = [];
+    this.commonErrorsData = null;
     this.engEngData = {};
     this.karenData = [];
     this.bookmarks = [];
@@ -272,14 +273,24 @@ class HtetLingoApp {
       console.warn('Grammar handbook load failed');
     }
 
-    // 3. Fetch quick lexicon & female names for background search
+    // 3. Fetch quick lexicon, female names & common errors for background search
     try {
-      const [lexRes, namesRes] = await Promise.all([
+      const [lexRes, namesRes, errorsRes] = await Promise.all([
         fetch('./data/lexicon_quick.json').catch(() => null),
-        fetch('./data/female_names.json').catch(() => null)
+        fetch('./data/female_names.json').catch(() => null),
+        fetch('./data/common_errors.json').catch(() => null)
       ]);
       if (lexRes && lexRes.ok) this.lexiconData = await lexRes.json();
       if (namesRes && namesRes.ok) this.femaleNamesData = await namesRes.json();
+      if (errorsRes && errorsRes.ok) this.commonErrorsData = await errorsRes.json();
+
+      if (window.htetSearchEngine) {
+        window.htetSearchEngine.setDatasets({
+          lexicon: this.lexiconData,
+          femaleNames: this.femaleNamesData,
+          commonErrors: this.commonErrorsData
+        });
+      }
     } catch (e) {
       console.warn('Dataset load failed, using local offline fallback');
     }
@@ -1310,11 +1321,17 @@ class HtetLingoApp {
       return;
     }
 
-    if (window.HtetSearchEngine && this.lexiconData.length) {
-      const results = window.HtetSearchEngine.search(this.lexiconData, query, {
-        femaleNames: this.femaleNamesData,
-        limit: 25
-      });
+    const engine = window.htetSearchEngine || (window.HtetSearchEngine ? new window.HtetSearchEngine() : null);
+    if (engine) {
+      if (!engine.isLoaded && this.lexiconData.length) {
+        engine.setDatasets({
+          lexicon: this.lexiconData,
+          femaleNames: this.femaleNamesData,
+          commonErrors: this.commonErrorsData
+        });
+      }
+
+      const results = engine.search(query, this.dictTab || 'all', 25);
 
       if (!results.length) {
         listEl.innerHTML = `
@@ -1330,25 +1347,31 @@ class HtetLingoApp {
       }
 
       listEl.innerHTML = results.map(r => `
-        <div class="card" style="padding: 1.25rem; border-radius: 20px;">
+        <div class="card" style="padding: 1.25rem; border-radius: 20px; ${r.type === 'common_error' ? 'border: 2px solid #f97316; background: rgba(249, 115, 22, 0.05);' : ''}">
           <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem;">
             <div>
-              <div style="display: flex; align-items: center; gap: 0.6rem;">
-                <span style="font-size: 1.25rem; font-weight: 900; color: var(--text-main);">${r.displayWord || r.word}</span>
+              <div style="display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;">
+                <span style="font-size: 1.25rem; font-weight: 900; color: var(--text-main);">${r.displayWord || r.word || r.title}</span>
+                ${r.badge ? `<span style="font-size: 0.72rem; font-weight: 800; background: ${r.badgeColor || 'var(--rose-primary)'}; color: #fff; padding: 0.15rem 0.55rem; border-radius: 9999px;">${r.badge}</span>` : ''}
                 ${r.pos ? `<span style="font-size: 0.72rem; font-weight: 800; background: var(--bg-card-subtle); border: 1px solid var(--border-color); padding: 0.15rem 0.45rem; border-radius: 6px; color: var(--text-muted);">${r.pos}</span>` : ''}
               </div>
-              ${r.phonetic ? `<div style="font-size: 0.88rem; color: var(--lavender); font-family: monospace; font-weight: 700;">${r.phonetic}</div>` : ''}
+              ${r.phonetic ? `<div style="font-size: 0.88rem; color: var(--lavender); font-family: monospace; font-weight: 700; margin-top: 0.2rem;">${r.phonetic}</div>` : ''}
             </div>
 
-            <button class="htet-audio-btn" style="width: 36px; height: 36px; font-size: 1rem;" 
-                    onclick="app.speakCurrent('${r.word.replace(/'/g, "\\'")}', 'en')">
+            <button class="htet-audio-btn" style="width: 36px; height: 36px; font-size: 1rem; flex-shrink: 0;" 
+                    onclick="app.speakCurrent('${(r.word || r.title || '').replace(/'/g, "\\'")}', 'en')">
               🔊
             </button>
           </div>
 
-          <div style="font-size: 1rem; font-weight: 800; color: var(--rose-primary); margin-top: 0.6rem; line-height: 1.4;">
+          <div style="font-size: 1rem; font-weight: 800; color: ${r.type === 'common_error' ? '#ea580c' : 'var(--rose-primary)'}; margin-top: 0.6rem; line-height: 1.5;">
             ${r.meaning || r.definition}
           </div>
+          ${r.type === 'common_error' && r.definition ? `
+            <div style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.4rem; font-style: italic;">
+              ${r.definition}
+            </div>
+          ` : ''}
         </div>
       `).join('');
     }
@@ -1573,11 +1596,12 @@ class HtetLingoApp {
     const progressPct = ((this.questionIndex) / questions.length) * 100;
 
     let bodyHtml = '';
-    if (q.type === 'multiple_choice') {
+    const qType = q.type || (q.options ? 'multiple_choice' : q.words || q.wordBank ? 'sentence_build' : 'match_pairs');
+    if (qType === 'multiple_choice' || qType === 'choice') {
       bodyHtml = this.renderMultipleChoiceStep(q);
-    } else if (q.type === 'sentence_build') {
+    } else if (qType === 'sentence_build' || qType === 'word_bank') {
       bodyHtml = this.renderSentenceBuildStep(q);
-    } else if (q.type === 'match_pairs') {
+    } else if (qType === 'match_pairs' || qType === 'match') {
       bodyHtml = this.renderMatchPairsStep(q);
     }
 
@@ -1644,8 +1668,11 @@ class HtetLingoApp {
       <button class="vocab-chip-btn" onclick="app.removePlacedWord(${idx})">${word}</button>
     `).join('');
 
-    const bankChips = q.wordBank.map((word, idx) => {
-      const isUsed = this.placedWords.includes(word);
+    const bankWords = q.wordBank || q.words || [];
+    const bankChips = bankWords.map((word, idx) => {
+      const usedCount = this.placedWords.filter(w => w === word).length;
+      const totalInBankBefore = bankWords.slice(0, idx).filter(w => w === word).length;
+      const isUsed = usedCount > totalInBankBefore;
       return `
         <button class="vocab-chip-btn ${isUsed ? 'used' : ''}" 
                 onclick="app.placeBankWord('${word.replace(/'/g, "\\'")}')" 
@@ -1664,26 +1691,30 @@ class HtetLingoApp {
   }
 
   renderMatchPairsStep(q) {
-    const cardsHtml = q.pairs.map((p, idx) => {
-      const isMatched = this.matchedPairs.includes(p.target);
+    const pairs = q.pairs || [];
+    const cardsHtml = pairs.map((p, idx) => {
+      const targetVal = p.target || p.a || '';
+      const isMatched = this.matchedPairs.includes(targetVal);
       const isSelected = this.selectedMatchA === idx;
       return `
         <button class="pair-card-cell ${isMatched ? 'matched' : ''} ${isSelected ? 'selected' : ''}"
                 onclick="app.selectMatchA(${idx})"
                 ${isMatched ? 'disabled' : ''}>
-          ${p.target}
+          ${targetVal}
         </button>
       `;
     }).join('');
 
-    const meaningsHtml = q.pairs.map((p, idx) => {
-      const isMatched = this.matchedPairs.includes(p.target);
+    const meaningsHtml = pairs.map((p, idx) => {
+      const targetVal = p.target || p.a || '';
+      const myVal = p.my || p.b || '';
+      const isMatched = this.matchedPairs.includes(targetVal);
       const isSelected = this.selectedMatchB === idx;
       return `
         <button class="pair-card-cell ${isMatched ? 'matched' : ''} ${isSelected ? 'selected' : ''}"
                 onclick="app.selectMatchB(${idx})"
                 ${isMatched ? 'disabled' : ''}>
-          ${p.my}
+          ${myVal}
         </button>
       `;
     }).join('');
@@ -1729,8 +1760,9 @@ class HtetLingoApp {
   checkPairMatch() {
     if (this.selectedMatchA !== null && this.selectedMatchB !== null) {
       const q = this.activeLesson.level.questions[this.questionIndex];
+      const targetVal = q.pairs?.[this.selectedMatchA]?.target || q.pairs?.[this.selectedMatchA]?.a || '';
       if (this.selectedMatchA === this.selectedMatchB) {
-        this.matchedPairs.push(q.pairs[this.selectedMatchA].target);
+        this.matchedPairs.push(targetVal);
         if (window.htetSound) window.htetSound.playDing();
       } else {
         if (window.htetSound) window.htetSound.playBuzz();
@@ -1755,12 +1787,13 @@ class HtetLingoApp {
     } else {
       btn.textContent = 'CHECK';
       btn.className = 'htet-btn htet-btn-primary';
-      if (q.type === 'multiple_choice') {
+      const qType = q.type || (q.options ? 'multiple_choice' : q.words || q.wordBank ? 'sentence_build' : 'match_pairs');
+      if (qType === 'multiple_choice' || qType === 'choice') {
         btn.disabled = this.selectedChoice === null;
-      } else if (q.type === 'sentence_build') {
+      } else if (qType === 'sentence_build' || qType === 'word_bank') {
         btn.disabled = this.placedWords.length === 0;
-      } else if (q.type === 'match_pairs') {
-        btn.disabled = this.matchedPairs.length !== q.pairs.length;
+      } else if (qType === 'match_pairs' || qType === 'match') {
+        btn.disabled = this.matchedPairs.length !== (q.pairs?.length || 0);
       }
     }
   }
@@ -1783,14 +1816,18 @@ class HtetLingoApp {
 
     const q = this.activeLesson.level.questions[this.questionIndex];
     let isCorrect = false;
+    const qType = q.type || (q.options ? 'multiple_choice' : q.words || q.wordBank ? 'sentence_build' : 'match_pairs');
 
-    if (q.type === 'multiple_choice') {
-      isCorrect = this.selectedChoice === q.correct;
-    } else if (q.type === 'sentence_build') {
-      const built = this.placedWords.join(this.targetLang === 'ja' || this.targetLang === 'zh' ? '' : ' ');
-      isCorrect = built === q.correct;
-    } else if (q.type === 'match_pairs') {
-      isCorrect = this.matchedPairs.length === q.pairs.length;
+    if (qType === 'multiple_choice' || qType === 'choice') {
+      const targetCorrect = q.correct !== undefined ? q.correct : q.correctIndex;
+      isCorrect = this.selectedChoice === targetCorrect;
+    } else if (qType === 'sentence_build' || qType === 'word_bank') {
+      const sep = (this.targetLang === 'ja' || this.targetLang === 'zh') ? '' : ' ';
+      const built = this.placedWords.join(sep);
+      const expected = q.correct || (Array.isArray(q.targetSentence) ? q.targetSentence.join(sep) : '');
+      isCorrect = built.trim() === expected.trim();
+    } else if (qType === 'match_pairs' || qType === 'match') {
+      isCorrect = this.matchedPairs.length === (q.pairs?.length || 0);
     }
 
     this.isAnswerChecked = true;
@@ -1813,7 +1850,7 @@ class HtetLingoApp {
         drawer.className = 'studio-feedback-drawer drawer-incorrect';
         content.innerHTML = `
           <div class="feedback-headline"><span>✕</span> <span>Not quite there</span></div>
-          <div class="feedback-explanation">${q.explanation || 'Review the correct phrasing and try again.'}</div>
+          <div class="feedback-explanation">${q.explanation || q.tip || 'Review the correct phrasing and try again.'}</div>
         `;
         if (window.htetSound) window.htetSound.playIncorrect();
       }
