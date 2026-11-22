@@ -26,32 +26,32 @@
   <link rel="apple-touch-icon" href="icons/icon.svg">
   <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
 
-  <!-- Stylesheet -->
+  <!-- Stylesheets -->
   <link rel="stylesheet" href="css/app.css">
-  <link rel="stylesheet" href="css/duolingo.css">
+  <link rel="stylesheet" href="css/learning.css">
 </head>
 <body>
   <div class="app-container">
     <!-- Offline status notification banner -->
     <div id="offlineBanner" class="offline-banner" style="display: none;"></div>
 
-    <!-- Gamified Top Bar (Duolingo Style) -->
-    <header class="game-top-bar">
+    <!-- HtetLingo Top Learning Bar -->
+    <header class="htet-status-bar">
       <button id="langSelectorBtn" class="lang-selector-btn" title="Switch Target Language" onclick="app.openLanguageModal()">
         <span id="topLangLabel">🇯🇵 Japanese</span>
       </button>
 
       <div style="display: flex; align-items: center; gap: 0.5rem;">
-        <div id="topStreakPill" class="stat-pill stat-streak" title="Daily Streak">
-          🔥 <span id="topStreakCount">5</span>
+        <div id="topStreakPill" class="htet-stat-badge stat-streak" title="Daily Fluency Streak">
+          🔥 <span id="topStreakCount">5</span>d
         </div>
 
-        <div id="topGemsPill" class="stat-pill stat-gems" title="Empowerment Gems">
-          💎 <span id="topGemsCount">120</span>
+        <div id="topXpPill" class="htet-stat-badge stat-xp" title="Bloom XP">
+          🌸 <span id="topXpCount">150</span>
         </div>
 
-        <div id="topHeartsPill" class="stat-pill stat-hearts" title="Hearts / Lives" onclick="app.switchTab('shop')" style="cursor: pointer;">
-          ❤️ <span id="topHeartsCount">5</span>
+        <div id="topEnergyPill" class="htet-stat-badge stat-energy" title="Language Energy" onclick="app.switchTab('shop')" style="cursor: pointer;">
+          ⚡ <span id="topEnergyCount">100%</span>
         </div>
 
         <button id="themeToggleBtn" class="icon-btn" title="Toggle Light/Dark Theme" aria-label="Toggle theme">
@@ -79,7 +79,7 @@
 
       <button class="nav-tab-item" data-tab="dict">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-        <span>Dict</span>
+        <span>Search Dict</span>
       </button>
 
       <button class="nav-tab-item" data-tab="aitutor">
@@ -89,7 +89,7 @@
 
       <button class="nav-tab-item" data-tab="shop">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-        <span>Shop VIP</span>
+        <span>VIP Studio</span>
       </button>
 
       <button class="nav-tab-item" data-tab="profile">
@@ -101,6 +101,7 @@
 
   <!-- Application Scripts -->
   <script src="js/sound.js"></script>
+  <script src="js/searchEngine.js"></script>
   <script src="js/curriculum.js"></script>
   <script src="js/data.js"></script>
   <script src="js/db.js"></script>

@@ -1,12 +1,13 @@
-// HtetLingo Service Worker - Duolingo Interactive Offline-First Learning
-const CACHE_NAME = 'htetlingo-v2.1.0';
+// HtetLingo Service Worker - Original Learning Studio Offline-First
+const CACHE_NAME = 'htetlingo-v2.2.0';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
   './manifest.json',
   './css/app.css',
-  './css/duolingo.css',
+  './css/learning.css',
   './js/sound.js',
+  './js/searchEngine.js',
   './js/curriculum.js',
   './js/app.js',
   './js/data.js',
@@ -15,6 +16,7 @@ const ASSETS_TO_CACHE = [
   './js/supabaseClient.js',
   './js/revenueCat.js',
   './js/aiTutor.js',
+  './data/lexicon_quick.json',
   './data/eng_myan_quick.json',
   './data/female_names.json',
   './data/eng_eng_quick.json',
@@ -26,7 +28,7 @@ const ASSETS_TO_CACHE = [
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      console.log('[HtetLingo SW v2.1.0] Pre-caching Duolingo offline assets');
+      console.log('[HtetLingo SW v2.2.0] Pre-caching original learning studio assets');
       return cache.addAll(ASSETS_TO_CACHE);
     }).then(() => self.skipWaiting())
   );

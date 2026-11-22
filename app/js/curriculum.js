@@ -443,6 +443,136 @@ window.HTET_CURRICULUM = {
           }
         ]
       }
+,
+      {
+        id: 'en_em_verbs',
+        title: 'Unit 3: Essential Verbs Mastery (EMDictionary Dataset)',
+        subtitle: 'EMDictionary မှ ထုတ်နှုတ်ထားသော မရှိမဖြစ် ကြိယာဝေါဟာရများ',
+        color: '#0284c7',
+        icon: '📚',
+        levels: [
+          {
+            id: 'en_em_v1',
+            title: 'Lesson 1: Learning & Action Verbs',
+            desc: 'learn, speak, understand, discover',
+            icon: '✍️',
+            xp: 25,
+            questions: [
+              {
+                type: 'choice',
+                prompt: 'According to EMDictionary, what does "learn /lɜːn/" mean?',
+                audioText: 'learn',
+                audioLang: 'en',
+                options: ['သင်ယူသည် / လေ့လာသင်ကြားသည်', 'မေ့လျော့သည် (Forget)', 'ငြင်းပယ်သည် (Refuse)', 'အိပ်ပျော်သည် (Sleep)'],
+                correctIndex: 0,
+                tip: 'EMDictionary: learn (v) ၁။ သင်ယူသည်။ လေ့လာသင်ကြားသည်။ လေ့ကျက်သည်။'
+              },
+              {
+                type: 'word_bank',
+                prompt: 'Assemble the EMDictionary example sentence: "She learns languages very quickly"',
+                audioText: 'She learns languages very quickly',
+                audioLang: 'en',
+                targetSentence: ['She', 'learns', 'languages', 'very', 'quickly'],
+                words: ['She', 'learns', 'languages', 'very', 'quickly', 'slow', 'never'],
+                tip: 'learn + s for third person singular.'
+              },
+              {
+                type: 'match',
+                prompt: 'Match verbs from EMDictionary dataset',
+                pairs: [
+                  { a: 'learn', b: 'သင်ယူသည်' },
+                  { a: 'speak', b: 'ပြောဆိုသည်' },
+                  { a: 'understand', b: 'နားလည်သဘောပေါက်သည်' },
+                  { a: 'encourage', b: 'အားပေးတိုက်တွန်းသည်' }
+                ]
+              }
+            ]
+          },
+          {
+            id: 'en_em_v2',
+            title: 'Lesson 2: Strength & Empathy Verbs',
+            desc: 'achieve, empower, support, believe',
+            icon: '🌟',
+            xp: 30,
+            questions: [
+              {
+                type: 'choice',
+                prompt: 'What does "achieve /əˈtʃiːv/" mean in EMDictionary?',
+                audioText: 'achieve',
+                audioLang: 'en',
+                options: ['အောင်မြင်စွာ ပြီးမြောက်သည် / ရရှိသည်', 'ရှုံးနိမ့်သည် (Fail)', 'စွန့်ခွာသည် (Leave)', 'ပျက်စီးသည် (Break)'],
+                correctIndex: 0,
+                tip: 'EMDictionary: achieve (v) ၁။ ရရှိသည်။ ဆွတ်ခူးသည်။ ပြီးမြောက်သည်။'
+              },
+              {
+                type: 'word_bank',
+                prompt: 'Assemble: "Women can achieve any dream"',
+                audioText: 'Women can achieve any dream',
+                audioLang: 'en',
+                targetSentence: ['Women', 'can', 'achieve', 'any', 'dream'],
+                words: ['Women', 'can', 'achieve', 'any', 'dream', 'cannot', 'fear'],
+                tip: 'Believe in continuous learning and achievement.'
+              },
+              {
+                type: 'match',
+                prompt: 'Match empowerment verbs from dataset',
+                pairs: [
+                  { a: 'achieve', b: 'အောင်မြင်စွာရရှိသည်' },
+                  { a: 'empower', b: 'လုပ်ပိုင်ခွင့်စွမ်းရည်ပေးသည်' },
+                  { a: 'support', b: 'ရိုင်းပင်းကူညီသည်' },
+                  { a: 'protect', b: 'ကာကွယ်စောင့်ရှောက်သည်' }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        id: 'en_em_adjectives',
+        title: 'Unit 4: Expressive Adjectives (EMDictionary & POS)',
+        subtitle: 'သရုပ်ဖော် နာမဝိသေသနများနှင့် စကားလုံးအလှများ',
+        color: '#8b5cf6',
+        icon: '🎨',
+        levels: [
+          {
+            id: 'en_em_adj1',
+            title: 'Lesson 1: Character & Brilliance',
+            desc: 'courageous, brilliant, compassionate, resilient',
+            icon: '💎',
+            xp: 25,
+            questions: [
+              {
+                type: 'choice',
+                prompt: 'What does "courageous /kəˈreɪ.dʒəs/" mean in EMDictionary?',
+                audioText: 'courageous',
+                audioLang: 'en',
+                options: ['ရဲရင့်သော / သတ္တိရှိသော', 'ကြောက်ရွံ့သော (Fearful)', 'စိတ်ဆိုးသော (Angry)', 'ပျင်းရိသော (Lazy)'],
+                correctIndex: 0,
+                tip: 'EMDictionary: courageous (adj) သတ္တိရှိသော။ ရဲရင့်သော။'
+              },
+              {
+                type: 'word_bank',
+                prompt: 'Assemble: "A courageous voice inspires the world"',
+                audioText: 'A courageous voice inspires the world',
+                audioLang: 'en',
+                targetSentence: ['A', 'courageous', 'voice', 'inspires', 'the', 'world'],
+                words: ['A', 'courageous', 'voice', 'inspires', 'the', 'world', 'silent', 'fear'],
+                tip: 'Expressing truth with bravery.'
+              },
+              {
+                type: 'match',
+                prompt: 'Match descriptive adjectives from dataset',
+                pairs: [
+                  { a: 'courageous', b: 'သတ္တိရှိသော' },
+                  { a: 'brilliant', b: 'ထက်မြက်ထူးချွန်သော' },
+                  { a: 'resilient', b: 'ကြံ့ကြံ့ခံနိုင်သော' },
+                  { a: 'radiant', b: 'ဝင်းလက်တောက်ပသော' }
+                ]
+              }
+            ]
+          }
+        ]
+      }
     ]
   },
 
@@ -660,6 +790,81 @@ window.HTET_CURRICULUM = {
                   { a: 'ကျေးဇူးတင်ပါတယ်', b: 'Thank you' },
                   { a: 'နေကောင်းလား', b: 'How are you?' },
                   { a: 'ကောင်းပါတယ်', b: 'I am fine / Good' }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+,
+      {
+        id: 'my_heritage_names',
+        title: 'Unit 2: Myanmar Female Names & Heritage (L16H7 Dataset)',
+        subtitle: 'မြန်မာအမျိုးသမီး နာမည်များ၊ အဓိပ္ပာယ်များနှင့် ယဉ်ကျေးမှု',
+        color: '#ec4899',
+        icon: '🌸',
+        levels: [
+          {
+            id: 'my_name_l1',
+            title: 'Lesson 1: Royal Flowers & Cherished Daughters',
+            desc: 'သဇင် (Thazin), မေ (May), ထက် (Htet)',
+            icon: '🌺',
+            xp: 25,
+            questions: [
+              {
+                type: 'choice',
+                prompt: 'What is the cultural symbolism of the Myanmar name "သဇင် (Thazin)"?',
+                audioText: 'သဇင်',
+                audioLang: 'my',
+                options: ['တော်ဝင်သဇင်ပန်း / ဖြူစင်မြင့်မြတ်ခြင်း (Royal Orchid)', 'နေမင်းကြီး (Sun)', 'ပင်လယ် (Ocean)', 'မိုးကြိုး (Thunder)'],
+                correctIndex: 0,
+                tip: 'သဇင်ပန်းသည် သန့်စင်ဖြူစင်မှု၊ ကျက်သရေနှင့် မာန်မာနရှိသော တော်ဝင်ပန်း ဖြစ်ပါသည်။'
+              },
+              {
+                type: 'word_bank',
+                prompt: 'Assemble the female name meaning: "မေ သည် ချစ်ခင်မြတ်နိုးဖွယ်ကောင်းသော သမီးငယ်"',
+                audioText: 'မေသည် ချစ်ခင်မြတ်နိုးဖွယ်ကောင်းသော သမီးငယ်',
+                audioLang: 'my',
+                targetSentence: ['မေ', 'သည်', 'ချစ်ခင်မြတ်နိုးဖွယ်ကောင်းသော', 'သမီးငယ်'],
+                words: ['မေ', 'သည်', 'ချစ်ခင်မြတ်နိုးဖွယ်ကောင်းသော', 'သမီးငယ်', 'ရန်သူ', 'မကောင်းသော'],
+                tip: '"မေ" ဆိုသည်မှာ မိဘဆွေမျိုးတို့ ချစ်ခင်မြတ်နိုးရသော သမီးမိန်းကလေး ဖြစ်ပါသည်။'
+              },
+              {
+                type: 'match',
+                prompt: 'Match Myanmar female names with meanings from dataset',
+                pairs: [
+                  { a: 'သဇင် (Thazin)', b: 'တော်ဝင်သဇင်ပန်း၊ ဖြူစင်ခြင်း' },
+                  { a: 'မေ (May)', b: 'ချစ်မြတ်နိုးဖွယ် သမီးငယ်' },
+                  { a: 'ထက် (Htet)', b: 'ထက်မြက်ခြင်း၊ ထူးချွန်ခြင်း' },
+                  { a: 'ခင် (Khin)', b: 'မေတ္တာရှိခြင်း၊ ခင်မင်တတ်ခြင်း' }
+                ]
+              }
+            ]
+          },
+          {
+            id: 'my_karen_l1',
+            title: 'Lesson 2: Karen Ethnic Language Greetings (Karen Dataset)',
+            desc: 'မုဂ့ၤ (Mu-ge), တာဘလူး (Ta-blu)',
+            icon: '🌿',
+            xp: 25,
+            questions: [
+              {
+                type: 'choice',
+                prompt: 'In Sgaw Karen language, what does "တာဘလူး (Ta-blu)" mean?',
+                audioText: 'တာဘလူး',
+                audioLang: 'my',
+                options: ['ကျေးဇူးတင်ပါတယ် (Thank you)', 'နှုတ်ဆက်ပါတယ် (Goodbye)', 'သွားတော့ (Go away)', "မသိပါ (Don't know)"],
+                correctIndex: 0,
+                tip: '"တာဘလူး" (Ta-blu) သည် ကရင်ဘာသာစကားဖြင့် "ကျေးဇူးတင်ပါတယ်" ဟု အဓိပ္ပာယ်ရပါသည်။'
+              },
+              {
+                type: 'match',
+                prompt: 'Match Karen words with Burmese meanings',
+                pairs: [
+                  { a: 'တာဘလူး', b: 'ကျေးဇူးတင်ပါတယ်' },
+                  { a: 'မုဂ့ၤ', b: 'မင်္ဂလာပါ / နှုတ်ခွန်းဆက်' },
+                  { a: 'ကညီ', b: 'ကရင်လူမျိုး' },
+                  { a: 'ဆိုး', b: 'ချစ်သည်' }
                 ]
               }
             ]

@@ -1,47 +1,48 @@
 /* ==========================================================================
-   HtetLingo Duolingo-Style Interactive Learning Styles
-   Cute & Kawaii Pastel Aesthetics with 3D Tactile Buttons & Animations
+   HtetLingo Interactive Learning Studio Design System
+   Original, Distinctive, Kawaii & Elegant Multilingual Learning UI
+   Created exclusively for HtetLingo (Empower Your Voice • Connect Cultures)
    ========================================================================== */
 
-/* Top Gamification Bar */
-.game-top-bar {
+/* Top Learning Status Bar */
+.htet-status-bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.5rem;
-  padding: 0.6rem 1rem;
+  gap: 0.6rem;
+  padding: 0.75rem 1.25rem;
   background: var(--bg-card);
   border-bottom: 2px solid var(--border-color);
   position: sticky;
   top: 0;
   z-index: 50;
+  box-shadow: 0 2px 8px rgba(244, 63, 94, 0.05);
 }
 
-.stat-pill {
+.htet-stat-badge {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
   font-weight: 800;
   font-size: 0.92rem;
-  padding: 0.3rem 0.65rem;
+  padding: 0.35rem 0.75rem;
   border-radius: var(--radius-full);
   background: var(--bg-card-subtle);
   border: 1.5px solid var(--border-color);
   user-select: none;
+  transition: transform 0.15s ease;
 }
 
-.stat-hearts {
-  color: #ef4444;
-}
-.stat-streak {
-  color: #f97316;
-}
-.stat-gems {
-  color: #06b6d4;
+.htet-stat-badge:hover {
+  transform: translateY(-1px);
 }
 
-/* 3D Duolingo-style Tactile Button */
-.duo-btn {
+.stat-streak { color: #f97316; }
+.stat-xp { color: #f43f5e; }
+.stat-energy { color: #10b981; }
+
+/* HtetLingo Original Tactile Action Buttons */
+.htet-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -52,94 +53,95 @@
   border-radius: 18px;
   border: 2px solid transparent;
   cursor: pointer;
-  transition: all 0.1s ease;
+  transition: all 0.12s cubic-bezier(0.34, 1.56, 0.64, 1);
   user-select: none;
   text-decoration: none;
   text-align: center;
 }
 
-.duo-btn-primary {
-  background: #f43f5e;
+.htet-btn-primary {
+  background: linear-gradient(135deg, #f43f5e, #ec4899);
   color: #ffffff;
   border-color: #e11d48;
-  box-shadow: 0 4px 0 #be123c;
+  box-shadow: 0 4px 12px rgba(244, 63, 94, 0.3), 0 3px 0 #be123c;
 }
 
-.duo-btn-primary:hover {
-  background: #fb7185;
+.htet-btn-primary:hover {
+  filter: brightness(1.05);
 }
 
-.duo-btn-primary:active {
-  transform: translateY(3px);
+.htet-btn-primary:active {
+  transform: translateY(2px);
   box-shadow: 0 1px 0 #be123c;
 }
 
-.duo-btn-success {
-  background: #10b981;
+.htet-btn-success {
+  background: linear-gradient(135deg, #10b981, #059669);
   color: #ffffff;
-  border-color: #059669;
-  box-shadow: 0 4px 0 #047857;
+  border-color: #047857;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3), 0 3px 0 #065f46;
 }
 
-.duo-btn-success:active {
-  transform: translateY(3px);
-  box-shadow: 0 1px 0 #047857;
+.htet-btn-success:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #065f46;
 }
 
-.duo-btn-subtle {
+.htet-btn-outline {
   background: var(--bg-card);
   color: var(--text-main);
   border: 2px solid var(--border-color);
   box-shadow: 0 3px 0 var(--border-color);
 }
 
-.duo-btn-subtle:active {
+.htet-btn-outline:active {
   transform: translateY(2px);
   box-shadow: 0 1px 0 var(--border-color);
 }
 
-/* Learning Roadmap Path */
-.roadmap-container {
-  max-width: 580px;
+/* HtetLingo Learning Studio Roadmap */
+.htet-roadmap-wrap {
+  max-width: 600px;
   margin: 0 auto;
   padding: 1.25rem 1rem 6rem;
 }
 
-.unit-card-header {
+.htet-unit-banner {
   background: linear-gradient(135deg, #f43f5e, #ec4899);
   color: #ffffff;
-  border-radius: 22px;
-  padding: 1.5rem;
+  border-radius: 24px;
+  padding: 1.5rem 1.6rem;
   margin-bottom: 2rem;
-  box-shadow: 0 8px 20px rgba(244, 63, 94, 0.25);
+  box-shadow: 0 10px 24px rgba(244, 63, 94, 0.22);
   position: relative;
   overflow: hidden;
 }
 
-.unit-badge {
+.htet-unit-badge {
   display: inline-block;
   font-size: 0.78rem;
   font-weight: 900;
   text-transform: uppercase;
   background: rgba(255, 255, 255, 0.25);
-  padding: 0.2rem 0.65rem;
+  padding: 0.25rem 0.75rem;
   border-radius: var(--radius-full);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.6rem;
 }
 
-.unit-title {
+.htet-unit-title {
   font-size: 1.35rem;
   font-weight: 900;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.3rem;
+  line-height: 1.3;
 }
 
-.unit-sub {
-  font-size: 0.9rem;
+.htet-unit-subtitle {
+  font-size: 0.92rem;
   opacity: 0.95;
 }
 
-/* Stepper Lesson Nodes */
-.path-nodes-flow {
+/* Learning Quest Nodes */
+.htet-quest-flow {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -147,86 +149,83 @@
   position: relative;
 }
 
-.node-row {
+.htet-node-step {
   display: flex;
   justify-content: center;
   width: 100%;
 }
 
-.node-row.shift-left {
-  transform: translateX(-45px);
-}
-.node-row.shift-right {
-  transform: translateX(45px);
-}
+.htet-node-step.shift-l { transform: translateX(-40px); }
+.htet-node-step.shift-r { transform: translateX(40px); }
 
-.lesson-circle-btn {
-  width: 78px;
-  height: 74px;
-  border-radius: 50%;
+.quest-circle-node {
+  width: 80px;
+  height: 76px;
+  border-radius: 26px;
   border: none;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: 1.8rem;
+  font-size: 1.85rem;
   cursor: pointer;
   position: relative;
-  transition: all 0.15s ease;
+  transition: all 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
   user-select: none;
 }
 
-.lesson-circle-btn.completed {
-  background: #10b981;
+.quest-circle-node.completed {
+  background: linear-gradient(135deg, #10b981, #059669);
   color: #ffffff;
-  box-shadow: 0 7px 0 #047857, 0 10px 16px rgba(16, 185, 129, 0.3);
+  box-shadow: 0 6px 0 #047857, 0 10px 20px rgba(16, 185, 129, 0.3);
 }
 
-.lesson-circle-btn.active {
-  background: #f43f5e;
+.quest-circle-node.active {
+  background: linear-gradient(135deg, #f43f5e, #fb7185);
   color: #ffffff;
-  box-shadow: 0 7px 0 #be123c, 0 12px 22px rgba(244, 63, 94, 0.38);
-  animation: duoPulse 2s infinite ease-in-out;
+  box-shadow: 0 7px 0 #be123c, 0 12px 24px rgba(244, 63, 94, 0.38);
+  animation: htetPulse 2.2s infinite ease-in-out;
 }
 
-.lesson-circle-btn.locked {
-  background: light-dark(#e2e8f0, #33203c);
+.quest-circle-node.locked {
+  background: light-dark(#f1f5f9, #2b1836);
   color: light-dark(#94a3b8, #644970);
-  box-shadow: 0 5px 0 light-dark(#cbd5e1, #25132d);
+  box-shadow: 0 5px 0 light-dark(#cbd5e1, #1e0e27);
   cursor: not-allowed;
 }
 
-.lesson-circle-btn:active:not(.locked) {
+.quest-circle-node:active:not(.locked) {
   transform: translateY(4px);
   box-shadow: 0 2px 0 #be123c;
 }
 
-@keyframes duoPulse {
+@keyframes htetPulse {
   0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.06); }
+  50% { transform: scale(1.05); }
 }
 
-.node-mascot-hint {
+.htet-active-tooltip {
   position: absolute;
   top: -38px;
   background: var(--bg-card);
   color: var(--rose-primary);
   border: 2px solid var(--rose-primary);
-  padding: 0.2rem 0.6rem;
-  border-radius: 12px;
+  padding: 0.25rem 0.65rem;
+  border-radius: 14px;
   font-size: 0.78rem;
   font-weight: 900;
   white-space: nowrap;
-  animation: bounceHint 1.4s infinite;
+  box-shadow: var(--shadow-sm);
+  animation: htetBounce 1.5s infinite;
 }
 
-@keyframes bounceHint {
+@keyframes htetBounce {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-4px); }
 }
 
-/* Fullscreen Lesson Runner Overlay */
-.lesson-runner-overlay {
+/* Fullscreen Studio Exercise Modal */
+.htet-studio-overlay {
   position: fixed;
   inset: 0;
   background: var(--bg-main);
@@ -236,41 +235,41 @@
   overflow: hidden;
 }
 
-.runner-header {
+.studio-top-bar {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 1.25rem;
   padding: 1rem 1.5rem;
-  border-bottom: 1.5px solid var(--border-color);
+  border-bottom: 2px solid var(--border-color);
   background: var(--bg-card);
 }
 
-.runner-close-btn {
+.studio-close-btn {
   background: none;
   border: none;
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   color: var(--text-muted);
   cursor: pointer;
   padding: 0.2rem;
+  line-height: 1;
 }
 
-.runner-progress-track {
+.studio-progress-track {
   flex: 1;
   height: 16px;
   background: light-dark(#f1f5f9, #2b1836);
   border-radius: var(--radius-full);
   overflow: hidden;
-  position: relative;
 }
 
-.runner-progress-fill {
+.studio-progress-fill {
   height: 100%;
   background: linear-gradient(90deg, #10b981, #34d399);
   border-radius: var(--radius-full);
   transition: width 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.runner-body {
+.studio-content-body {
   flex: 1;
   overflow-y: auto;
   padding: 1.5rem 1.25rem 2rem;
@@ -282,44 +281,37 @@
   justify-content: center;
 }
 
-.runner-mascot-bubble {
+.studio-prompt-card {
   display: flex;
   align-items: center;
   gap: 1rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.75rem;
 }
 
-.mascot-avatar {
+.mascot-blossom {
   font-size: 3.2rem;
   line-height: 1;
-  animation: mascotWiggle 3s infinite ease-in-out;
 }
 
-@keyframes mascotWiggle {
-  0%, 100% { transform: rotate(0deg); }
-  25% { transform: rotate(-6deg); }
-  75% { transform: rotate(6deg); }
-}
-
-.bubble-text-box {
+.prompt-speech-bubble {
   background: var(--bg-card);
   border: 2px solid var(--border-color);
   border-radius: 20px;
-  padding: 1rem 1.25rem;
-  position: relative;
+  padding: 1rem 1.35rem;
   box-shadow: var(--shadow-sm);
   font-size: 1.2rem;
   font-weight: 800;
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.75rem;
+  flex: 1;
 }
 
-/* Audio Pronunciation Play Button */
-.audio-play-circle-btn {
+/* Audio Pronunciation Button */
+.htet-audio-btn {
   width: 44px;
   height: 44px;
-  border-radius: 50%;
+  border-radius: 14px;
   background: #f43f5e;
   color: #ffffff;
   border: none;
@@ -332,19 +324,19 @@
   transition: all 0.1s;
 }
 
-.audio-play-circle-btn:active {
+.htet-audio-btn:active {
   transform: translateY(2px);
   box-shadow: 0 1px 0 #be123c;
 }
 
-/* Multiple Choice Cards */
-.choice-cards-grid {
+/* Interactive Choices */
+.studio-choices-grid {
   display: flex;
   flex-direction: column;
   gap: 0.85rem;
 }
 
-.choice-option-card {
+.studio-choice-item {
   background: var(--bg-card);
   border: 2.5px solid var(--border-color);
   border-radius: 18px;
@@ -360,19 +352,19 @@
   box-shadow: 0 3px 0 var(--border-color);
 }
 
-.choice-option-card:hover {
+.studio-choice-item:hover {
   border-color: var(--rose-primary);
   background: var(--bg-card-subtle);
 }
 
-.choice-option-card.selected {
+.studio-choice-item.selected {
   border-color: var(--rose-primary);
   background: var(--rose-light);
   color: var(--rose-primary);
   box-shadow: 0 4px 0 var(--rose-hover);
 }
 
-.choice-index-badge {
+.choice-key-badge {
   width: 32px;
   height: 32px;
   border-radius: 10px;
@@ -386,9 +378,9 @@
   color: var(--text-muted);
 }
 
-/* Word Bank / Sentence Builder */
-.sentence-builder-slot {
-  min-height: 80px;
+/* Word Assembly / Sentence Construction */
+.assembly-target-slot {
+  min-height: 85px;
   border-bottom: 2.5px dashed var(--border-color);
   display: flex;
   flex-wrap: wrap;
@@ -398,14 +390,14 @@
   align-items: center;
 }
 
-.word-bank-chips-pool {
+.assembly-chips-bank {
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
   justify-content: center;
 }
 
-.word-chip {
+.vocab-chip-btn {
   background: var(--bg-card);
   border: 2px solid var(--border-color);
   border-radius: 14px;
@@ -418,29 +410,29 @@
   user-select: none;
 }
 
-.word-chip:hover {
+.vocab-chip-btn:hover {
   border-color: var(--rose-primary);
 }
 
-.word-chip:active {
+.vocab-chip-btn:active {
   transform: translateY(2px);
   box-shadow: 0 1px 0 var(--border-color);
 }
 
-.word-chip.used {
-  opacity: 0.25;
+.vocab-chip-btn.used {
+  opacity: 0.22;
   cursor: default;
   box-shadow: none;
 }
 
-/* Tap-to-Pair Matching Game */
-.matching-pairs-grid {
+/* Tap-to-Pair Matching Grid */
+.pairing-cards-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.85rem;
 }
 
-.match-card-btn {
+.pair-card-cell {
   background: var(--bg-card);
   border: 2.5px solid var(--border-color);
   border-radius: 16px;
@@ -454,18 +446,18 @@
   user-select: none;
 }
 
-.match-card-btn:hover {
+.pair-card-cell:hover {
   border-color: var(--rose-primary);
 }
 
-.match-card-btn.selected {
+.pair-card-cell.selected {
   border-color: #3b82f6;
   background: #eff6ff;
   color: #1d4ed8;
   box-shadow: 0 4px 0 #2563eb;
 }
 
-.match-card-btn.matched {
+.pair-card-cell.matched {
   border-color: #10b981;
   background: #ecfdf5;
   color: #047857;
@@ -474,8 +466,8 @@
   box-shadow: none;
 }
 
-/* Tactile Bottom Sheet Feedback Bar */
-.runner-bottom-sheet {
+/* Studio Bottom Feedback Drawer */
+.studio-feedback-drawer {
   padding: 1.25rem 1.5rem;
   border-top: 2px solid var(--border-color);
   background: var(--bg-card);
@@ -483,24 +475,20 @@
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  transition: background 0.2s;
 }
 
-.runner-bottom-sheet.sheet-correct {
+.studio-feedback-drawer.drawer-success {
   background: #ecfdf5;
   border-color: #a7f3d0;
 }
 
-.runner-bottom-sheet.sheet-incorrect {
+.studio-feedback-drawer.drawer-incorrect {
   background: #fff1f2;
   border-color: #fecdd3;
 }
 
-.sheet-feedback-text {
-  flex: 1;
-}
-
-.sheet-feedback-title {
+.feedback-text-wrap { flex: 1; }
+.feedback-headline {
   font-size: 1.3rem;
   font-weight: 900;
   display: flex;
@@ -508,16 +496,19 @@
   gap: 0.5rem;
 }
 
-.sheet-correct .sheet-feedback-title {
-  color: #065f46;
-}
-
-.sheet-incorrect .sheet-feedback-title {
-  color: #9f1239;
-}
-
-.sheet-feedback-tip {
+.drawer-success .feedback-headline { color: #065f46; }
+.drawer-incorrect .feedback-headline { color: #9f1239; }
+.feedback-explanation {
   font-size: 0.92rem;
   color: var(--text-main);
   margin-top: 0.25rem;
+}
+
+/* High-Accuracy Search Highlight */
+mark.hl-match {
+  background: #fde047;
+  color: #854d0e;
+  font-weight: 900;
+  padding: 0.1rem 0.25rem;
+  border-radius: 4px;
 }
