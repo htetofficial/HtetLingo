@@ -28,26 +28,30 @@
 
   <!-- Stylesheet -->
   <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/duolingo.css">
 </head>
 <body>
   <div class="app-container">
     <!-- Offline status notification banner -->
     <div id="offlineBanner" class="offline-banner" style="display: none;"></div>
 
-    <!-- Header Navigation Bar -->
-    <header class="app-header">
-      <div class="brand-wrapper" onclick="app.switchTab('home')">
-        <img src="icons/icon.svg" alt="HtetLingo Logo" class="brand-logo">
-        <span class="brand-title">HtetLingo 🌸</span>
-      </div>
+    <!-- Gamified Top Bar (Duolingo Style) -->
+    <header class="game-top-bar">
+      <button id="langSelectorBtn" class="lang-selector-btn" title="Switch Target Language" onclick="app.openLanguageModal()">
+        <span id="topLangLabel">🇯🇵 Japanese</span>
+      </button>
 
-      <div class="header-actions">
-        <button id="langSelectorBtn" class="lang-selector-btn" title="Choose Target Language">
-          <span>🇯🇵 Japanese</span>
-        </button>
+      <div style="display: flex; align-items: center; gap: 0.5rem;">
+        <div id="topStreakPill" class="stat-pill stat-streak" title="Daily Streak">
+          🔥 <span id="topStreakCount">5</span>
+        </div>
 
-        <div id="headerStreak" class="pill-btn streak-pill" title="Sisterhood Learning Streak">
-          💖 5d
+        <div id="topGemsPill" class="stat-pill stat-gems" title="Empowerment Gems">
+          💎 <span id="topGemsCount">120</span>
+        </div>
+
+        <div id="topHeartsPill" class="stat-pill stat-hearts" title="Hearts / Lives" onclick="app.switchTab('shop')" style="cursor: pointer;">
+          ❤️ <span id="topHeartsCount">5</span>
         </div>
 
         <button id="themeToggleBtn" class="icon-btn" title="Toggle Light/Dark Theme" aria-label="Toggle theme">
@@ -63,24 +67,14 @@
 
     <!-- Bottom Tab Navigation -->
     <nav class="bottom-nav" aria-label="Main Navigation">
-      <button class="nav-tab-item active" data-tab="home">
+      <button class="nav-tab-item active" data-tab="learn">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-        <span>Home</span>
+        <span>Learn</span>
       </button>
 
-      <button class="nav-tab-item" data-tab="vocab">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
-        <span>Vocab</span>
-      </button>
-
-      <button class="nav-tab-item" data-tab="grammar">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-        <span>Grammar</span>
-      </button>
-
-      <button class="nav-tab-item" data-tab="quiz">
+      <button class="nav-tab-item" data-tab="practice">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><polygon points="12 6 12 12 16 14"></polygon></svg>
-        <span>Quiz</span>
+        <span>Practice</span>
       </button>
 
       <button class="nav-tab-item" data-tab="dict">
@@ -88,29 +82,26 @@
         <span>Dict</span>
       </button>
 
-      <button class="nav-tab-item" data-tab="translate">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-        <span>Translate</span>
-      </button>
-
       <button class="nav-tab-item" data-tab="aitutor">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="11" width="18" height="10" rx="2"></rect><circle cx="12" cy="5" r="2"></circle><path d="M12 7v4"></path><line x1="8" y1="16" x2="8.01" y2="16"></line><line x1="16" y1="16" x2="16.01" y2="16"></line></svg>
         <span>AI Tutor</span>
       </button>
 
-      <button class="nav-tab-item" data-tab="pricing">
+      <button class="nav-tab-item" data-tab="shop">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-        <span>VIP</span>
+        <span>Shop VIP</span>
       </button>
 
-      <button class="nav-tab-item" data-tab="settings">
+      <button class="nav-tab-item" data-tab="profile">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-        <span>Settings</span>
+        <span>Profile</span>
       </button>
     </nav>
   </div>
 
   <!-- Application Scripts -->
+  <script src="js/sound.js"></script>
+  <script src="js/curriculum.js"></script>
   <script src="js/data.js"></script>
   <script src="js/db.js"></script>
   <script src="js/speech.js"></script>

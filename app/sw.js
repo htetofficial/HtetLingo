@@ -1,10 +1,13 @@
-// HtetLingo Service Worker - Cute & Feminist Offline-First Learning
-const CACHE_NAME = 'htetlingo-v1.2.0';
+// HtetLingo Service Worker - Duolingo Interactive Offline-First Learning
+const CACHE_NAME = 'htetlingo-v2.0.0';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
   './manifest.json',
   './css/app.css',
+  './css/duolingo.css',
+  './js/sound.js',
+  './js/curriculum.js',
   './js/app.js',
   './js/data.js',
   './js/db.js',
@@ -23,7 +26,7 @@ const ASSETS_TO_CACHE = [
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      console.log('[HtetLingo SW] Pre-caching offline datasets & assets');
+      console.log('[HtetLingo SW] Pre-caching Duolingo offline assets');
       return cache.addAll(ASSETS_TO_CACHE);
     }).then(() => self.skipWaiting())
   );

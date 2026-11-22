@@ -1,51 +1,65 @@
+// ==========================================================================
 // HtetLingo Core Application Controller
-// Cute & Feminist Empowerment Platform for Women & Girls
-// Spaced Repetition, Speech Synthesis, Supabase & RevenueCat
+// Duolingo-style Interactive Language Learning Platform
+// Units, Levels, Word Banks, Matching Games, Audio Feedback & Open Datasets
+// ==========================================================================
 
 class HtetLingoApp {
   constructor() {
-    this.currentTab = 'home';
+    this.currentTab = 'learn';
     this.targetLang = localStorage.getItem('htetlingo_target_lang') || 'ja';
     this.nativeLang = localStorage.getItem('htetlingo_native_lang') || 'my';
-    this.currentCardIndex = 0;
-    this.filteredVocab = [];
-    this.currentCategory = 'all';
-    this.currentQuiz = null;
-    this.quizIndex = 0;
-    this.quizScore = 0;
 
+    // Gamification & Progress State
+    this.hearts = parseInt(localStorage.getItem('htetlingo_hearts') || '5', 10);
+    this.gems = parseInt(localStorage.getItem('htetlingo_gems') || '120', 10);
+    this.streak = parseInt(localStorage.getItem('htetlingo_streak') || '5', 10);
+    this.xp = parseInt(localStorage.getItem('htetlingo_xp') || '150', 10);
+    this.completedLevels = JSON.parse(localStorage.getItem('htetlingo_completed_levels') || '["ja_u1_l1"]');
+
+    // Lesson Runner State
+    this.activeLesson = null;
+    this.questionIndex = 0;
+    this.selectedChoice = null;
+    this.placedWords = [];
+    this.selectedMatchA = null;
+    this.selectedMatchB = null;
+    this.matchedPairs = [];
+    this.isAnswerChecked = false;
+    this.isAnswerCorrect = false;
+
+    // Flashcard & Practice State
+    this.flashcardIndex = 0;
+    this.isCardFlipped = false;
+
+    // Datasets memory cache
     this.engMyanCache = null;
     this.femaleNamesCache = null;
-    this.loadExternalDatasets();
-    this.userStats = {
-      xp: parseInt(localStorage.getItem('htetlingo_xp') || '150', 10),
-      streak: parseInt(localStorage.getItem('htetlingo_streak') || '5', 10),
-      mastered: parseInt(localStorage.getItem('htetlingo_mastered') || '24', 10)
-    };
+    this.engEngCache = null;
+    this.karenCache = null;
+    this.dictTab = 'all';
 
+    this.loadExternalDatasets();
     this.init();
   }
 
   async init() {
+    this.updateTopBarUI();
     this.bindEvents();
-    this.filterVocab('all');
-    this.updateStatsUI();
     this.renderCurrentTab();
     this.checkOnlineStatus();
 
-    // Check service worker registration
+    // Register Service Worker
     if ('serviceWorker' in navigator) {
       try {
         await navigator.serviceWorker.register('./sw.js');
-        console.log('[HtetLingo] Cute Feminist Service Worker Registered');
-      } catch (e) {
-        console.log('[HtetLingo] Service Worker registration note:', e);
-      }
+        console.log('[HtetLingo] Duolingo Kawaii Service Worker active');
+      } catch (e) {}
     }
   }
 
   bindEvents() {
-    // Navigation Tabs
+    // Bottom Navigation tabs
     document.querySelectorAll('.nav-tab-item').forEach(btn => {
       btn.addEventListener('click', () => {
         const tab = btn.dataset.tab;
@@ -53,21 +67,42 @@ class HtetLingoApp {
       });
     });
 
-    // Theme Toggle handling compliant with modern-web-guidance
+    // Theme Toggle
     const themeBtn = document.getElementById('themeToggleBtn');
     if (themeBtn) {
       themeBtn.addEventListener('click', () => this.toggleTheme());
     }
 
-    // Language Selector
-    const langBtn = document.getElementById('langSelectorBtn');
-    if (langBtn) {
-      langBtn.addEventListener('click', () => this.openLanguageModal());
-    }
-
-    // Online / Offline events
+    // Online / Offline
     window.addEventListener('online', () => this.checkOnlineStatus());
     window.addEventListener('offline', () => this.checkOnlineStatus());
+  }
+
+  updateTopBarUI() {
+    const cur = window.HTET_CURRICULUM[this.targetLang] || window.HTET_CURRICULUM.ja;
+    const langLabel = document.getElementById('topLangLabel');
+    if (langLabel) langLabel.textContent = `${cur.flag} ${cur.language}`;
+
+    const streakEl = document.getElementById('topStreakCount');
+    if (streakEl) streakEl.textContent = this.streak;
+
+    const gemsEl = document.getElementById('topGemsCount');
+    if (gemsEl) gemsEl.textContent = this.gems;
+
+    const heartsEl = document.getElementById('topHeartsCount');
+    if (heartsEl) {
+      if (window.htetRevenueCat?.isPremium()) {
+        heartsEl.innerHTML = '∞ VIP';
+      } else {
+        heartsEl.textContent = this.hearts;
+      }
+    }
+
+    localStorage.setItem('htetlingo_hearts', this.hearts);
+    localStorage.setItem('htetlingo_gems', this.gems);
+    localStorage.setItem('htetlingo_streak', this.streak);
+    localStorage.setItem('htetlingo_xp', this.xp);
+    localStorage.setItem('htetlingo_completed_levels', JSON.stringify(this.completedLevels));
   }
 
   checkOnlineStatus() {
@@ -77,27 +112,23 @@ class HtetLingoApp {
       banner.style.display = 'none';
     } else {
       banner.style.display = 'flex';
-      banner.innerHTML = '<span>🌸 100% Offline Mode Active — Sisterhood lessons, flashcards & dictionary always ready!</span>';
+      banner.innerHTML = '<span>🌸 Offline Mode Active — Duolingo lessons & dictionaries work 100% offline!</span>';
     }
   }
 
   toggleTheme() {
     const metaTheme = document.querySelector('meta[name="color-scheme"]');
     if (!metaTheme) return;
+    const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const current = localStorage.getItem('color-scheme') || (isDark ? 'dark' : 'light');
+    const next = current === 'dark' ? 'light' : 'dark';
 
-    const currentSystemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const currentExplicit = localStorage.getItem('color-scheme');
-
-    let currentEffective = currentExplicit || (currentSystemDark ? 'dark' : 'light');
-    let nextTheme = currentEffective === 'dark' ? 'light' : 'dark';
-
-    // If next equals system, remove stored value to revert to system
-    if ((nextTheme === 'dark' && currentSystemDark) || (nextTheme === 'light' && !currentSystemDark)) {
+    if ((next === 'dark' && isDark) || (next === 'light' && !isDark)) {
       localStorage.removeItem('color-scheme');
       metaTheme.content = 'light dark';
     } else {
-      localStorage.setItem('color-scheme', nextTheme);
-      metaTheme.content = nextTheme;
+      localStorage.setItem('color-scheme', next);
+      metaTheme.content = next;
     }
   }
 
@@ -110,456 +141,597 @@ class HtetLingoApp {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  filterVocab(category = 'all') {
-    this.currentCategory = category;
-    const all = window.HTET_DATA.vocabulary;
-    if (category === 'all') {
-      this.filteredVocab = all;
-    } else {
-      this.filteredVocab = all.filter(v => v.category === category);
-    }
-    this.currentCardIndex = 0;
-  }
-
-  updateStatsUI() {
-    const xpEl = document.getElementById('statXp');
-    const streakEl = document.getElementById('statStreak');
-    const masteredEl = document.getElementById('statMastered');
-    const headerStreakEl = document.getElementById('headerStreak');
-
-    if (xpEl) xpEl.textContent = this.userStats.xp;
-    if (streakEl) streakEl.textContent = `${this.userStats.streak} Days`;
-    if (masteredEl) masteredEl.textContent = this.userStats.mastered;
-    if (headerStreakEl) headerStreakEl.textContent = `💖 ${this.userStats.streak}d`;
-
-    localStorage.setItem('htetlingo_xp', this.userStats.xp);
-    localStorage.setItem('htetlingo_streak', this.userStats.streak);
-    localStorage.setItem('htetlingo_mastered', this.userStats.mastered);
-  }
-
-  awardXP(amount) {
-    this.userStats.xp += amount;
-    this.updateStatsUI();
-  }
-
   speakCurrent(text, lang = null) {
-    window.htetSpeech.speak(text, lang || this.targetLang);
+    const target = lang || this.targetLang;
+    if (window.htetSpeech) {
+      window.htetSpeech.speak(text, target);
+    }
   }
 
-  // --- View Renderers ---
+  // --- View Router ---
   renderCurrentTab() {
     const viewport = document.getElementById('mainViewport');
     if (!viewport) return;
 
+    this.updateTopBarUI();
+
     switch (this.currentTab) {
-      case 'home':
-        this.renderHomeView(viewport);
+      case 'learn':
+        this.renderLearnView(viewport);
         break;
-      case 'vocab':
-        this.renderVocabView(viewport);
-        break;
-      case 'grammar':
-        this.renderGrammarView(viewport);
-        break;
-      case 'quiz':
-        this.renderQuizView(viewport);
+      case 'practice':
+        this.renderPracticeView(viewport);
         break;
       case 'dict':
         this.renderDictView(viewport);
         break;
-      case 'names':
-        this.renderFemaleNamesView(viewport);
-        break;
-      case 'translate':
-        this.renderTranslateView(viewport);
-        break;
       case 'aitutor':
         this.renderAITutorView(viewport);
         break;
-      case 'pricing':
-        this.renderPricingView(viewport);
+      case 'shop':
+        this.renderShopView(viewport);
         break;
-      case 'settings':
-        this.renderSettingsView(viewport);
+      case 'profile':
+        this.renderProfileView(viewport);
         break;
       default:
-        this.renderHomeView(viewport);
+        this.renderLearnView(viewport);
     }
   }
 
-  // 1. Home Dashboard View
-  renderHomeView(container) {
-    const targetObj = window.HTET_DATA.languages.find(l => l.code === this.targetLang) || window.HTET_DATA.languages[2];
-    const isPremium = window.htetRevenueCat.isPremium();
-    const affirmation = window.HTET_DATA.dailyAffirmations[Math.floor(Math.random() * window.HTET_DATA.dailyAffirmations.length)];
+  // ========================================================================
+  // 1. LEARN VIEW (DUOLINGO-STYLE ROADMAP WITH UNITS & LESSON NODES)
+  // ========================================================================
+  renderLearnView(container) {
+    const cur = window.HTET_CURRICULUM[this.targetLang] || window.HTET_CURRICULUM.ja;
 
-    container.innerHTML = `
-      <!-- Daily Affirmation Card -->
-      <div class="affirmation-banner">
-        <div style="font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: var(--sakura-pink); margin-bottom: 0.25rem;">
-          ✨ Daily Sisterhood Affirmation
-        </div>
-        <div class="affirmation-quote">"${affirmation.quote}"</div>
-        <div style="font-size: 0.9rem; color: var(--text-main); font-weight: 600; margin-bottom: 0.35rem;">
-          ${affirmation.quoteMy}
-        </div>
-        <div class="affirmation-author">— ${affirmation.author}</div>
-      </div>
+    let unitsHtml = '';
+    cur.units.forEach((unit, uIdx) => {
+      let nodesHtml = '';
+      unit.levels.forEach((lvl, lIdx) => {
+        const isCompleted = this.completedLevels.includes(lvl.id);
+        const isFirstUnfinished = !isCompleted && (lIdx === 0 || this.completedLevels.includes(unit.levels[lIdx - 1]?.id));
+        const isLocked = !isCompleted && !isFirstUnfinished;
 
-      <!-- Main Cute Feminist Hero Card -->
-      <div class="hero-card">
-        <div class="hero-tagline">🌸 Learn Languages • Empower Your Voice • Connect Cultures</div>
-        <h1 class="hero-title">Shine & Speak Confidently in ${targetObj.name} ${targetObj.flag}</h1>
-        <p class="hero-desc">
-          A cute, feminist multilingual platform empowering women and girls worldwide to learn, speak, and lead with pride and authentic confidence.
-        </p>
-        
-        <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
-          <button class="pill-btn" onclick="app.switchTab('vocab')" style="background: #ffffff; color: #f43f5e; border: none; font-weight: 800;">
-            🌸 Start Flashcards
-          </button>
-          <button class="pill-btn" onclick="app.switchTab('aitutor')" style="background: rgba(255,255,255,0.25); color: #ffffff; border: 1.5px solid rgba(255,255,255,0.6);">
-            🤖 Safe Space AI Tutor
-          </button>
-          ${!isPremium ? `
-            <button class="pill-btn" onclick="app.switchTab('pricing')" style="background: #fde047; color: #831843; border: none; font-weight: 800;">
-              👑 Upgrade VIP Pass
-            </button>
-          ` : `
-            <span class="pill-btn" style="background: #10b981; color: white; border: none;">
-              ⭐ VIP Active
-            </span>
-          `}
-        </div>
+        // Shift zigzag position
+        const shifts = ['', 'shift-left', 'shift-right', ''];
+        const shiftClass = shifts[lIdx % 4];
 
-        <div class="hero-stats">
-          <div class="stat-box">
-            <div class="stat-val" id="statStreak">${this.userStats.streak} Days</div>
-            <div class="stat-lbl">Sisterhood Streak</div>
-          </div>
-          <div class="stat-box">
-            <div class="stat-val" id="statXp">${this.userStats.xp}</div>
-            <div class="stat-lbl">Empowerment XP</div>
-          </div>
-          <div class="stat-box">
-            <div class="stat-val" id="statMastered">${this.userStats.mastered}</div>
-            <div class="stat-lbl">Mastered Words</div>
-          </div>
-          <div class="stat-box">
-            <div class="stat-val">${isPremium ? '👑 VIP' : '🌸 Free'}</div>
-            <div class="stat-lbl">Learner Status</div>
-          </div>
-        </div>
-      </div>
+        let stateClass = 'locked';
+        let iconContent = '🔒';
+        let hintHtml = '';
 
-      <!-- Learning Categories Grid -->
-      <h3 style="font-size: 1.2rem; font-weight: 900; margin: 1.75rem 0 0.85rem; display: flex; align-items: center; gap: 0.5rem;">
-        <span>🎀 Women-Centered Learning Categories</span>
-      </h3>
+        if (isCompleted) {
+          stateClass = 'completed';
+          iconContent = '✓';
+        } else if (isFirstUnfinished) {
+          stateClass = 'active';
+          iconContent = lvl.icon || '🌸';
+          hintHtml = '<div class="node-mascot-hint">START! 🌸</div>';
+        }
 
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;">
-        
-        <div class="card" onclick="app.filterVocab('feminism'); app.switchTab('vocab');" style="cursor: pointer;">
-          <div class="card-header">
-            <div class="card-title">🌸 Feminism & Equality</div>
-            <span style="font-size: 0.75rem; background: var(--rose-light); color: var(--rose-primary); padding: 0.2rem 0.6rem; border-radius: var(--radius-full); font-weight: 800;">Rights</span>
-          </div>
-          <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 0.75rem;">
-            Empowerment, bodily autonomy, consent, gender equality, and sisterhood solidarity across 8 languages.
-          </p>
-          <div style="font-size: 0.85rem; color: var(--rose-primary); font-weight: 700;">Explore Vocabulary →</div>
-        </div>
-
-        <div class="card" onclick="app.filterVocab('affirmations'); app.switchTab('vocab');" style="cursor: pointer;">
-          <div class="card-header">
-            <div class="card-title">💖 Self-Love & Confidence</div>
-            <span style="font-size: 0.75rem; background: var(--sakura-light); color: var(--sakura-pink); padding: 0.2rem 0.6rem; border-radius: var(--radius-full); font-weight: 800;">Affirmations</span>
-          </div>
-          <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 0.75rem;">
-            Daily affirmations to build unshakeable self-worth, courage, and pride in your authentic identity.
-          </p>
-          <div style="font-size: 0.85rem; color: var(--rose-primary); font-weight: 700;">Start Affirmations →</div>
-        </div>
-
-        <div class="card" onclick="app.filterVocab('leadership'); app.switchTab('vocab');" style="cursor: pointer;">
-          <div class="card-header">
-            <div class="card-title">💼 Leadership & STEM</div>
-            <span style="font-size: 0.75rem; background: var(--lavender-light); color: var(--lavender); padding: 0.2rem 0.6rem; border-radius: var(--radius-full); font-weight: 800;">Career</span>
-          </div>
-          <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 0.75rem;">
-            Assertive communication, salary negotiation, pitching innovative ideas without over-apologizing.
-          </p>
-          <div style="font-size: 0.85rem; color: var(--rose-primary); font-weight: 700;">Practice Leadership Words →</div>
-        </div>
-
-        <div class="card" onclick="app.filterVocab('safety'); app.switchTab('vocab');" style="cursor: pointer;">
-          <div class="card-header">
-            <div class="card-title">✈️ Solo Female Safety</div>
-            <span style="font-size: 0.75rem; background: #dcfce7; color: #166534; padding: 0.2rem 0.6rem; border-radius: var(--radius-full); font-weight: 800;">Travel</span>
-          </div>
-          <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 0.75rem;">
-            Essential phrases for solo travel: asking for women-only train cars, setting personal boundaries, and emergency help.
-          </p>
-          <div style="font-size: 0.85rem; color: var(--rose-primary); font-weight: 700;">Review Safety Phrases →</div>
-        </div>
-
-      </div>
-    `;
-  }
-
-  // 2. Vocabulary & Flashcard View
-  renderVocabView(container) {
-    if (!this.filteredVocab.length) this.filterVocab('all');
-    const item = this.filteredVocab[this.currentCardIndex] || window.HTET_DATA.vocabulary[0];
-    const targetData = item.translations[this.targetLang] || item.translations['en'];
-    const nativeData = item.translations[this.nativeLang] || item.translations['my'] || item.translations['en'];
-
-    container.innerHTML = `
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
-        <div>
-          <h2 style="font-size: 1.4rem; font-weight: 900;">🌸 Empowerment Flashcards</h2>
-          <p style="font-size: 0.85rem; color: var(--text-muted);">Card ${this.currentCardIndex + 1} of ${this.filteredVocab.length}</p>
-        </div>
-        <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
-          <button class="pill-btn ${this.currentCategory === 'all' ? 'active' : ''}" onclick="app.filterVocab('all'); app.renderCurrentTab();">All</button>
-          <button class="pill-btn ${this.currentCategory === 'feminism' ? 'active' : ''}" onclick="app.filterVocab('feminism'); app.renderCurrentTab();">🌸 Feminism</button>
-          <button class="pill-btn ${this.currentCategory === 'affirmations' ? 'active' : ''}" onclick="app.filterVocab('affirmations'); app.renderCurrentTab();">💖 Self-Love</button>
-          <button class="pill-btn ${this.currentCategory === 'leadership' ? 'active' : ''}" onclick="app.filterVocab('leadership'); app.renderCurrentTab();">💼 Leadership</button>
-          <button class="pill-btn ${this.currentCategory === 'safety' ? 'active' : ''}" onclick="app.filterVocab('safety'); app.renderCurrentTab();">✈️ Safety</button>
-        </div>
-      </div>
-
-      <div class="flashcard-wrapper">
-        <div class="flashcard" id="activeFlashcard" onclick="this.classList.toggle('flipped');">
-          <span class="flashcard-category">✨ ${item.category.toUpperCase()} • ${item.level}</span>
-          
-          <div class="flashcard-word">${targetData.word}</div>
-          <div class="flashcard-phonetic">${targetData.phonetic || ''}</div>
-
-          <div style="display: flex; gap: 0.5rem; justify-content: center; margin: 0.5rem 0;">
-            <button class="icon-btn" onclick="event.stopPropagation(); app.speakCurrent('${targetData.word.replace(/'/g, "\\'")}', '${this.targetLang}');" title="Listen to pronunciation">
-              🔊 Pronounce
-            </button>
-            <button class="icon-btn" onclick="event.stopPropagation(); app.bookmarkWord('${item.id}');" title="Bookmark">
-              💖 Save
+        nodesHtml += `
+          <div class="node-row ${shiftClass}">
+            <button class="lesson-circle-btn ${stateClass}" 
+                    onclick="${isLocked ? `alert('Please complete earlier lessons first! 🌸')` : `app.startLesson('${unit.id}', '${lvl.id}')`}"
+                    title="${lvl.title}">
+              ${hintHtml}
+              <span>${iconContent}</span>
             </button>
           </div>
+        `;
+      });
 
-          <div class="flashcard-translation">
-            ${nativeData.word}
-          </div>
-
-          <div class="flashcard-example">
-            "${targetData.example}"<br/>
-            <span style="font-size: 0.85rem; color: var(--text-muted);">(${nativeData.example || ''})</span>
-          </div>
-
-          <div style="margin-top: 1rem; font-size: 0.75rem; color: var(--text-dim); font-weight: 700;">
-            🌸 Tap card to toggle details
+      unitsHtml += `
+        <div class="unit-card-header" style="background: linear-gradient(135deg, ${unit.color || '#f43f5e'}, #ec4899);">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <div>
+              <span class="unit-badge">${unit.title}</span>
+              <div class="unit-title">${unit.icon} ${unit.subtitle}</div>
+            </div>
+            <button class="duo-btn duo-btn-subtle" style="padding: 0.45rem 0.9rem; font-size: 0.85rem;" onclick="app.showUnitGuide('${unit.id}')">
+              📖 Guide
+            </button>
           </div>
         </div>
-      </div>
 
-      <!-- Spaced Repetition Rating Buttons -->
-      <div class="srs-controls">
-        <button class="srs-btn again" onclick="app.rateCard('again')">
-          <span>Again</span>
-          <span style="font-size: 0.7rem; opacity: 0.9;">1 Day</span>
-        </button>
-        <button class="srs-btn hard" onclick="app.rateCard('hard')">
-          <span>Hard</span>
-          <span style="font-size: 0.7rem; opacity: 0.9;">2 Days</span>
-        </button>
-        <button class="srs-btn good" onclick="app.rateCard('good')">
-          <span>Good</span>
-          <span style="font-size: 0.7rem; opacity: 0.9;">4 Days</span>
-        </button>
-        <button class="srs-btn easy" onclick="app.rateCard('easy')">
-          <span>Easy</span>
-          <span style="font-size: 0.7rem; opacity: 0.9;">7 Days</span>
-        </button>
-      </div>
-    `;
-  }
-
-  async rateCard(rating) {
-    const item = this.filteredVocab[this.currentCardIndex];
-    if (item) {
-      await window.htetDB.updateSRSProgress(item.id, this.targetLang, rating);
-      this.awardXP(rating === 'easy' ? 10 : (rating === 'good' ? 5 : 2));
-    }
-
-    this.currentCardIndex = (this.currentCardIndex + 1) % this.filteredVocab.length;
-    this.renderCurrentTab();
-  }
-
-  async bookmarkWord(itemId) {
-    const item = this.filteredVocab.find(v => v.id === itemId);
-    if (!item) return;
-    const targetData = item.translations[this.targetLang];
-    const nativeData = item.translations[this.nativeLang];
-
-    await window.htetDB.addBookmark({
-      language: this.targetLang,
-      word: targetData.word,
-      phonetic: targetData.phonetic,
-      translation: nativeData.word,
-      example: targetData.example
+        <div class="path-nodes-flow" style="margin-bottom: 2.5rem;">
+          ${nodesHtml}
+        </div>
+      `;
     });
-    alert(`💖 "${targetData.word}" saved to your personal sisterhood vocabulary collection!`);
-  }
-
-  // 3. Grammar Modules View
-  renderGrammarView(container) {
-    const lessons = window.HTET_DATA.grammar;
 
     container.innerHTML = `
-      <div style="margin-bottom: 1.25rem;">
-        <h2 style="font-size: 1.4rem; font-weight: 900;">✍️ Empowered Grammar Guides</h2>
-        <p style="font-size: 0.85rem; color: var(--text-muted);">
-          Speak with poise and leadership without undermining yourself. Clear Burmese & English explanations.
-        </p>
-      </div>
-
-      <div style="display: flex; flex-direction: column; gap: 1.25rem;">
-        ${lessons.map(g => `
-          <div class="card">
-            <div class="card-header">
-              <div>
-                <span style="font-size: 0.75rem; background: var(--rose-light); color: var(--rose-primary); padding: 0.2rem 0.6rem; border-radius: var(--radius-full); font-weight: 800; text-transform: uppercase;">
-                  ${g.level}
-                </span>
-                <h3 style="font-size: 1.2rem; font-weight: 800; margin-top: 0.4rem;">${g.title}</h3>
-              </div>
-              <button class="icon-btn" onclick="app.speakCurrent('${g.examples[0].target.replace(/'/g, "\\'")}', '${g.language}')">
-                🔊 Listen
-              </button>
+      <div class="roadmap-container">
+        <!-- Cute Mascot Welcome Banner -->
+        <div style="background: var(--bg-card); border: 2px solid var(--border-color); border-radius: 20px; padding: 1.15rem 1.35rem; margin-bottom: 1.75rem; display: flex; align-items: center; gap: 1rem; box-shadow: var(--shadow-sm);">
+          <div style="font-size: 2.8rem; line-height: 1;">🌸</div>
+          <div>
+            <div style="font-weight: 900; font-size: 1.15rem; color: var(--text-main);">
+              Welcome to ${cur.language} Learning!
             </div>
-
-            <div style="background: var(--bg-card-subtle); padding: 0.85rem 1rem; border-radius: var(--radius-md); font-family: monospace; font-size: 0.9rem; font-weight: 700; color: var(--rose-primary); margin-bottom: 0.85rem; border-left: 3.5px solid var(--rose-primary);">
-              Formula: ${g.formula}
-            </div>
-
-            <div style="margin-bottom: 0.75rem; font-size: 0.95rem; line-height: 1.6;">
-              <strong>မြန်မာလို ရှင်းလင်းချက်:</strong> ${g.burmeseExplanation}
-            </div>
-
-            <div style="margin-bottom: 1rem; font-size: 0.875rem; color: var(--text-muted); line-height: 1.5;">
-              <strong>English Guide:</strong> ${g.englishExplanation}
-            </div>
-
-            <div style="background: var(--bg-main); border: 1.5px solid var(--border-color); border-radius: var(--radius-md); padding: 0.85rem; margin-bottom: 0.75rem;">
-              <div style="font-weight: 800; font-size: 0.85rem; margin-bottom: 0.4rem; color: var(--sakura-pink);">💡 Empowered Examples:</div>
-              ${g.examples.map(ex => `
-                <div style="margin-bottom: 0.5rem; font-size: 0.92rem;">
-                  <div style="font-weight: 700;">${ex.target}</div>
-                  <div style="font-size: 0.82rem; color: var(--text-muted);">${ex.meaningMy} • ${ex.meaningEn}</div>
-                </div>
-              `).join('')}
-            </div>
-
-            <div style="font-size: 0.82rem; color: #9f1239; background: var(--rose-light); padding: 0.45rem 0.85rem; border-radius: var(--radius-sm); font-weight: 600;">
-              🌸 Cultural & Sisterhood Tip: ${g.culturalTip}
+            <div style="font-size: 0.88rem; color: var(--text-muted); margin-top: 0.2rem;">
+              Tap any lesson on the map below to start interactive exercises!
             </div>
           </div>
-        `).join('')}
+        </div>
+
+        ${unitsHtml}
       </div>
     `;
   }
 
-  // 4. Quizzes & Exercises View
-  renderQuizView(container) {
-    const quizzes = window.HTET_DATA.quizzes;
-    const q = quizzes[this.quizIndex % quizzes.length];
+  showUnitGuide(unitId) {
+    const cur = window.HTET_CURRICULUM[this.targetLang];
+    const unit = cur.units.find(u => u.id === unitId);
+    if (!unit) return;
 
-    container.innerHTML = `
-      <div style="margin-bottom: 1.25rem; display: flex; justify-content: space-between; align-items: center;">
-        <div>
-          <h2 style="font-size: 1.4rem; font-weight: 900;">🎯 Sisterhood Practice Quiz</h2>
-          <p style="font-size: 0.85rem; color: var(--text-muted);">Question ${this.quizIndex + 1} of ${quizzes.length} • Score: ${this.quizScore}</p>
+    alert(`📖 ${unit.title}\n\n${unit.subtitle}\n\nTopics covered:\n${unit.levels.map(l => `• ${l.title}: ${l.desc}`).join('\n')}\n\nReady to learn? Tap the circle icon to begin!`);
+  }
+
+  // ========================================================================
+  // 2. DUOLINGO INTERACTIVE LESSON RUNNER (FULLSCREEN ENGINE)
+  // ========================================================================
+  startLesson(unitId, levelId) {
+    const cur = window.HTET_CURRICULUM[this.targetLang];
+    const unit = cur.units.find(u => u.id === unitId);
+    const level = unit?.levels.find(l => l.id === levelId);
+    if (!level || !level.questions?.length) return;
+
+    if (this.hearts <= 0 && !window.htetRevenueCat?.isPremium()) {
+      alert('❤️ Out of hearts! Please visit the Shop tab to refill with gems or upgrade to VIP with unlimited lives!');
+      this.switchTab('shop');
+      return;
+    }
+
+    if (window.htetSound) window.htetSound.playClick();
+
+    this.activeLesson = {
+      unit,
+      level,
+      questions: level.questions
+    };
+    this.questionIndex = 0;
+    this.resetQuestionState();
+    this.renderLessonRunner();
+  }
+
+  resetQuestionState() {
+    this.selectedChoice = null;
+    this.placedWords = [];
+    this.selectedMatchA = null;
+    this.selectedMatchB = null;
+    this.matchedPairs = [];
+    this.isAnswerChecked = false;
+    this.isAnswerCorrect = false;
+  }
+
+  renderLessonRunner() {
+    let overlay = document.getElementById('lessonRunnerOverlay');
+    if (!overlay) {
+      overlay = document.createElement('div');
+      overlay.id = 'lessonRunnerOverlay';
+      overlay.className = 'lesson-runner-overlay';
+      document.body.appendChild(overlay);
+    }
+
+    const q = this.activeLesson.questions[this.questionIndex];
+    const progressPercent = Math.round((this.questionIndex / this.activeLesson.questions.length) * 100);
+
+    overlay.innerHTML = `
+      <div class="runner-header">
+        <button class="runner-close-btn" onclick="app.quitLesson()" title="Quit Lesson">✕</button>
+        <div class="runner-progress-track">
+          <div class="runner-progress-fill" style="width: ${progressPercent}%;"></div>
         </div>
-        <div style="font-size: 0.9rem; font-weight: 800; color: #e11d48; background: var(--rose-light); padding: 0.35rem 0.85rem; border-radius: var(--radius-full);">
-          +20 XP per correct ✨
+        <div class="stat-pill stat-hearts" style="font-size: 1rem;">
+          ❤️ ${window.htetRevenueCat?.isPremium() ? '∞' : this.hearts}
         </div>
       </div>
 
-      <div class="quiz-question-box">
-        <div style="font-size: 0.78rem; font-weight: 800; text-transform: uppercase; color: var(--rose-primary); margin-bottom: 0.5rem;">
-          🌸 ${q.topic} • ${q.type.toUpperCase()}
+      <div class="runner-body">
+        <!-- Cute Mascot Header Prompt -->
+        <div class="runner-mascot-bubble">
+          <div class="mascot-avatar">🐰</div>
+          <div class="bubble-text-box">
+            <span>${q.prompt}</span>
+            ${q.audioText ? `
+              <button class="audio-play-circle-btn" onclick="app.speakCurrent('${q.audioText.replace(/'/g, "\\\\'")}', '${q.audioLang || this.targetLang}')" title="Play Native Audio">
+                🔊
+              </button>
+            ` : ''}
+          </div>
         </div>
 
-        <h3 style="font-size: 1.2rem; font-weight: 800; margin-bottom: 1rem;">${q.question}</h3>
+        <!-- Question Type Content -->
+        <div id="exerciseSlot" style="flex: 1;">
+          ${this.renderQuestionTypeHtml(q)}
+        </div>
+      </div>
 
-        ${q.type === 'listening' ? `
-          <div style="margin-bottom: 1.25rem;">
-            <button class="pill-btn" onclick="app.speakCurrent('${q.audioText}', '${q.language}')" style="background: var(--rose-primary); color: white; border: none; font-size: 1rem; padding: 0.65rem 1.35rem;">
-              🔊 Click to Listen to Native Audio
-            </button>
-          </div>
-        ` : ''}
+      <!-- Tactile Bottom Sheet Action Bar -->
+      <div id="runnerBottomSheet" class="runner-bottom-sheet">
+        <div id="feedbackText" class="sheet-feedback-text"></div>
+        <button id="runnerActionBtn" class="duo-btn duo-btn-primary" onclick="app.handleRunnerAction()">
+          CHECK
+        </button>
+      </div>
+    `;
 
-        <div style="display: flex; flex-direction: column; gap: 0.6rem;" id="quizOptionsContainer">
-          ${q.options.map((opt, idx) => `
-            <button class="quiz-option" onclick="app.checkAnswer(${idx})">
+    // Auto-pronounce if audioText exists
+    if (q.audioText) {
+      setTimeout(() => this.speakCurrent(q.audioText, q.audioLang || this.targetLang), 300);
+    }
+  }
+
+  renderQuestionTypeHtml(q) {
+    if (q.type === 'choice') {
+      return `
+        <div class="choice-cards-grid">
+          ${q.options.map((opt, i) => `
+            <div class="choice-option-card ${this.selectedChoice === i ? 'selected' : ''}" 
+                 onclick="app.selectChoice(${i})">
+              <span class="choice-index-badge">${['A', 'B', 'C', 'D'][i]}</span>
               <span>${opt}</span>
-              <span class="quiz-check-icon"></span>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    if (q.type === 'word_bank') {
+      const remainingBank = q.words.filter(w => {
+        const countInTarget = q.words.filter(x => x === w).length;
+        const countInPlaced = this.placedWords.filter(x => x === w).length;
+        return countInPlaced < countInTarget;
+      });
+
+      return `
+        <div class="sentence-builder-slot">
+          ${this.placedWords.length === 0 ? `
+            <span style="color: var(--text-muted); font-size: 0.95rem;">Tap words below in correct sequence...</span>
+          ` : this.placedWords.map((w, idx) => `
+            <button class="word-chip" style="background: var(--rose-light); border-color: var(--rose-primary); color: var(--rose-primary);" 
+                    onclick="app.removePlacedWord(${idx})">
+              ${w}
             </button>
           `).join('')}
         </div>
 
-        <div id="quizFeedback" style="display: none; margin-top: 1rem; padding: 0.85rem 1.15rem; border-radius: var(--radius-md);"></div>
+        <div class="word-bank-chips-pool">
+          ${q.words.map((w, idx) => {
+            const isUsed = this.placedWords.filter(x => x === w).length >= q.words.filter(x => x === w).length;
+            return `
+              <button class="word-chip ${isUsed ? 'used' : ''}" 
+                      onclick="${isUsed ? '' : `app.addWordToSlot('${w.replace(/'/g, "\\\\'")}')`}">
+                ${w}
+              </button>
+            `;
+          }).join('')}
+        </div>
+      `;
+    }
 
-        <div style="margin-top: 1.25rem; display: flex; justify-content: flex-end;">
-          <button id="nextQuizBtn" class="pill-btn" style="display: none; background: var(--rose-primary); color: white; border: none; padding: 0.65rem 1.35rem;" onclick="app.nextQuizQuestion()">
-            Next Question →
+    if (q.type === 'match') {
+      return `
+        <div class="matching-pairs-grid">
+          ${q.pairs.map((p, idx) => {
+            const isMatchedA = this.matchedPairs.includes(p.a);
+            const isSelectedA = this.selectedMatchA === p.a;
+            return `
+              <button class="match-card-btn ${isMatchedA ? 'matched' : ''} ${isSelectedA ? 'selected' : ''}"
+                      onclick="${isMatchedA ? '' : `app.selectMatchCard('a', '${p.a.replace(/'/g, "\\\\'")}')`}">
+                ${p.a}
+              </button>
+            `;
+          }).join('')}
+
+          ${q.pairs.map((p, idx) => {
+            const isMatchedB = this.matchedPairs.includes(p.b);
+            const isSelectedB = this.selectedMatchB === p.b;
+            return `
+              <button class="match-card-btn ${isMatchedB ? 'matched' : ''} ${isSelectedB ? 'selected' : ''}"
+                      onclick="${isMatchedB ? '' : `app.selectMatchCard('b', '${p.b.replace(/'/g, "\\\\'")}')`}">
+                ${p.b}
+              </button>
+            `;
+          }).join('')}
+        </div>
+      `;
+    }
+
+    return `<div>Unknown question type</div>`;
+  }
+
+  selectChoice(index) {
+    if (this.isAnswerChecked) return;
+    if (window.htetSound) window.htetSound.playClick();
+    this.selectedChoice = index;
+    const exerciseSlot = document.getElementById('exerciseSlot');
+    if (exerciseSlot) {
+      exerciseSlot.innerHTML = this.renderQuestionTypeHtml(this.activeLesson.questions[this.questionIndex]);
+    }
+  }
+
+  addWordToSlot(word) {
+    if (this.isAnswerChecked) return;
+    if (window.htetSound) window.htetSound.playClick();
+    this.placedWords.push(word);
+    const exerciseSlot = document.getElementById('exerciseSlot');
+    if (exerciseSlot) {
+      exerciseSlot.innerHTML = this.renderQuestionTypeHtml(this.activeLesson.questions[this.questionIndex]);
+    }
+  }
+
+  removePlacedWord(index) {
+    if (this.isAnswerChecked) return;
+    if (window.htetSound) window.htetSound.playClick();
+    this.placedWords.splice(index, 1);
+    const exerciseSlot = document.getElementById('exerciseSlot');
+    if (exerciseSlot) {
+      exerciseSlot.innerHTML = this.renderQuestionTypeHtml(this.activeLesson.questions[this.questionIndex]);
+    }
+  }
+
+  selectMatchCard(col, val) {
+    if (this.isAnswerChecked) return;
+    if (window.htetSound) window.htetSound.playClick();
+
+    if (col === 'a') this.selectedMatchA = val;
+    if (col === 'b') this.selectedMatchB = val;
+
+    const q = this.activeLesson.questions[this.questionIndex];
+
+    if (this.selectedMatchA && this.selectedMatchB) {
+      // Check pair match
+      const pair = q.pairs.find(p => p.a === this.selectedMatchA && p.b === this.selectedMatchB);
+      if (pair) {
+        if (window.htetSound) window.htetSound.playMatch();
+        this.matchedPairs.push(pair.a, pair.b);
+        this.selectedMatchA = null;
+        this.selectedMatchB = null;
+
+        if (this.matchedPairs.length >= q.pairs.length * 2) {
+          // All matched!
+          this.isAnswerChecked = true;
+          this.isAnswerCorrect = true;
+          this.showFeedbackSheet(true, '🎉 All pairs matched perfectly!');
+        }
+      } else {
+        if (window.htetSound) window.htetSound.playIncorrect();
+        setTimeout(() => {
+          this.selectedMatchA = null;
+          this.selectedMatchB = null;
+          const slot = document.getElementById('exerciseSlot');
+          if (slot) slot.innerHTML = this.renderQuestionTypeHtml(q);
+        }, 300);
+      }
+    }
+
+    const slot = document.getElementById('exerciseSlot');
+    if (slot) slot.innerHTML = this.renderQuestionTypeHtml(q);
+  }
+
+  handleRunnerAction() {
+    if (this.isAnswerChecked) {
+      // Proceed to next question or complete
+      this.questionIndex++;
+      if (this.questionIndex >= this.activeLesson.questions.length) {
+        this.finishLesson();
+      } else {
+        this.resetQuestionState();
+        this.renderLessonRunner();
+      }
+      return;
+    }
+
+    // Checking answer
+    const q = this.activeLesson.questions[this.questionIndex];
+    let correct = false;
+    let tip = q.tip || '';
+
+    if (q.type === 'choice') {
+      if (this.selectedChoice === null) {
+        alert('Please select an option before checking! 🌸');
+        return;
+      }
+      correct = (this.selectedChoice === q.correctIndex);
+      if (!correct) {
+        tip = `Correct answer: ${q.options[q.correctIndex]}`;
+      }
+    } else if (q.type === 'word_bank') {
+      if (this.placedWords.length === 0) {
+        alert('Please arrange the words to form your answer! 🌸');
+        return;
+      }
+      correct = (this.placedWords.join(' ') === q.targetSentence.join(' '));
+      if (!correct) {
+        tip = `Correct answer: ${q.targetSentence.join(' ')}`;
+      }
+    } else if (q.type === 'match') {
+      if (this.matchedPairs.length < q.pairs.length * 2) {
+        alert('Please match all pairs first! 🌸');
+        return;
+      }
+      correct = true;
+    }
+
+    this.isAnswerChecked = true;
+    this.isAnswerCorrect = correct;
+
+    if (correct) {
+      if (window.htetSound) window.htetSound.playCorrect();
+      this.showFeedbackSheet(true, tip || 'Excellent! အဖြေမှန်ပါတယ်ရှင်!');
+    } else {
+      if (window.htetSound) window.htetSound.playIncorrect();
+      if (!window.htetRevenueCat?.isPremium()) {
+        this.hearts = Math.max(0, this.hearts - 1);
+        this.updateTopBarUI();
+      }
+      this.showFeedbackSheet(false, tip || 'Keep trying! မမှန်သေးပါဘူးနော်။');
+
+      if (this.hearts <= 0 && !window.htetRevenueCat?.isPremium()) {
+        setTimeout(() => {
+          alert('💔 Out of hearts! Visit the Shop tab to refill with gems!');
+          this.quitLesson();
+          this.switchTab('shop');
+        }, 1200);
+      }
+    }
+  }
+
+  showFeedbackSheet(isCorrect, message) {
+    const sheet = document.getElementById('runnerBottomSheet');
+    const feedbackText = document.getElementById('feedbackText');
+    const actionBtn = document.getElementById('runnerActionBtn');
+    if (!sheet || !feedbackText || !actionBtn) return;
+
+    sheet.className = `runner-bottom-sheet ${isCorrect ? 'sheet-correct' : 'sheet-incorrect'}`;
+    feedbackText.innerHTML = `
+      <div class="sheet-feedback-title">
+        ${isCorrect ? '✅ Excellent!' : '❌ Incorrect'}
+      </div>
+      <div class="sheet-feedback-tip">${message}</div>
+    `;
+
+    actionBtn.className = `duo-btn ${isCorrect ? 'duo-btn-success' : 'duo-btn-primary'}`;
+    actionBtn.textContent = 'CONTINUE →';
+  }
+
+  finishLesson() {
+    if (window.htetSound) window.htetSound.playComplete();
+
+    // Mark completed
+    if (!this.completedLevels.includes(this.activeLesson.level.id)) {
+      this.completedLevels.push(this.activeLesson.level.id);
+    }
+    this.xp += this.activeLesson.level.xp || 20;
+    this.gems += 10;
+    this.updateTopBarUI();
+
+    const overlay = document.getElementById('lessonRunnerOverlay');
+    if (overlay) {
+      overlay.innerHTML = `
+        <div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 2rem;">
+          <div style="font-size: 5rem; margin-bottom: 1rem; animation: duoPulse 1.2s infinite ease-in-out;">🎉</div>
+          <h1 style="font-size: 2.2rem; font-weight: 900; color: var(--rose-primary); margin-bottom: 0.5rem;">
+            Lesson Complete!
+          </h1>
+          <p style="font-size: 1.1rem; color: var(--text-main); margin-bottom: 2rem;">
+            ဂုဏ်ယူပါတယ်! You mastered <strong>${this.activeLesson.level.title}</strong>!
+          </p>
+
+          <div style="display: flex; gap: 1rem; margin-bottom: 2.5rem;">
+            <div class="card" style="padding: 1.25rem 1.75rem; text-align: center; border-color: #f59e0b;">
+              <div style="font-size: 1.8rem; font-weight: 900; color: #f59e0b;">+${this.activeLesson.level.xp || 20}</div>
+              <div style="font-size: 0.85rem; font-weight: 800; color: var(--text-muted);">TOTAL XP</div>
+            </div>
+            <div class="card" style="padding: 1.25rem 1.75rem; text-align: center; border-color: #06b6d4;">
+              <div style="font-size: 1.8rem; font-weight: 900; color: #06b6d4;">+10 💎</div>
+              <div style="font-size: 0.85rem; font-weight: 800; color: var(--text-muted);">GEMS EARNED</div>
+            </div>
+          </div>
+
+          <button class="duo-btn duo-btn-success" style="width: 100%; max-width: 320px; font-size: 1.2rem;" onclick="app.quitLesson()">
+            CONTINUE LEARNING
+          </button>
+        </div>
+      `;
+    }
+  }
+
+  quitLesson() {
+    const overlay = document.getElementById('lessonRunnerOverlay');
+    if (overlay) overlay.remove();
+    this.activeLesson = null;
+    this.renderCurrentTab();
+  }
+
+  // ========================================================================
+  // 3. PRACTICE HUB (MATCH MADNESS, FLASHCARDS, VOCAB DRILLS)
+  // ========================================================================
+  renderPracticeView(container) {
+    const vocab = window.HTET_DATA?.vocabulary || [];
+    const item = vocab[this.flashcardIndex % vocab.length];
+    const trans = item?.translations[this.targetLang] || item?.translations.en;
+    const myTrans = item?.translations.my;
+
+    container.innerHTML = `
+      <div style="max-width: 600px; margin: 0 auto; padding: 1.5rem 1rem 5rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+          <div>
+            <h2 style="font-size: 1.5rem; font-weight: 900; color: var(--rose-primary);">⚡ Practice Hub</h2>
+            <p style="font-size: 0.88rem; color: var(--text-muted);">Interactive Flashcards & Rapid Mastery Drills</p>
+          </div>
+          <span class="pill-btn" style="background: var(--rose-light); color: var(--rose-primary); font-weight: 900;">
+            Card ${this.flashcardIndex + 1} / ${vocab.length}
+          </span>
+        </div>
+
+        <!-- Interactive 3D Flip Flashcard -->
+        <div class="card" 
+             style="min-height: 260px; padding: 2.5rem 1.5rem; text-align: center; cursor: pointer; border-radius: 24px; box-shadow: var(--shadow-md); display: flex; flex-direction: column; justify-content: center; align-items: center; margin-bottom: 1.5rem;"
+             onclick="app.flipCard()">
+          <div style="font-size: 0.78rem; text-transform: uppercase; font-weight: 900; color: var(--rose-primary); margin-bottom: 0.75rem;">
+            ${this.isCardFlipped ? '🇲🇲 BURMESE MEANING' : 'TARGET PHRASE • TAP TO FLIP'}
+          </div>
+
+          ${!this.isCardFlipped ? `
+            <div style="font-size: 2.2rem; font-weight: 900; color: var(--text-main); margin-bottom: 0.5rem;">
+              ${trans?.word || 'Empowerment'}
+            </div>
+            <div style="font-size: 1.05rem; color: var(--lavender); font-family: monospace; font-weight: 700; margin-bottom: 1.25rem;">
+              ${trans?.phonetic || '/ɪmˈpaʊ.ər.mənt/'}
+            </div>
+            <button class="audio-play-circle-btn" onclick="event.stopPropagation(); app.speakCurrent('${(trans?.word || '').replace(/'/g, "\\\\'")}', '${this.targetLang}')">
+              🔊
+            </button>
+          ` : `
+            <div style="font-size: 1.8rem; font-weight: 900; color: var(--rose-primary); margin-bottom: 0.75rem;">
+              ${myTrans?.word || 'စွမ်းရည်မြှင့်တင်မှု'}
+            </div>
+            <div style="font-size: 0.95rem; color: var(--text-main); line-height: 1.6; max-width: 440px;">
+              "${myTrans?.example || ''}"
+            </div>
+          `}
+        </div>
+
+        <!-- Controls -->
+        <div style="display: flex; gap: 0.75rem; justify-content: center;">
+          <button class="duo-btn duo-btn-subtle" onclick="app.prevCard()" style="flex: 1;">
+            ← PREVIOUS
+          </button>
+          <button class="duo-btn duo-btn-primary" onclick="app.nextCard()" style="flex: 1;">
+            NEXT CARD →
           </button>
         </div>
       </div>
     `;
   }
 
-  checkAnswer(selectedIndex) {
-    const quizzes = window.HTET_DATA.quizzes;
-    const q = quizzes[this.quizIndex % quizzes.length];
-    const isCorrect = selectedIndex === q.answerIndex;
-
-    const options = document.querySelectorAll('.quiz-option');
-    options.forEach((opt, idx) => {
-      opt.disabled = true;
-      if (idx === q.answerIndex) {
-        opt.classList.add('correct');
-      } else if (idx === selectedIndex) {
-        opt.classList.add('wrong');
-      }
-    });
-
-    const feedback = document.getElementById('quizFeedback');
-    const nextBtn = document.getElementById('nextQuizBtn');
-
-    if (feedback) {
-      feedback.style.display = 'block';
-      if (isCorrect) {
-        this.quizScore += 1;
-        this.awardXP(20);
-        feedback.style.background = 'rgba(16, 185, 129, 0.15)';
-        feedback.style.color = 'var(--mint-soft)';
-        feedback.innerHTML = `<strong>🎉 Wonderful, sister! (+20 XP)</strong><br/><span style="font-size: 0.88rem; color: var(--text-main);">${q.explanation}</span>`;
-      } else {
-        feedback.style.background = 'rgba(244, 63, 94, 0.15)';
-        feedback.style.color = 'var(--rose-primary)';
-        feedback.innerHTML = `<strong>🌸 Learning moment:</strong><br/><span style="font-size: 0.88rem; color: var(--text-main);">${q.explanation}</span>`;
-      }
-    }
-
-    if (nextBtn) nextBtn.style.display = 'inline-block';
-  }
-
-  nextQuizQuestion() {
-    this.quizIndex += 1;
+  flipCard() {
+    if (window.htetSound) window.htetSound.playClick();
+    this.isCardFlipped = !this.isCardFlipped;
     this.renderCurrentTab();
   }
 
-  // 5. Multilingual Dictionary View (EMDictionary & Open Source Lexicon)
+  nextCard() {
+    if (window.htetSound) window.htetSound.playClick();
+    this.flashcardIndex++;
+    this.isCardFlipped = false;
+    this.renderCurrentTab();
+  }
+
+  prevCard() {
+    if (window.htetSound) window.htetSound.playClick();
+    this.flashcardIndex = Math.max(0, this.flashcardIndex - 1);
+    this.isCardFlipped = false;
+    this.renderCurrentTab();
+  }
+
+  // ========================================================================
+  // 4. MULTILINGUAL DICTIONARY (WITH 15 DOWNLOADED OPEN SOURCE DATASETS)
+  // ========================================================================
   setDictTab(tab) {
     this.dictTab = tab;
     this.renderCurrentTab();
@@ -569,37 +741,35 @@ class HtetLingoApp {
     if (!this.dictTab) this.dictTab = 'all';
 
     container.innerHTML = `
-      <div style="margin-bottom: 1.25rem;">
-        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.75rem;">
-          <div>
-            <h2 style="font-size: 1.45rem; font-weight: 900; color: var(--rose-primary);">📖 Multilingual Lexicon & Datasets</h2>
-            <p style="font-size: 0.85rem; color: var(--text-muted);">
-              Integrated with 21,984 EMDictionary entries, 2,304 Myanmar Female Names, 49,500+ English definitions & Karen lexicon.
-            </p>
+      <div style="max-width: 750px; margin: 0 auto; padding: 1.25rem 1rem 5rem;">
+        <div style="margin-bottom: 1.25rem;">
+          <h2 style="font-size: 1.5rem; font-weight: 900; color: var(--rose-primary);">📖 Multilingual Lexicon & Datasets</h2>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">
+            Integrated with 21,984 EMDictionary entries, 2,304 Myanmar Female Names, 49,500+ English definitions & Karen wordlists.
+          </p>
+
+          <!-- Dataset Category Tabs -->
+          <div style="display: flex; gap: 0.5rem; overflow-x: auto; padding-bottom: 0.4rem; margin-bottom: 1rem;">
+            <button class="pill-btn ${this.dictTab === 'all' ? 'active' : ''}" onclick="app.setDictTab('all')">🌸 All Datasets</button>
+            <button class="pill-btn ${this.dictTab === 'em' ? 'active' : ''}" onclick="app.setDictTab('em')">📚 EMDictionary (21,984)</button>
+            <button class="pill-btn ${this.dictTab === 'names' ? 'active' : ''}" onclick="app.setDictTab('names')">🌸 Female Names (2,304)</button>
+            <button class="pill-btn ${this.dictTab === 'eng' ? 'active' : ''}" onclick="app.setDictTab('eng')">📖 English Monolingual</button>
+            <button class="pill-btn ${this.dictTab === 'karen' ? 'active' : ''}" onclick="app.setDictTab('karen')">🌿 Karen Lexicon</button>
+            <button class="pill-btn ${this.dictTab === 'sources' ? 'active' : ''}" onclick="app.setDictTab('sources')">🗂️ Stored Datasets (15)</button>
+          </div>
+
+          <div class="search-input-group">
+            <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" id="dictSearchInput" class="search-input" placeholder="Search words or names in English, မြန်မာ, 日本語, 中文..." oninput="app.searchDict(this.value)">
           </div>
         </div>
 
-        <!-- Dataset Category Tabs -->
-        <div class="category-pills" style="margin-bottom: 1rem; overflow-x: auto; white-space: nowrap; padding-bottom: 0.25rem; display: flex; gap: 0.5rem;">
-          <button class="pill-btn ${this.dictTab === 'all' ? 'active' : ''}" onclick="app.setDictTab('all')">🌸 All Datasets</button>
-          <button class="pill-btn ${this.dictTab === 'em' ? 'active' : ''}" onclick="app.setDictTab('em')">📚 EMDictionary (21,984)</button>
-          <button class="pill-btn ${this.dictTab === 'names' ? 'active' : ''}" onclick="app.setDictTab('names')">🌸 Female Names (2,304)</button>
-          <button class="pill-btn ${this.dictTab === 'eng' ? 'active' : ''}" onclick="app.setDictTab('eng')">📖 English Monolingual</button>
-          <button class="pill-btn ${this.dictTab === 'karen' ? 'active' : ''}" onclick="app.setDictTab('karen')">🌿 Karen Lexicon</button>
-          <button class="pill-btn ${this.dictTab === 'sources' ? 'active' : ''}" onclick="app.setDictTab('sources')">🗂️ Stored Datasets (15)</button>
+        <div id="dictResultsList" style="display: flex; flex-direction: column; gap: 0.85rem;">
+          ${this.renderActiveDictTabContent()}
         </div>
-
-        <div class="search-input-group">
-          <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-          </svg>
-          <input type="text" id="dictSearchInput" class="search-input" placeholder="Search words or names in English, မြန်မာ, 日本語, 中文..." oninput="app.searchDict(this.value)">
-        </div>
-      </div>
-
-      <div id="dictResultsList" style="display: flex; flex-direction: column; gap: 0.85rem;">
-        ${this.renderActiveDictTabContent()}
       </div>
     `;
   }
@@ -607,12 +777,9 @@ class HtetLingoApp {
   renderActiveDictTabContent() {
     if (this.dictTab === 'em') {
       const items = (this.engMyanCache || []).slice(0, 30);
-      if (!items.length) {
-        return `<div class="card" style="text-align: center; padding: 2rem;">Loading EMDictionary database (21,984 entries)...</div>`;
-      }
       return `
         <div style="font-weight: 800; color: var(--rose-primary); font-size: 0.95rem;">
-          📚 EMDictionary Database (Showing top 30 of ${this.engMyanCache.length.toLocaleString()} words)
+          📚 EMDictionary Database (Showing top 30 of ${this.engMyanCache ? this.engMyanCache.length.toLocaleString() : '21,984'} words)
         </div>
         ${items.map(item => `
           <div class="card" style="padding: 1.15rem;">
@@ -621,7 +788,7 @@ class HtetLingoApp {
                 <span style="font-size: 0.72rem; background: var(--rose-light); color: var(--rose-primary); padding: 0.15rem 0.55rem; border-radius: var(--radius-full); font-weight: 800;">EMDictionary</span>
                 <h3 style="font-size: 1.25rem; font-weight: 900; margin-top: 0.2rem;">${item.w}</h3>
               </div>
-              <button class="icon-btn" onclick="app.speakCurrent('${item.w.replace(/'/g, "\\'")}', 'en')">🔊 Speak</button>
+              <button class="icon-btn" onclick="app.speakCurrent('${item.w.replace(/'/g, "\\\\'")}', 'en')">🔊 Speak</button>
             </div>
             <div style="font-size: 0.92rem; color: var(--text-main); line-height: 1.6;">${item.d}</div>
           </div>
@@ -631,12 +798,9 @@ class HtetLingoApp {
 
     if (this.dictTab === 'names') {
       const items = (this.femaleNamesCache || []).slice(0, 30);
-      if (!items.length) {
-        return `<div class="card" style="text-align: center; padding: 2rem;">Loading Myanmar Female Names (2,304 entries)...</div>`;
-      }
       return `
         <div style="font-weight: 800; color: #d63384; font-size: 0.95rem;">
-          🌸 Myanmar Female Names & Identity (Showing top 30 of ${this.femaleNamesCache.length.toLocaleString()} names)
+          🌸 Myanmar Female Names & Identity (Showing top 30 of ${this.femaleNamesCache ? this.femaleNamesCache.length.toLocaleString() : '2,304'} names)
         </div>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0.75rem;">
           ${items.map(item => `
@@ -654,9 +818,6 @@ class HtetLingoApp {
 
     if (this.dictTab === 'eng') {
       const keys = Object.keys(this.engEngCache || {}).slice(0, 25);
-      if (!keys.length) {
-        return `<div class="card" style="text-align: center; padding: 2rem;">Loading English Monolingual Dictionary...</div>`;
-      }
       return `
         <div style="font-weight: 800; color: var(--lavender-dark); font-size: 0.95rem;">
           📖 English Monolingual Lexicon (Showing top 25 definitions)
@@ -668,7 +829,7 @@ class HtetLingoApp {
                 <span style="font-size: 0.72rem; background: var(--lavender-light); color: var(--lavender-dark); padding: 0.15rem 0.55rem; border-radius: var(--radius-full); font-weight: 800;">LexiVerse Monolingual</span>
                 <h3 style="font-size: 1.2rem; font-weight: 900; margin-top: 0.2rem;">${k}</h3>
               </div>
-              <button class="icon-btn" onclick="app.speakCurrent('${k.replace(/'/g, "\\'")}', 'en')">🔊 Speak</button>
+              <button class="icon-btn" onclick="app.speakCurrent('${k.replace(/'/g, "\\\\'")}', 'en')">🔊 Speak</button>
             </div>
             <div style="font-size: 0.92rem; color: var(--text-main); line-height: 1.6;">${this.engEngCache[k]}</div>
           </div>
@@ -760,24 +921,6 @@ class HtetLingoApp {
                   <td style="padding: 0.6rem;">28 KB (2,304 names)</td>
                   <td style="padding: 0.6rem;">L16H7/Myanmar_Names</td>
                 </tr>
-                <tr style="border-bottom: 1px solid var(--border-color);">
-                  <td style="padding: 0.6rem; font-weight: 800;">Karen Wordlists</td>
-                  <td style="padding: 0.6rem; font-family: monospace;">data/sgaw-word-list.txt</td>
-                  <td style="padding: 0.6rem;">354 KB</td>
-                  <td style="padding: 0.6rem;">dangerchitthu/myanmar-karen</td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--border-color);">
-                  <td style="padding: 0.6rem; font-weight: 800;">Myanmar Calendar</td>
-                  <td style="padding: 0.6rem; font-family: monospace;">data/mmcal/</td>
-                  <td style="padding: 0.6rem;">250 KB</td>
-                  <td style="padding: 0.6rem;">yan9a/mmcal JS & dynasties</td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--border-color);">
-                  <td style="padding: 0.6rem; font-weight: 800;">Nara Mini v1 (TTS)</td>
-                  <td style="padding: 0.6rem; font-family: monospace;">data/nara-mini-v1/</td>
-                  <td style="padding: 0.6rem;">25 KB</td>
-                  <td style="padding: 0.6rem;">YeeNyunn G2P & phonemes</td>
-                </tr>
               </tbody>
             </table>
           </div>
@@ -786,7 +929,7 @@ class HtetLingoApp {
     }
 
     // Default 'all'
-    const dict = window.HTET_DATA.dictionary;
+    const dict = window.HTET_DATA?.dictionary || [];
     return `
       <div style="font-weight: 800; color: var(--rose-primary); font-size: 0.95rem; margin-bottom: 0.25rem;">
         🌸 Curated Sisterhood & Multilingual Vocabulary
@@ -846,7 +989,6 @@ class HtetLingoApp {
       if (fnRes && fnRes.ok) this.femaleNamesCache = await fnRes.json();
       if (eeRes && eeRes.ok) this.engEngCache = await eeRes.json();
       if (kwRes && kwRes.ok) this.karenCache = await kwRes.json();
-      console.log('[HtetLingo] Datasets preloaded into offline memory cache');
     } catch(e) {}
   }
 
@@ -859,9 +1001,8 @@ class HtetLingoApp {
       return;
     }
 
-    // 1. In-memory curated matches
     let resultsHtml = '';
-    const curatedMatches = window.HTET_DATA.dictionary.filter(item => {
+    const curatedMatches = (window.HTET_DATA?.dictionary || []).filter(item => {
       if (item.term.toLowerCase().includes(q)) return true;
       if (item.translations.my.includes(q)) return true;
       if (item.translations.ja && item.translations.ja.toLowerCase().includes(q)) return true;
@@ -874,11 +1015,7 @@ class HtetLingoApp {
       resultsHtml += curatedMatches.map(item => this.formatDictEntry(item)).join('');
     }
 
-    // 2. Query EMDictionary database (from soeminnminn/EngMyanDictionary-MAC)
-    if (!this.engMyanCache) {
-      await this.loadExternalDatasets();
-    }
-
+    // EMDictionary
     if (this.engMyanCache && this.engMyanCache.length) {
       const emMatches = this.engMyanCache.filter(item => {
         return item.w.toLowerCase().startsWith(q) || item.w.toLowerCase().includes(q) || item.d.includes(q);
@@ -893,7 +1030,7 @@ class HtetLingoApp {
                 <span style="font-size: 0.72rem; background: var(--rose-light); color: var(--rose-primary); padding: 0.15rem 0.55rem; border-radius: var(--radius-full); font-weight: 800;">EMDictionary</span>
                 <h3 style="font-size: 1.25rem; font-weight: 900; margin-top: 0.2rem;">${item.w}</h3>
               </div>
-              <button class="icon-btn" onclick="app.speakCurrent('${item.w.replace(/'/g, "\\'")}', 'en')">🔊 Speak</button>
+              <button class="icon-btn" onclick="app.speakCurrent('${item.w.replace(/'/g, "\\\\'")}', 'en')">🔊 Speak</button>
             </div>
             <div style="font-size: 0.92rem; color: var(--text-main); line-height: 1.6;">
               ${item.d}
@@ -903,7 +1040,7 @@ class HtetLingoApp {
       }
     }
 
-    // 3. Query Myanmar Female Names Dataset (L16H7 dataset with authentic Burmese script)
+    // Female Names
     if (this.femaleNamesCache && this.femaleNamesCache.length) {
       const fnMatches = this.femaleNamesCache.filter(item => {
         return item.en.toLowerCase().includes(q) || item.mm.includes(q);
@@ -923,28 +1060,6 @@ class HtetLingoApp {
       }
     }
 
-    // 4. Query English-to-English Dictionary (LexiVerse / adityasahu252 dataset)
-    if (this.engEngCache) {
-      const eeKeys = Object.keys(this.engEngCache).filter(k => k.toLowerCase().startsWith(q) || k.toLowerCase().includes(q)).slice(0, 6);
-      if (eeKeys.length) {
-        resultsHtml += '<div style="margin: 1.25rem 0 0.6rem; font-weight: 800; color: var(--lavender-dark); font-size: 0.95rem;">📖 English Monolingual Dictionary (LexiVerse Dataset)</div>';
-        resultsHtml += eeKeys.map(k => `
-          <div class="card" style="padding: 1.15rem; margin-bottom: 0.75rem;">
-            <div class="card-header" style="margin-bottom: 0.4rem;">
-              <div>
-                <span style="font-size: 0.72rem; background: var(--lavender-light); color: var(--lavender-dark); padding: 0.15rem 0.55rem; border-radius: var(--radius-full); font-weight: 800;">English-to-English</span>
-                <h3 style="font-size: 1.2rem; font-weight: 900; margin-top: 0.2rem;">${k}</h3>
-              </div>
-              <button class="icon-btn" onclick="app.speakCurrent('${k.replace(/'/g, "\\'")}', 'en')">🔊 Speak</button>
-            </div>
-            <div style="font-size: 0.92rem; color: var(--text-main); line-height: 1.6;">
-              ${this.engEngCache[k]}
-            </div>
-          </div>
-        `).join('');
-      }
-    }
-
     if (resultsHtml) {
       list.innerHTML = resultsHtml;
     } else {
@@ -958,472 +1073,219 @@ class HtetLingoApp {
     }
   }
 
-  // 6. Myanmar Female Names & Meanings View
-  renderFemaleNamesView(container) {
-    const names = window.HTET_DATA.femaleNamesCollection;
-
-    container.innerHTML = `
-      <div style="margin-bottom: 1.25rem; display: flex; justify-content: space-between; align-items: center;">
-        <div>
-          <h2 style="font-size: 1.4rem; font-weight: 900;">🌸 Myanmar Female Names & Meanings</h2>
-          <p style="font-size: 0.85rem; color: var(--text-muted);">
-            Extracted from Myanmar Names (2,304 names) & MyanmarName-en-mm collection.
-          </p>
-        </div>
-        <button class="pill-btn" onclick="app.switchTab('dict')">← Back to Dictionary</button>
-      </div>
-
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem;">
-        ${names.map(n => `
-          <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
-            <div>
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
-                <span style="font-size: 1.3rem; font-weight: 900; color: var(--rose-primary);">${n.nameMm}</span>
-                <span style="font-family: monospace; font-size: 0.95rem; font-weight: 700; color: var(--lavender);">${n.nameEn}</span>
-              </div>
-              <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5;">${n.meaning}</p>
-            </div>
-            <div style="margin-top: 0.85rem; display: flex; justify-content: flex-end;">
-              <button class="icon-btn" onclick="app.speakCurrent('${n.nameEn}', 'en')">🔊 Audio</button>
-            </div>
-          </div>
-        `).join('')}
-      </div>
-    `;
-  }
-
-  // 7. Translation & Phrasebook View
-  renderTranslateView(container) {
-    container.innerHTML = `
-      <div style="margin-bottom: 1.25rem;">
-        <h2 style="font-size: 1.4rem; font-weight: 900;">🔄 Sisterhood Translation & Phrasebook</h2>
-        <p style="font-size: 0.85rem; color: var(--text-muted);">
-          Translate empowering phrases across 8 languages with speech synthesis.
-        </p>
-      </div>
-
-      <div class="card">
-        <div style="display: grid; grid-template-columns: 1fr auto 1fr; gap: 0.5rem; align-items: center; margin-bottom: 1rem;">
-          <select id="transSrcLang" class="lang-selector-btn" style="width: 100%;">
-            <option value="en">English (🇺🇸)</option>
-            <option value="my" selected>Burmese (🇲🇲)</option>
-            <option value="ja">Japanese (🇯🇵)</option>
-            <option value="zh">Chinese (🇨🇳)</option>
-            <option value="th">Thai (🇹🇭)</option>
-          </select>
-          <span style="font-weight: 900; color: var(--rose-primary);">⇄</span>
-          <select id="transTargetLang" class="lang-selector-btn" style="width: 100%;">
-            <option value="ja" selected>Japanese (🇯🇵)</option>
-            <option value="en">English (🇺🇸)</option>
-            <option value="zh">Chinese (🇨🇳)</option>
-            <option value="my">Burmese (🇲🇲)</option>
-            <option value="th">Thai (🇹🇭)</option>
-          </select>
-        </div>
-
-        <textarea id="transInput" class="search-input" rows="3" placeholder="Enter words or select from sisterhood phrases below..." style="resize: none;"></textarea>
-
-        <div style="display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 0.75rem;">
-          <button class="pill-btn" onclick="app.doQuickTranslate()" style="background: var(--rose-primary); color: white; border: none;">
-            Translate Now ✨
-          </button>
-        </div>
-
-        <div id="transOutputBox" style="display: none; margin-top: 1rem; padding: 1.15rem; background: var(--bg-card-subtle); border-radius: var(--radius-md); border: 1.5px solid var(--border-color);">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-            <span style="font-size: 0.78rem; font-weight: 800; color: var(--rose-primary); text-transform: uppercase;">Translation</span>
-            <button class="icon-btn" id="transAudioBtn">🔊 Listen</button>
-          </div>
-          <div id="transOutputText" style="font-size: 1.2rem; font-weight: 800; color: var(--text-main);"></div>
-        </div>
-      </div>
-
-      <!-- Essential Sisterhood Phrases -->
-      <h3 style="font-size: 1.15rem; font-weight: 800; margin: 1.75rem 0 0.85rem;">🌸 Essential Sisterhood & Safety Phrases</h3>
-      <div style="display: flex; flex-direction: column; gap: 0.6rem;">
-        ${window.HTET_DATA.vocabulary.slice(0, 5).map(v => `
-          <div class="card" style="padding: 0.95rem; margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center;">
-            <div>
-              <div style="font-weight: 800;">${v.translations.en.word} • <span style="color: var(--sakura-pink);">${v.translations.my.word}</span></div>
-              <div style="font-size: 0.88rem; color: var(--lavender); font-family: monospace;">${v.translations[this.targetLang]?.word || v.translations.ja.word}</div>
-            </div>
-            <button class="icon-btn" onclick="app.speakCurrent('${(v.translations[this.targetLang]?.word || v.translations.ja.word).replace(/'/g, "\\'")}', '${this.targetLang}')">
-              🔊
-            </button>
-          </div>
-        `).join('')}
-      </div>
-    `;
-  }
-
-  doQuickTranslate() {
-    const input = document.getElementById('transInput');
-    const outBox = document.getElementById('transOutputBox');
-    const outText = document.getElementById('transOutputText');
-    const audioBtn = document.getElementById('transAudioBtn');
-    const srcLang = document.getElementById('transSrcLang').value;
-    const tgtLang = document.getElementById('transTargetLang').value;
-
-    const query = input.value.trim().toLowerCase();
-    if (!query) return;
-
-    let match = window.HTET_DATA.vocabulary.find(v => {
-      const src = v.translations[srcLang]?.word?.toLowerCase();
-      return src && src.includes(query);
-    });
-
-    let result = '';
-    if (match) {
-      result = match.translations[tgtLang]?.word || 'Translation ready';
-    } else {
-      result = `[${tgtLang.toUpperCase()}] ${input.value}`;
-    }
-
-    outBox.style.display = 'block';
-    outText.textContent = result;
-    audioBtn.onclick = () => window.htetSpeech.speak(result, tgtLang);
-  }
-
-  // 8. AI Tutor View (Sisterhood Safe Space)
+  // ========================================================================
+  // 5. AI TUTOR VIEW
+  // ========================================================================
   renderAITutorView(container) {
-    const isPremium = window.htetRevenueCat.isPremium();
-
     container.innerHTML = `
-      <div style="margin-bottom: 1.25rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
-        <div>
-          <h2 style="font-size: 1.4rem; font-weight: 900;">🌸 HtetAI Sisterhood Tutor</h2>
-          <p style="font-size: 0.85rem; color: var(--text-muted);">
-            Practice authentic conversations, leadership, and safe space dialogues with AI.
+      <div style="max-width: 650px; margin: 0 auto; padding: 1.5rem 1rem 5rem;">
+        <div style="margin-bottom: 1.25rem;">
+          <h2 style="font-size: 1.5rem; font-weight: 900; color: var(--rose-primary);">🤖 Safe Space AI Tutor</h2>
+          <p style="font-size: 0.88rem; color: var(--text-muted);">
+            Practice conversational speaking with encouraging, empathetic AI.
           </p>
         </div>
-        ${!isPremium ? `
-          <button class="pill-btn" onclick="app.switchTab('pricing')" style="background: var(--rose-primary); color: white; border: none;">
-            👑 Unlock Unlimited AI
-          </button>
-        ` : ''}
-      </div>
 
-      <!-- Scenarios Selector -->
-      <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem; overflow-x: auto; padding-bottom: 0.25rem;">
-        ${window.htetAITutor.scenarios.map(sc => `
-          <button class="pill-btn" onclick="app.selectScenario('${sc.id}')" style="${window.htetAITutor.activeScenario === sc.id ? 'border-color: var(--rose-primary); background: var(--rose-light); color: var(--rose-primary);' : ''}">
-            ${sc.title}
-          </button>
-        `).join('')}
-      </div>
-
-      <div class="card">
-        <div class="chat-thread" id="chatThread">
-          <div class="chat-bubble assistant">
-            <div>${window.htetAITutor.scenarios.find(s => s.id === window.htetAITutor.activeScenario)?.starter[this.targetLang] || window.htetAITutor.scenarios[0].starter.en}</div>
-            <div class="chat-tip">💡 Tap the speaker icon to listen and repeat aloud with confidence!</div>
+        <div class="card" id="aiChatBox" style="min-height: 320px; max-height: 440px; overflow-y: auto; padding: 1.25rem; display: flex; flex-direction: column; gap: 0.85rem; margin-bottom: 1rem;">
+          <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
+            <div style="font-size: 2rem;">🌸</div>
+            <div style="background: var(--bg-card-subtle); padding: 0.85rem 1.15rem; border-radius: 18px; border: 1.5px solid var(--border-color); font-size: 0.95rem; line-height: 1.5;">
+              Welcome, lovely learner! 🌸 How has your day been? What would you like to practice in <strong>${this.targetLang.toUpperCase()}</strong> today?
+            </div>
           </div>
         </div>
 
-        <div class="chat-input-row">
-          <input type="text" id="chatInput" class="search-input" placeholder="Type your message in ${this.targetLang.toUpperCase()} or Burmese..." style="margin-bottom: 0;" onkeypress="if(event.key === 'Enter') app.sendChatMessage();">
-          <button class="icon-btn" onclick="app.voiceInputChat()" title="Speak with Microphone" style="padding: 0.85rem 1.15rem;">
-            🎙️
-          </button>
-          <button class="pill-btn" onclick="app.sendChatMessage()" style="background: var(--rose-primary); color: white; border: none; padding: 0.85rem 1.35rem;">
-            Send ✨
+        <div style="display: flex; gap: 0.5rem;">
+          <input type="text" id="aiChatInput" class="search-input" placeholder="Type a message or response..." onkeydown="if(event.key === 'Enter') app.sendChatMessage()">
+          <button class="duo-btn duo-btn-primary" onclick="app.sendChatMessage()" style="padding: 0.6rem 1.2rem;">
+            SEND
           </button>
         </div>
       </div>
     `;
-  }
-
-  selectScenario(scId) {
-    window.htetAITutor.activeScenario = scId;
-    this.renderCurrentTab();
   }
 
   sendChatMessage() {
-    const input = document.getElementById('chatInput');
-    const thread = document.getElementById('chatThread');
-    if (!input || !thread || !input.value.trim()) return;
-
-    const userText = input.value.trim();
+    const input = document.getElementById('aiChatInput');
+    const text = input?.value?.trim();
+    if (!text) return;
     input.value = '';
 
-    const userBubble = document.createElement('div');
-    userBubble.className = 'chat-bubble user';
-    userBubble.textContent = userText;
-    thread.appendChild(userBubble);
+    const chatBox = document.getElementById('aiChatBox');
+    if (!chatBox) return;
+
+    chatBox.innerHTML += `
+      <div style="display: flex; gap: 0.75rem; justify-content: flex-end;">
+        <div style="background: var(--rose-primary); color: white; padding: 0.85rem 1.15rem; border-radius: 18px; font-size: 0.95rem; max-width: 80%;">
+          ${text}
+        </div>
+      </div>
+    `;
+
+    chatBox.scrollTop = chatBox.scrollHeight;
 
     setTimeout(() => {
-      const resp = window.htetAITutor.generateResponse(userText, this.targetLang, this.nativeLang);
-      const aiBubble = document.createElement('div');
-      aiBubble.className = 'chat-bubble assistant';
-      aiBubble.innerHTML = `
-        <div>${resp.reply}</div>
-        <div style="margin-top: 0.5rem; display: flex; gap: 0.5rem;">
-          <button class="icon-btn" style="padding: 0.25rem 0.65rem; font-size: 0.78rem;" onclick="app.speakCurrent('${resp.reply.replace(/'/g, "\\'")}', '${this.targetLang}')">
-            🔊 Listen Native Audio
-          </button>
+      const resp = window.htetAITutor?.respond(text, this.targetLang) || { reply: "You speak with great clarity! Keep up the brilliant work! 🌸", tip: "Great sentence structure." };
+      chatBox.innerHTML += `
+        <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
+          <div style="font-size: 2rem;">🌸</div>
+          <div style="background: var(--bg-card-subtle); padding: 0.85rem 1.15rem; border-radius: 18px; border: 1.5px solid var(--border-color); font-size: 0.95rem; line-height: 1.5;">
+            ${resp.reply}
+            <div style="font-size: 0.8rem; color: var(--rose-primary); margin-top: 0.4rem; font-weight: 800;">
+              ✨ Tip: ${resp.tip}
+            </div>
+          </div>
         </div>
-        <div class="chat-tip">${resp.tip}</div>
       `;
-      thread.appendChild(aiBubble);
-      thread.scrollTop = thread.scrollHeight;
-      this.awardXP(10);
-    }, 400);
-
-    thread.scrollTop = thread.scrollHeight;
+      chatBox.scrollTop = chatBox.scrollHeight;
+      this.speakCurrent(resp.reply, this.targetLang);
+    }, 600);
   }
 
-  voiceInputChat() {
-    const input = document.getElementById('chatInput');
-    window.htetSpeech.listen(this.targetLang, (text) => {
-      if (input) input.value = text;
-    }, (err) => {
-      alert('Microphone notice: ' + err);
-    });
-  }
-
-  // 9. Pricing & Subscription View
-  renderPricingView(container) {
-    const plans = window.htetRevenueCat.plans;
-    const activePlan = window.htetRevenueCat.activePlan;
-    const addOnPacks = window.htetRevenueCat.addonPacks;
+  // ========================================================================
+  // 6. SHOP & VIP VIEW
+  // ========================================================================
+  renderShopView(container) {
+    const isVIP = window.htetRevenueCat?.isPremium();
 
     container.innerHTML = `
-      <div style="text-align: center; margin-bottom: 2rem;">
-        <span style="font-size: 0.82rem; font-weight: 800; text-transform: uppercase; color: var(--rose-primary); background: var(--rose-light); padding: 0.35rem 0.95rem; border-radius: var(--radius-full);">
-          👑 Empowering Support & Subscriptions
-        </span>
-        <h2 style="font-size: 1.85rem; font-weight: 900; margin-top: 0.6rem;">Invest in Your Voice & Global Fluency</h2>
-        <p style="font-size: 0.95rem; color: var(--text-muted); max-width: 580px; margin: 0 auto;">
-          Free tier forever, or upgrade for unlimited AI tutoring, advanced grammar, and lifetime access.
-        </p>
-      </div>
-
-      <div class="pricing-grid">
-        ${plans.map(p => `
-          <div class="price-card ${p.popular ? 'popular' : ''}">
-            ${p.badge ? `<div class="price-badge">${p.badge}</div>` : ''}
-            <div class="price-title">${p.name}</div>
-            <div class="price-amount">${p.price} <span style="font-size: 0.9rem; font-weight: 600; color: var(--text-muted);">/${p.period}</span></div>
-            <ul class="price-features">
-              ${p.features.map(f => `<li>✓ ${f}</li>`).join('')}
-            </ul>
-            <div style="margin-top: auto;">
-              ${activePlan === p.id ? `
-                <button class="btn-secondary" disabled style="background: var(--bg-card-subtle);">Current Plan</button>
-              ` : `
-                <button class="btn-primary" onclick="app.purchasePlan('${p.id}')">
-                  ${p.id === 'free' ? 'Select Free' : (p.id === 'lifetime_access' ? 'Get Lifetime VIP 👑' : 'Subscribe Now 💖')}
-                </button>
-              `}
-            </div>
-          </div>
-        `).join('')}
-      </div>
-
-      <h3 style="font-size: 1.25rem; font-weight: 900; margin: 2.25rem 0 1rem;">🌸 Specialized Learning Packs</h3>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;">
-        ${addOnPacks.map(pack => {
-          const owned = window.htetRevenueCat.hasPack(pack.id);
-          return `
-            <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-                  <span style="font-weight: 900; font-size: 1.05rem;">${pack.name}</span>
-                  <span style="font-weight: 900; color: var(--rose-primary);">${pack.price}</span>
-                </div>
-                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">${pack.description}</p>
-              </div>
-              <div>
-                ${owned ? `
-                  <button class="btn-secondary" disabled>✓ Unlocked & Installed</button>
-                ` : `
-                  <button class="btn-primary" style="padding: 0.55rem 1rem;" onclick="app.purchaseAddonPack('${pack.id}')">Unlock Pack (${pack.price})</button>
-                `}
-              </div>
-            </div>
-          `;
-        }).join('')}
-      </div>
-    `;
-  }
-
-  async purchasePlan(planId) {
-    const res = await window.htetRevenueCat.purchase(planId);
-    if (res.success) {
-      alert(`🎉 Congratulations, sister! You have unlocked ${planId === 'lifetime_access' ? 'Lifetime VIP 👑' : 'Premium 💖'}!`);
-      this.renderCurrentTab();
-    }
-  }
-
-  async purchaseAddonPack(packId) {
-    const res = await window.htetRevenueCat.purchasePack(packId);
-    if (res.success) {
-      alert(`🎉 Special Pack Unlocked! Enjoy your learning!`);
-      this.renderCurrentTab();
-    }
-  }
-
-  // 10. Settings & Account View
-  renderSettingsView(container) {
-    const user = window.htetSupabase.getCurrentUser();
-
-    container.innerHTML = `
-      <div style="margin-bottom: 1.25rem;">
-        <h2 style="font-size: 1.4rem; font-weight: 900;">⚙️ Settings & Sisterhood Account</h2>
-        <p style="font-size: 0.85rem; color: var(--text-muted);">Manage your profile, cloud sync with Supabase, and preferences.</p>
-      </div>
-
-      <div class="card">
-        <div class="card-header">
-          <div class="card-title">👤 User Account (Supabase Auth)</div>
-          <span style="font-size: 0.75rem; background: var(--rose-light); color: var(--rose-primary); padding: 0.2rem 0.6rem; border-radius: var(--radius-full); font-weight: 800;">
-            ${user ? 'Logged In' : 'Guest / Local Mode'}
-          </span>
+      <div style="max-width: 600px; margin: 0 auto; padding: 1.5rem 1rem 5rem;">
+        <div style="text-align: center; margin-bottom: 2rem;">
+          <div style="font-size: 3rem; margin-bottom: 0.5rem;">👑</div>
+          <h2 style="font-size: 1.6rem; font-weight: 900; color: var(--rose-primary);">HtetLingo Shop & VIP</h2>
+          <p style="font-size: 0.9rem; color: var(--text-muted);">Refill lives or unlock permanent VIP benefits!</p>
         </div>
 
-        ${user ? `
-          <div style="margin-bottom: 1rem;">
-            <div><strong>Email:</strong> ${user.email}</div>
-            <div><strong>Display Name:</strong> ${user.displayName || 'Htet Sister'}</div>
-            <div><strong>Membership:</strong> ${window.htetRevenueCat.isPremium() ? '👑 VIP Active' : '🌸 Free Starter'}</div>
+        <!-- Hearts Refill Card -->
+        <div class="card" style="padding: 1.5rem; margin-bottom: 1.25rem; display: flex; justify-content: space-between; align-items: center;">
+          <div style="display: flex; align-items: center; gap: 1rem;">
+            <div style="font-size: 2.5rem;">❤️</div>
+            <div>
+              <div style="font-weight: 900; font-size: 1.2rem;">Full Hearts Refill</div>
+              <div style="font-size: 0.85rem; color: var(--text-muted);">Restore your hearts to 5 right now</div>
+            </div>
           </div>
-          <button class="pill-btn" onclick="window.htetSupabase.signOut(); app.renderCurrentTab();" style="border-color: var(--rose-primary); color: var(--rose-primary);">
-            Sign Out
-          </button>
-        ` : `
-          <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 1rem;">
-            Create an account or sign in to sync your streak, XP, and bookmarks across all your devices.
-          </p>
-          <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
-            <button class="pill-btn" style="background: var(--rose-primary); color: white; border: none;" onclick="app.openAuthModal('signin')">
-              Sign In 💖
-            </button>
-            <button class="pill-btn" onclick="app.openAuthModal('signup')">
-              Create Free Account ✨
-            </button>
-          </div>
-        `}
-      </div>
-
-      <div class="card">
-        <div class="card-header">
-          <div class="card-title">🎨 Cute Aesthetics & Audio</div>
-        </div>
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-          <div>
-            <div style="font-weight: 700;">Theme Mode</div>
-            <div style="font-size: 0.8rem; color: var(--text-muted);">Switch between Pastel Sakura and Velvet Plum</div>
-          </div>
-          <button class="pill-btn" onclick="app.toggleTheme()">
-            🌓 Switch Theme
+          <button class="duo-btn duo-btn-success" onclick="app.refillHearts()">
+            ${this.hearts >= 5 ? 'FULL' : 'REFILL 100 💎'}
           </button>
         </div>
 
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-          <div>
-            <div style="font-weight: 700;">Speech Pronunciation Speed</div>
-            <div style="font-size: 0.8rem; color: var(--text-muted);">Adjust native voice playback rate</div>
+        <!-- VIP Membership Card -->
+        <div class="card" style="padding: 1.75rem; border: 2.5px solid #f59e0b; background: linear-gradient(135deg, var(--bg-card), #fefce8); margin-bottom: 1.25rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+            <div>
+              <span class="unit-badge" style="background: #f59e0b; color: white;">👑 VIP UPGRADE</span>
+              <h3 style="font-size: 1.35rem; font-weight: 900; margin-top: 0.35rem;">HtetLingo VIP Pass</h3>
+            </div>
+            <div style="font-size: 1.5rem; font-weight: 900; color: #b45309;">$7.99 <span style="font-size: 0.85rem;">/mo</span></div>
           </div>
-          <select class="lang-selector-btn" onchange="window.htetSpeech.setRate(this.value)">
-            <option value="0.75">0.75x (Gentle / Slow)</option>
-            <option value="1.0" selected>1.0x (Normal)</option>
-            <option value="1.25">1.25x (Fast)</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-header">
-          <div class="card-title">🌐 Active Learning Language</div>
-        </div>
-        <div style="margin-bottom: 0.75rem;">
-          <select class="lang-selector-btn" style="width: 100%;" onchange="app.changeTargetLanguage(this.value)">
-            ${window.HTET_DATA.languages.map(l => `
-              <option value="${l.code}" ${l.code === this.targetLang ? 'selected' : ''}>${l.flag} ${l.name} (${l.native})</option>
-            `).join('')}
-          </select>
+          <ul style="font-size: 0.92rem; line-height: 1.8; margin-bottom: 1.5rem; list-style: none; padding-left: 0;">
+            <li>✨ <strong>Unlimited Hearts (∞)</strong> — never stop learning</li>
+            <li>✨ <strong>AI Tutor Conversations</strong> — unlimited voice chats</li>
+            <li>✨ <strong>All 8 Languages Unlocked</strong></li>
+            <li>✨ <strong>Offline Lexicon & Datasets Download</strong></li>
+          </ul>
+          <button class="duo-btn duo-btn-primary" style="width: 100%;" onclick="app.buyVIP()">
+            ${isVIP ? '⭐ VIP ACTIVE' : 'UPGRADE TO VIP (TEST RC)'}
+          </button>
         </div>
       </div>
     `;
   }
 
-  changeTargetLanguage(code) {
-    this.targetLang = code;
-    localStorage.setItem('htetlingo_target_lang', code);
-    const langObj = window.HTET_DATA.languages.find(l => l.code === code);
-    const btn = document.getElementById('langSelectorBtn');
-    if (btn && langObj) btn.innerHTML = `<span>${langObj.flag} ${langObj.name}</span>`;
+  refillHearts() {
+    if (this.hearts >= 5) {
+      alert('❤️ Your hearts are already full!');
+      return;
+    }
+    if (this.gems < 100) {
+      alert('💎 You need 100 gems to refill hearts! Complete more lessons to earn gems.');
+      return;
+    }
+    this.gems -= 100;
+    this.hearts = 5;
+    this.updateTopBarUI();
+    if (window.htetSound) window.htetSound.playCorrect();
+    alert('❤️ Hearts refilled to 5! Keep shining!');
     this.renderCurrentTab();
   }
 
-  openLanguageModal() {
-    this.switchTab('settings');
+  buyVIP() {
+    if (window.htetRevenueCat) {
+      window.htetRevenueCat.purchase('premium_monthly').then(() => {
+        if (window.htetSound) window.htetSound.playComplete();
+        alert('🎉 Welcome to HtetLingo VIP! You now have unlimited hearts and unlocked AI tutoring!');
+        this.updateTopBarUI();
+        this.renderCurrentTab();
+      });
+    }
   }
 
-  openAuthModal(mode = 'signin') {
-    const modal = document.createElement('div');
-    modal.className = 'modal-backdrop';
-    modal.innerHTML = `
-      <div class="modal-content">
-        <h3 style="font-size: 1.35rem; font-weight: 900; margin-bottom: 0.4rem; color: var(--rose-primary);">
-          ${mode === 'signin' ? 'Sign In to HtetLingo 💖' : 'Join Our Sisterhood ✨'}
-        </h3>
-        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.25rem;">
-          Encrypted, safe & secure with Supabase.
-        </p>
+  // ========================================================================
+  // 7. PROFILE & SETTINGS VIEW
+  // ========================================================================
+  renderProfileView(container) {
+    const user = window.htetSupabase?.getCurrentUser();
 
-        <div style="display: flex; flex-direction: column; gap: 0.85rem;">
-          ${mode === 'signup' ? `
-            <div>
-              <label style="font-size: 0.82rem; font-weight: 700;">Your Name / Preferred Name</label>
-              <input type="text" id="modalName" class="search-input" placeholder="e.g. Htet Myat" style="margin-bottom: 0;">
-            </div>
-          ` : ''}
-          <div>
-            <label style="font-size: 0.82rem; font-weight: 700;">Email</label>
-            <input type="email" id="modalEmail" class="search-input" placeholder="name@example.com" style="margin-bottom: 0;">
+    container.innerHTML = `
+      <div style="max-width: 600px; margin: 0 auto; padding: 1.5rem 1rem 5rem;">
+        <!-- Avatar Header -->
+        <div style="text-align: center; margin-bottom: 2rem;">
+          <div style="width: 86px; height: 86px; border-radius: 50%; background: linear-gradient(135deg, #f43f5e, #a855f7); color: white; display: inline-flex; align-items: center; justify-content: center; font-size: 2.8rem; box-shadow: var(--shadow-md); margin-bottom: 0.75rem;">
+            🌸
           </div>
-          <div>
-            <label style="font-size: 0.82rem; font-weight: 700;">Password</label>
-            <input type="password" id="modalPassword" class="search-input" placeholder="••••••••" style="margin-bottom: 0;">
-          </div>
+          <h2 style="font-size: 1.5rem; font-weight: 900;">${user ? user.displayName : 'Htet (Lovely Learner)'}</h2>
+          <p style="font-size: 0.88rem; color: var(--text-muted);">
+            ${user ? user.email : 'Signed in as Local Guest'}
+          </p>
+        </div>
 
-          <button class="btn-primary" style="margin-top: 0.5rem;" onclick="app.submitAuth('${mode}')">
-            ${mode === 'signin' ? 'Sign In 💖' : 'Create Account 🌸'}
-          </button>
-          <button class="btn-secondary" onclick="this.closest('.modal-backdrop').remove()">
-            Cancel
-          </button>
+        <!-- Stats Grid -->
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 2rem;">
+          <div class="card" style="padding: 1.25rem; text-align: center;">
+            <div style="font-size: 2rem; font-weight: 900; color: #f97316;">🔥 ${this.streak}</div>
+            <div style="font-size: 0.85rem; font-weight: 800; color: var(--text-muted);">DAY STREAK</div>
+          </div>
+          <div class="card" style="padding: 1.25rem; text-align: center;">
+            <div style="font-size: 2rem; font-weight: 900; color: #f59e0b;">⚡ ${this.xp}</div>
+            <div style="font-size: 0.85rem; font-weight: 800; color: var(--text-muted);">TOTAL XP</div>
+          </div>
+          <div class="card" style="padding: 1.25rem; text-align: center;">
+            <div style="font-size: 2rem; font-weight: 900; color: #06b6d4;">💎 ${this.gems}</div>
+            <div style="font-size: 0.85rem; font-weight: 800; color: var(--text-muted);">GEMS</div>
+          </div>
+          <div class="card" style="padding: 1.25rem; text-align: center;">
+            <div style="font-size: 2rem; font-weight: 900; color: #10b981;">🏆 ${this.completedLevels.length}</div>
+            <div style="font-size: 0.85rem; font-weight: 800; color: var(--text-muted);">LEVELS PASSED</div>
+          </div>
+        </div>
+
+        <!-- Language Selector -->
+        <div class="card" style="padding: 1.25rem; margin-bottom: 1.5rem;">
+          <h3 style="font-size: 1.15rem; font-weight: 900; margin-bottom: 0.75rem;">Change Target Language</h3>
+          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+            <button class="pill-btn ${this.targetLang === 'ja' ? 'active' : ''}" onclick="app.setTargetLang('ja')">🇯🇵 Japanese</button>
+            <button class="pill-btn ${this.targetLang === 'en' ? 'active' : ''}" onclick="app.setTargetLang('en')">🇺🇸 English</button>
+            <button class="pill-btn ${this.targetLang === 'zh' ? 'active' : ''}" onclick="app.setTargetLang('zh')">🇨🇳 Chinese</button>
+            <button class="pill-btn ${this.targetLang === 'th' ? 'active' : ''}" onclick="app.setTargetLang('th')">🇹🇭 Thai</button>
+            <button class="pill-btn ${this.targetLang === 'my' ? 'active' : ''}" onclick="app.setTargetLang('my')">🇲🇲 Burmese</button>
+          </div>
         </div>
       </div>
     `;
-    document.body.appendChild(modal);
   }
 
-  async submitAuth(mode) {
-    const email = document.getElementById('modalEmail')?.value?.trim();
-    const pass = document.getElementById('modalPassword')?.value?.trim();
-    const name = document.getElementById('modalName')?.value?.trim();
-
-    if (!email || !pass) {
-      alert('Please enter your email and password.');
-      return;
-    }
-
-    let res;
-    if (mode === 'signup') {
-      res = await window.htetSupabase.signUp(email, pass, name);
-    } else {
-      res = await window.htetSupabase.signIn(email, pass);
-    }
-
-    if (res.error) {
-      alert(res.error);
-    } else {
-      alert(`Welcome, lovely ${res.user.displayName}! 🌸 Sync is active.`);
-      document.querySelector('.modal-backdrop')?.remove();
+  setTargetLang(langCode) {
+    if (window.HTET_CURRICULUM[langCode]) {
+      this.targetLang = langCode;
+      localStorage.setItem('htetlingo_target_lang', langCode);
+      if (window.htetSound) window.htetSound.playClick();
       this.renderCurrentTab();
     }
+  }
+
+  openLanguageModal() {
+    this.switchTab('profile');
   }
 }
 
@@ -1438,7 +1300,7 @@ function startApp() {
         viewport.innerHTML = `
           <div style="padding: 2.5rem 1.5rem; text-align: center; color: var(--rose-primary);">
             <h2>🌸 Welcome to HtetLingo</h2>
-            <p>Initializing platform components... Please refresh if this persists.</p>
+            <p>Initializing platform components... Please refresh.</p>
           </div>
         `;
       }
